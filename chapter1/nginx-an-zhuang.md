@@ -1,6 +1,8 @@
 # Nginx 安装
 
-> Linux 下安装nginx 并不太简单, 因为nginx 依赖一些环境.
+> Linux 下安装nginx 并不是特别麻烦, 只是需要安装一些依赖环境而已. Nginx 是一款优秀地web 服务器, 容易扩展,有丰富的模块儿可供选择.由于笔者会用到它的自动索引功能, 所以通常安装时,会将ngx-fancyindex 模块儿一并安装.笔者安装的是nginx-1.11.13.
+
+## **安装前准备**
 
 ## Nginx 依赖
 
@@ -10,22 +12,30 @@
 4. pcre: nginx 提供地址重写rewrite功能, 需要安装perl 依赖库pcre
 
 ## 下载相关包
+* nginx-1.11.13.tar.gz
+* ngx-fancyindex.tar.gz
 
-安装依赖
+### 目录结构
+* /usr/local/src/nginx
+* /usr/local/src/nginx/nginx-1.11.13.tar.gz
+* /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
 
-安装gcc 编译器:
+
+## 安装依赖
+
+### 安装gcc 编译器:
 
 ``` bash
 yum -y gcc gcc-c++
 ```
 
-## 安装zlib
+### 安装zlib
 
 ``` bash
 yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
 ```
 
-## 安装Nginx
+### 安装Nginx
 
 ### configure
 
@@ -77,7 +87,8 @@ nginx -t
 nginx -t -c /usr/local/nginx/nginx.conf
 ```
 
-### Nginx 启动
+### 启动服务
+> nginx 默认配置监听端口为80, 但是只有root 用户才能使用80 端口, 需要修改配置文件监听端口. nginx 启动时刻指定配置文件位置, 若不指定, 使用默认配置文件.
 
 ``` bash
 nginx 
