@@ -21,7 +21,7 @@ yum -y gcc gcc-c++
 
 ## 安装zlib
 
-```
+``` bash
 yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
 ```
 
@@ -29,7 +29,7 @@ yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
 
 ### configure
 
-```
+``` bash
 ./configure \
 --prefix=/var/data/nginx \
 --sbin-path=/usr/sbin/nginx \
@@ -55,50 +55,50 @@ yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
 --add-module=../plugins/ngx-fancyindex/
 ```
 
-安装
+### 安装
 
-```
+``` bash
 make  && make install
 ```
 
-测试
+### 测试
 
-```
+``` bash
 nginx -v   //查看版本号
 nginx -V   //查看安装详情
 ```
 
-Nginx 的启动管理
+## Nginx 的启动管理
 
-检测 配置文件
+### 检测 配置文件
 
-```
+``` bash
 nginx -t
 nginx -t -c /usr/local/nginx/nginx.conf
 ```
 
-Nginx 启动
+### Nginx 启动
 
-```
+``` bash
 nginx 
 nginx -c /usr/local/nginx/nginx.con
 ```
 
-Nginx 停止
-
-```
+### Nginx 停止
+ 
+``` bash
 nginx -s stop
 ```
 
-重启
+### 重启
 
-```
+``` bash
 nginx -s reload
 ```
 
-查看帮助
+### 查看帮助
 
-```
+``` bash
 nginx -h
 ```
 
