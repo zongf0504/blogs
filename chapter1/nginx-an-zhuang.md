@@ -12,8 +12,8 @@
 4. pcre: nginx 提供地址重写rewrite功能, 需要安装perl 依赖库pcre
 
 ### 1.2 下载相关包
-* nginx-1.11.13.tar.gz
-* ngx-fancyindex.tar.gz
+* nginx-1.11.13.tar.gz [csdn 下载](http://download.csdn.net/detail/zgf19930504/9845788)
+* ngx-fancyindex.tar.gz [csdn 下载](http://download.csdn.net/detail/zgf19930504/9845791)
 
 ### 1.3 目录结构
 * /usr/local/src/nginx
