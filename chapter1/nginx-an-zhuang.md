@@ -20,6 +20,11 @@
 * /usr/local/src/nginx/nginx-1.11.13.tar.gz
 * /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
 
+### 1.4 解压
+``` bash
+tar -zxvf /usr/local/src/nginx/nginx-1.11.13.tar.gz
+tar -zxvf /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
+```
 
 ## 2. 安装依赖环境
 
