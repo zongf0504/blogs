@@ -84,16 +84,16 @@ nginx -v   //查看版本号
 nginx -V   //查看安装详情
 ```
 
-## Nginx 的启动管理
+## 4. Nginx 的启动管理
 
-### 检测 配置文件
+### 4.1 检测配置文件
 
 ``` bash
 nginx -t
 nginx -t -c /usr/local/nginx/nginx.conf
 ```
 
-### 启动服务
+### 4.2 启动服务
 > nginx 默认配置监听端口为80, 但是只有root 用户才能使用80 端口, 需要修改配置文件监听端口. nginx 启动时刻指定配置文件位置, 若不指定, 使用默认配置文件.
 
 ``` bash
@@ -101,19 +101,19 @@ nginx
 nginx -c /usr/local/nginx/nginx.con
 ```
 
-### Nginx 停止
+### 4.3 Nginx 停止
  
 ``` bash
 nginx -s stop
 ```
 
-### 重启
+### 4.4 重启
 
 ``` bash
 nginx -s reload
 ```
 
-### 查看帮助
+### 4.5 查看帮助
 
 ``` bash
 nginx -h
