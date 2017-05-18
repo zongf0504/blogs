@@ -15,7 +15,7 @@
 * nginx-1.11.13.tar.gz
 * ngx-fancyindex.tar.gz
 
-#### 1.3 目录结构
+### 1.3 目录结构
 * /usr/local/src/nginx
 * /usr/local/src/nginx/nginx-1.11.13.tar.gz
 * /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
