@@ -2,42 +2,42 @@
 
 > Linux 下安装nginx 并不是特别麻烦, 只是需要安装一些依赖环境而已. Nginx 是一款优秀地web 服务器, 容易扩展,有丰富的模块儿可供选择.由于笔者会用到它的自动索引功能, 所以通常安装时,会将ngx-fancyindex 模块儿一并安装.笔者安装的是nginx-1.11.13.
 
-## **安装前准备**
+## 1. 安装前准备
 
-## Nginx 依赖
+### 1.1 Nginx 依赖
 
 1. gcc: 源码包安装  
 2. zlib: nginx 提供zip 模块儿, 需要zlib 支持  
 3. openssl: nginx 提供ssl 模块儿, 需要openssl 支持  
 4. pcre: nginx 提供地址重写rewrite功能, 需要安装perl 依赖库pcre
 
-## 下载相关包
+### 1.2 下载相关包
 * nginx-1.11.13.tar.gz
 * ngx-fancyindex.tar.gz
 
-### 目录结构
+#### 1.3 目录结构
 * /usr/local/src/nginx
 * /usr/local/src/nginx/nginx-1.11.13.tar.gz
 * /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
 
 
-## 安装依赖
+## 2. 安装依赖环境
 
-### 安装gcc 编译器:
+### 2.1 安装gcc 编译器:
 
 ``` bash
 yum -y gcc gcc-c++
 ```
 
-### 安装zlib
+### 2.2 安装zlib
 
 ``` bash
 yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
 ```
 
-### 安装Nginx
+## 3. 安装Nginx
 
-### configure
+### 3.1 自定义安装路径
 
 ``` bash
 ./configure \
@@ -65,13 +65,19 @@ yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
 --add-module=../plugins/ngx-fancyindex/
 ```
 
-### 安装
+### 3.2 编译
 
 ``` bash
-make  && make install
+make 
 ```
 
-### 测试
+### 3.3 安装
+
+``` bash
+make install
+```
+
+### 3.4 测试
 
 ``` bash
 nginx -v   //查看版本号
