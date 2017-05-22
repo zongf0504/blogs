@@ -297,14 +297,27 @@ tomcat 8之前的默认编码为iso-8859-1, 因此tomcat 在处理get 请求时�
 ## 5. 修改tomcat 启动文件
 
 ### 1. 修改JDK 路径
-当服务器上安装的jdk 版本并非你想用的jdk 
+当服务器上安装的jdk 版本并非你想用的jdk 版本时, 你可以通过修改tomcat bin 目录下的catalina.sh 脚本来指定jdk 的路径.
 
+编辑catalina.sh 脚本:
+``` bash
+
+[admin@localhost tomcat]$ vim /opt/app/tomcat/tomcat-7-7080/bin/catalina.sh
+
+```
+
+在文件第一非注释行,添加以下配置:
+***
 
 #set java home
-export JAVA_HOME=/home/zonggf/jdk/jdk1.8.0_121
+export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
+
+***
 
 
 ### 2. 修改JVM 内存
+tomcat 默认启动占用内存 256M, 有的web 应用占用内存大, 所以可能出现内存溢出的现象,这样的
+
 JAVA_OPTS="-Xms516m -Xmx1024m -Xss1024K -XX:PermSize=512m -XX:MaxPermSize=512m"
 
 
