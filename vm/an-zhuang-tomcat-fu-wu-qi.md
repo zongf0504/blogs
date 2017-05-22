@@ -3,7 +3,7 @@
 
 ## 1. 安装tomcat
 ### 1.1 下载安装包
-Apache 官网下载地址:[http://tomcat.apache.org/](http://tomcat.apache.org/)
+Apache 官网下载地址: [http://tomcat.apache.org/](http://tomcat.apache.org/)
 
 ### 1.2 上传安装包
 ### 1.3 解压
