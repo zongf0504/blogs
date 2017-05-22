@@ -16,8 +16,8 @@ Maven 官网下载地址: [http://maven.apache.org/download.cgi](http://maven.ap
 
 ## 3. 解压
 ``` bash
-[admin@localhost zip]$ tar -zxf apache-maven-3.2.5-bin.tar.gz
-[admin@localhost zip]$ tar -zxf apache-maven-3.5.0-bin.tar.gz
+[admin@localhost maven]$ tar -zxf apache-maven-3.2.5-bin.tar.gz
+[admin@localhost maven]$ tar -zxf apache-maven-3.5.0-bin.tar.gz
 ```
 ## 4. 备份
 
