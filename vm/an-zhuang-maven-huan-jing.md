@@ -71,9 +71,23 @@ export PATH=$PATH:$MAVEN_HOME
 ``` 
 
 ### 2.3 使配置文件立即生效
+默认修改 /etc/profile 之后并不能立即生效, 需要重新登录才能生效, 可使用**source **命令来使修改立即生效.
 ```bash
 [admin@localhost maven]$ source /etc/profile
 ```
+
+### 2.4 测试环境变量是否生效
+``` bash
+[admin@localhost maven]$ mvn -version       
+Apache Maven 3.2.5 (12a6b3acb947671f09b81f49094c53f426d8cea1; 2014-12-15T01:29:23+08:00)
+Maven home: /opt/app/maven/apache-maven-3.2.5
+Java version: 1.7.0_80, vendor: Oracle Corporation
+Java home: /opt/app/jdk/jdk1.7.0_80/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "2.6.32-642.el6.x86_64", arch: "amd64", family: "unix"
+[admin@localhost maven]$
+```
+
 
 
 
