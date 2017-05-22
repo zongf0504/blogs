@@ -1,4 +1,4 @@
-<style>
+<style type="text/css">
 img {
    text-align:center;
 }
