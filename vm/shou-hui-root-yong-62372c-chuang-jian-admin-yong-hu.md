@@ -168,3 +168,41 @@ root    ALL=(ALL)       ALL
 
 ***
 
+## 4. 测试
+
+### 4.1 使用admin 用户登录服务器,查看防火墙状态
+默认情况下, admin 是不能执行 service命令的, 纵使dmin 添加到了root 组中.
+``` bash
+
+[admin@localhost ~]$ service iptables status
+iptables: Only usable by root.
+
+```
+
+### 4.2 使用 sudo 命令查看
+第一次使用sudo 时,需要输入 admin 密码
+
+``` bash
+[admin@localhost ~]$ sudo service iptables status
+[sudo] password for admin: 
+Table: filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED 
+2    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+4    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22 
+5    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination         
+1    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+
+[admin@localhost ~]$
+```
+
+
+
