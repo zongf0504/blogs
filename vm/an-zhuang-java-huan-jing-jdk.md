@@ -48,4 +48,18 @@ export JAVA_HOME=/opt/app/jdk/jdk1.7.0_80
 export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ***
-##   
+
+## 6. 设置配置文件立即生效
+``` bash
+[admin@localhost jdk]$ source /etc/profile
+``` 
+
+## 7. 检测是否生效
+
+``` bash
+[admin@localhost jdk]$ java -version
+java version "1.7.0_80"
+Java(TM) SE Runtime Environment (build 1.7.0_80-b15)
+Java HotSpot(TM) 64-Bit Server VM (build 24.80-b11, mixed mode)
+[admin@localhost jdk]$ 
+```
