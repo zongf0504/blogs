@@ -39,7 +39,7 @@ mv /opt/app/tomcat/*.tar.gz /opt/source
 ```
 
 ### 1.5 重命名
-解压后的tomcat 最好按一定的规则命名, 这样便于管理.笔者通常会采用格式: ** tomcat-版本号-端口号[-应用简称]** 来命名, 端口号设定规则, 第一位代表tomcat 版本号, 比如说: tomcat-8-8080-jenkins, 由于此时我们并不需要部署什么应用, 所以我们命名为 tomcat-7-7080, tomcat-8-8080
+解压后的tomcat 最好按一定的规则命名, 这样便于管理.笔者通常会采用格式: ** tomcat-版本号-端口号[-应用简称]** 来命名, **端口号设定规则, 第一位代表tomcat 版本号**, 比如说: tomcat-8-8080-jenkins, 由于此时我们并不需要部署什么应用, 所以我们命名为 tomcat-7-7080, tomcat-8-8080
 ``` bash
 [admin@localhost tomcat]$ mv tomcat-7-7080/ tomcat-7-7080/
 [admin@localhost tomcat]$ mv tomcat-7-7080/ tomcat-7-7080/
