@@ -70,7 +70,7 @@ export CLASSPATH=.:$JAVA\_HOME/lib/dt.jar:$JAVA\_HOME/lib/tools.jar
 ---
 
 ### 5.3 设置配置文件立即生效
-默认情况下,修改完/etc/profile 是不会立即生效的, 需要退出当前登录,重新登录才行.但是我们也可以使用source命令,令修改立即生效. 
+默认情况下,修改完/etc/profile 是不会立即生效的, 需要退出当前登录,重新登录才行.但是我们也可以使用** source **命令,令修改立即生效. 
 
 ```bash
 
