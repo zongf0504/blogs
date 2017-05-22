@@ -297,5 +297,24 @@ tomcat 8之前的默认编码为iso-8859-1, 因此tomcat 在处理get 请求时�
 ## 5. 修改tomcat 启动文件
 
 ### 1. 修改JDK 路径
+当服务器上安装的jdk 版本并非你想用的jdk 
+
+
+#set java home
+export JAVA_HOME=/home/zonggf/jdk/jdk1.8.0_121
+
 
 ### 2. 修改JVM 内存
+JAVA_OPTS="-Xms516m -Xmx1024m -Xss1024K -XX:PermSize=512m -XX:MaxPermSize=512m"
+
+
+
+
+
+
+
+
+
+
+
+
