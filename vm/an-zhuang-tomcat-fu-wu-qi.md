@@ -116,7 +116,7 @@ Using CLASSPATH:       /opt/app/tomcat/tomcat-8-8080/bin/bootstrap.jar:/opt/app/
 ## 4. 修改tomcat 配置文件
 
 ### 1. 修改端口号
-linux 操作系统, 一个端口号只能被一个实例所占用, 而tomcat 默认使用端口号8080, 当一台服务器上需要启动多个tomcat 实例 时, 那么就需要修改tomcat 的占用的端口号了, 只需要将tomcat 默认的8080, 8009, 8005, 三个端口修改就行了. 笔者来修改 tomcat-7-7080 的端口.
+linux 操作系统, 一个端口号只能被一个实例所占用, 而tomcat 默认使用端口号8080, 当一台服务器上需要启动多个tomcat 实例 时, 那么就需要修改tomcat 的占用的端口号了, 只需要将tomcat 默认的**8005, 8080, 8009** 三个端口修改就行了. 笔者来修改 tomcat-7-7080 的端口, 修改为 **7005, 7080, 7009**
 
 ``` bash
 
@@ -124,6 +124,7 @@ linux 操作系统, 一个端口号只能被一个实例所占用, 而tomcat 默
 
 ```
 
+***
 ``` xml
 <?xml version='1.0' encoding='utf-8'?>
 <!--
@@ -270,8 +271,29 @@ linux 操作系统, 一个端口号只能被一个实例所占用, 而tomcat 默
   </Service>
 </Server>
 ```
+***
 
 ### 2. 修改get请求编码
+tomcat 8之前的默认编码为iso-8859-1, 因此tomcat 在处理get 请求时中文会出现乱码的情况,  通常在应用中需要对此情况做特殊处理,或者修改服务器默认编码为utf8, 修改方式.
+
+``` bash
+
+[admin@localhost tomcat]$ vim /opt/app/tomcat/tomcat-7-7080/conf/server.xml 
+
+```
+
+配置端口7080 的xml 片段后面添加 URIEncodeing="UTF-8"
+
+***
+``` xml
+<Connector port="7080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+
+```
+***
+
+
 
 ## 5. 修改tomcat 启动文件
 
