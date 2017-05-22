@@ -50,39 +50,10 @@ drwxrwxr-x. 21 root root 4096 May 22 22:13 /var/run
 ```
 ## 3. 修改sudo 文件
 
-
 ``` bash
 [root@localhost ~]# visudo
-\#\# Sudoers allows particular users to run various commands as
-\#\# the root user, without needing the root password.
-\#\#
-\#\# Examples are provided at the bottom of the file for collections
-\#\# of related commands, which can then be delegated out to particular
-\#\# users or groups.
-\#\#
-\#\# This file must be edited with the 'visudo' command.
-
-\#\# Host Aliases
-\#\# Groups of machines. You may prefer to use hostnames (perhaps using
-\#\# wildcards for entire domains) or IP addresses instead.
-\# Host_Alias     FILESERVERS = fs1, fs2
-\# Host_Alias     MAILSERVERS = smtp, smtp2
-
-\#\# User Aliases
-\#\# These aren't often necessary, as you can use regular groups
-\#\# (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
-\#\# rather than USERALIAS
-\# User_Alias ADMINS = jsmith, mikem
-
-
-\#\# Command Aliases
-\#\# These are groups of related commands...
-visudo: /etc/sudoers.tmp unchanged
-[root@localhost ~]\# cat /etc/sudoers.tmp
-cat: /etc/sudoers.tmp: No such file or directory
-[root@localhost ~]\# cat /etc/sudoers
-sudoers    sudoers.d/ 
-[root@localhost ~]\# cat /etc/sudoers
+```
+``` bash
 \#\# Sudoers allows particular users to run various commands as
 \#\# the root user, without needing the root password.
 \#\#
@@ -109,7 +80,7 @@ sudoers    sudoers.d/
 \#\# These are groups of related commands...
 
 \#\# Networking
-Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+**Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool**
 
 \#\# Installation and management of software
 Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
