@@ -52,6 +52,14 @@ drwxrwxr-x. 9 admin admin 4096 May 21 06:28 tomcat-8-8080
 ```
 
 ## 2. tomcat 目录讲解
+* bin
+* conf
+* lib
+* logs
+* temp
+* webapps
+* work
+* ...
 
 ## 3. tomcat 启动 & 停止
 
