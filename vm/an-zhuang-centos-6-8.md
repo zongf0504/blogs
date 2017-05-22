@@ -25,3 +25,33 @@
 ....... ![](/assets/vm_install_2017-05-22_112218.png)
 
 ## 二 安装Centos 系统
+
+### 2.1 点击开启此虚拟机, 启动虚拟机
+
+### 2.2 
+
+....... ![](/assets/vm_install_2017-05-22_125451.png)
+....... ![](/assets/vm_install_2017-05-22_125655.png)
+....... ![](/assets/vm_install_2017-05-22_125838.png)
+....... ![](/assets/vm_install_2017-05-22_125858.png)
+....... ![](/assets/vm_install_2017-05-22_125913.png)
+....... ![](/assets/vm_install_2017-05-22_125940.png)
+....... ![](/assets/vm_install_2017-05-22_125954.png)
+....... ![](/assets/vm_install_2017-05-22_130015.png)
+....... ![](/assets/vm_install_2017-05-22_130052.png)
+....... ![](/assets/vm_install_2017-05-22_130120.png)
+....... ![](/assets/vm_install_2017-05-22_130148.png)
+....... ![](/assets/vm_install_2017-05-22_130241.png)
+....... ![](/assets/vm_install_2017-05-22_130341.png)
+....... ![](/assets/vm_install_2017-05-22_130440.png)
+....... ![](/assets/vm_install_2017-05-22_130512.png)
+....... ![](/assets/vm_install_2017-05-22_130528.png)
+....... ![](/assets/vm_install_2017-05-22_130712.png)
+....... ![](/assets/vm_install_2017-05-22_130749.png)
+....... ![](/assets/vm_install_2017-05-22_130842.png)
+....... ![](/assets/vm_install_2017-05-22_130917.png)
+....... ![](/assets/vm_install_2017-05-22_130932.png)
+
+
+
+
