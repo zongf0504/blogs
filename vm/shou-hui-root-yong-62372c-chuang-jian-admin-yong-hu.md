@@ -49,10 +49,4 @@ drwxrwxr-x. 21 root root 4096 May 22 22:13 /var/run
 ``
 ## 
 
-``` bash
-
-
-
-
-```
 
