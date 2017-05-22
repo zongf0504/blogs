@@ -24,6 +24,68 @@ VM 安装成功之后，电脑上会新增两块虚拟网卡 VMnet1 和 VMnet8 ,
 
 
 ## 2. 设置虚拟机ip
+### 2.1 设置虚拟机网络连接方式
+可以通过点击 **编辑虚拟机设置** 修改参数, 由于默认就是NAT 方式, 所以没有必要修改, 直接点击 **开启此虚拟机** 即可
+![](/assets/vm_network_2017-05-22_184149.png)
+
+
+### 2.2 使用root 用户登录虚拟机系统, 并执行setup 命令
+![](/assets/vm_network_2017-05-22_184432.png)
+
+
+#### 2.2.1 通过setup 图形页面,设置ip
+通过键盘上下键移动,选择第三项 **Network configuration**, 点击 **Enter**
+
+![](/assets/vm_network_2017-05-22_184457.png)
+
+#### 2.2.2 选择 Device configuration, 点击Enter
+![](/assets/vm_network_2017-05-22_184507.png)
+
+#### 2.2.3 选择网卡, 直接按Enter
+![](/assets/vm_network_2017-05-22_184536.png)
+
+#### 2.2.4 设置ip, 点击OK
+先将 **Sstatic IP** 的* 按空格去掉, 然后设置 ip, 子网掩码, 网关, 如果不去掉则是动态获取ip. 服务器不推荐使用动态获取ip 的方式,因为服务器通常都是通过远程连接工具来操作的, 若没有固定ip ,是没有办法进行远程连接的. 注意此处的Name 和 Device 不要修改, 这个名称为网络配置文件的文件名.参看 2.3
+![](/assets/vm_network_2017-05-22_184601.png)
+
+#### 2.2.5 按Tab 键,选择保存, 按Enter
+![](/assets/vm_network_2017-05-22_184638.png)
+
+#### 2.2.6 按Tab 键, 选择 Save&Quit , 按Enter 
+![](/assets/vm_network_2017-05-22_184736.png)
+
+#### 2.2.7 按Tab 键,选择Quit, 按Enter
+![](/assets/vm_network_2017-05-22_184801.png)
+
+
+### 2.5 修改网络配置文件
+新装的linux 系统, 通过setup 设置完ip 之后, 还需要修改网络配置文件: **/etc/sysconfig/network-scripts/ifcfg-eth0**, 只需要将ONBOOT 设置为yes 即可.(不同电脑不一定都是ifcfg-eth0 , 得看图2.2.4 中的Device 名称.)
+
+编辑:
+``` bash
+[root@localhost opt]# vim /etc/sysconfig/network-scripts/ifcfg-eth0     
+```
+
+配置文件:/etc/sysconfig/network-scripts/ifcfg-eth0
+***
+DEVICE=eth0
+HWADDR=00:0c:29:fc:81:30
+TYPE=Ethernet
+UUID=1b4c2a48-3bab-4dc9-aaf3-4911d1f8e19e
+**ONBOOT=yes**
+NM_CONTROLLED=yes
+BOOTPROTO=none
+IPADDR=192.168.145.100
+NETMASK=255.255.255.0
+GATEWAY=192.168.145.0
+USERCTL=no
+PEERDNS=yes
+IPV6INIT=no
+***
+
+
+### 2.6 重启网络服务
+![](/assets/vm_network_2017-05-22_185444.png)
 
 
 ## 3. 远程连接工具
