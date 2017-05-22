@@ -76,7 +76,7 @@ OS name: "linux", version: "2.6.32-642.el6.x86_64", arch: "amd64", family: "unix
 ### 2.2 文件末尾添加配置:
 
 ```bash
-#maven env  
+# maven env  
 export MAVEN_HOME=/opt/app/maven/apache-maven-3.2.5  
 export PATH=$PATH:$MAVEN_HOME
 ```
