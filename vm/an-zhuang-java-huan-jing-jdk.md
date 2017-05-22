@@ -28,6 +28,12 @@ jdk 安装到/opt/app/jdk 目录, 压缩文件备份到 /opt/source 目录下,�
 
 ```
 
+## 5. 备份安装包
+将jdk7, jdk8 的安装包备份起来, 整洁目录, 同时以备日后使用.
+``` bash
+mv /opt/app/jdk/*.tar.gz /opt/source
+```
+
 ## 4. 测试
 如果不设置环境变量的话,那么到此就已经成功安装了jdk7 和 jdk8, 只不过以后使用时都必须使用绝对路径.
 
@@ -50,9 +56,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 
 ```
 
-## 5. 设置默认jdk
+## 6. 设置默认jdk
 
-### 5.1 编辑/etc/profile 文件
+### 6.1 编辑/etc/profile 文件
 
 ```bash
 
@@ -60,7 +66,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 
 ```
 
-### 5.2 文件末追加配置片段
+### 6.2 文件末追加配置片段
 ---
 
 \#java env  
@@ -70,7 +76,7 @@ export CLASSPATH=.:$JAVA\_HOME/lib/dt.jar:$JAVA\_HOME/lib/tools.jar
 
 ---
 
-### 5.3 设置配置文件立即生效
+### 6.3 设置配置文件立即生效
 默认情况下,修改完/etc/profile 是不会立即生效的, 需要退出当前登录,重新登录才行.但是我们也可以使用** source **命令,令修改立即生效. 
 
 ```bash
@@ -79,7 +85,7 @@ export CLASSPATH=.:$JAVA\_HOME/lib/dt.jar:$JAVA\_HOME/lib/tools.jar
 
 ```
 
-### 5.4 检测是否生效
+### 6.4 检测是否生效
 设置成功之后, 不使用绝对路径的话, 默认使用jdk1.7; 若想使用jdk 1.8 , 需要使用绝对路径,或在启动脚本中设置全局变量JAVA_HOME的值,这个在安装tomcat 服务器时会讲到.
 ```bash
 
