@@ -52,13 +52,13 @@ drwxrwxr-x. 9 admin admin 4096 May 21 06:28 tomcat-8-8080
 ```
 
 ## 2. tomcat 目录讲解
-* bin
-* conf
-* lib
-* logs
-* temp
-* webapps
-* work
+* **bin** : tomcat 的启动关闭等脚本
+* **conf** : tomcat 相关配置文件
+* **lib** : tomcat 依赖的jar包(tomcat 本身就一java 应用, 也需要依赖一些第三方jar包)
+* **logs** : tomcat 日志文件, 三种类型日志: catalina, localhost, host-manager, 按天自动切割, 即每天产生一个新文件
+* **temp** : 临时目录
+* **webapps** : 应用部署目录,将war包丢进此目录即可完成部署, 会自动将war 目录解压
+* **work/Catalina/localhost** : 应用工作目录,每部署一个应用, 此目录会产生一个与应用同名称的文件夹, 因此重新部署时,通常建议删除此目录中相应的文件夹,以防止新部署应用不生效.
 * ...
 
 ## 3. tomcat 启动 & 停止
