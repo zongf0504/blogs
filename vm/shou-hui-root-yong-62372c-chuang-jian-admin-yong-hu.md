@@ -20,6 +20,7 @@ passwd: all authentication tokens updated successfully.
 ```
 
 ### 1.3 将admin 添加到 root 组中
+
 ``` bash
 [root@localhost ~] usermod -aG root admin
 ```
