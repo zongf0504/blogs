@@ -1,7 +1,8 @@
 <style type="text/css">
 img {
    text-align:center;
-   margin:auto;
+   margin-left:auto;
+   margin-right:auto;
 }
 </style>
 
