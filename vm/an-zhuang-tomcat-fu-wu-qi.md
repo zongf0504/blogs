@@ -123,7 +123,7 @@ linux 操作系统, 一个端口号只能被一个实例所占用, 而tomcat 默
 [admin@localhost tomcat]$ vim /opt/app/tomcat/tomcat-7-7080/conf/server.xml 
 
 ```
-
+配置文件内容: server.xml
 ***
 ``` xml
 <?xml version='1.0' encoding='utf-8'?>
@@ -288,14 +288,14 @@ tomcat 8之前的默认编码为iso-8859-1, 因此tomcat 在处理get 请求时�
 ``` xml
 <Connector port="7080" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="8443" />
+               redirectPort="8443" URIEncoding="UTF-8" />
 
 ```
 ***
 
 
-
 ## 5. 修改tomcat 启动文件
 
 ### 1. 修改JDK 路径
+
 ### 2. 修改JVM 内存
