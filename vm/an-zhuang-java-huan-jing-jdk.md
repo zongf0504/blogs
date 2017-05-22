@@ -3,7 +3,7 @@
 
 ## 1. 下载:
 
-官网下载linux 下的64 位的jdk7 和 jdk8
+官网下载linux 下的64 位的jdk7 和 jdk8, 下载地址: [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * jdk-7u80-linux-x64.tar.gz
 * jdk-8u131-linux-x64.tar.gz
 
