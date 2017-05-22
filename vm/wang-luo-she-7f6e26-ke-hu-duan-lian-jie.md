@@ -107,7 +107,7 @@ IPV6INIT=no
 
 ### 3.1 远程命令执行工具
 
-linux 命令远程连接工具有很多, 比如说putty, SecureCRT, XShell 等, 笔者习惯使用 SecureCRT 和putty, 此处仅演示SecureCRT 的使用方式.
+linux 命令远程连接工具有很多, 比如说putty, SecureCRT, XShell 等, 笔者习惯使用 SecureCRT 和putty, 此处仅演示SecureCRT 的使用方式. SecureCRT 安装方式就不讲了,网上多的是.
 
 #### 3.1.1 打开SecureCRT, 依次点击图中按钮
 
