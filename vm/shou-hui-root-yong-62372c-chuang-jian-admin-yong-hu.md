@@ -80,28 +80,28 @@ drwxrwxr-x. 21 root root 4096 May 22 22:13 /var/run
 \#\# These are groups of related commands...
 
 \#\# Networking
-** Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool **
+**Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool **
 
 \#\# Installation and management of software
-** Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum **
+**Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum **
 
 \#\# Services
-** Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig **
+**Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig **
 
 \#\# Updating the locate database
-Cmnd_Alias LOCATE = /usr/bin/updatedb
+**Cmnd_Alias LOCATE = /usr/bin/updatedb**
 
 \#\# Storage
-Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+**Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount**
 
 \#\# Delegating permissions
-Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp 
+**Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp **
 
 \#\# Processes
-Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+**Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall**
 
 \#\# Drivers
-Cmnd_Alias DRIVERS = /sbin/modprobe
+**Cmnd_Alias DRIVERS = /sbin/modprobe**
 
 \# Defaults specification
 
@@ -148,7 +148,7 @@ root    ALL=(ALL)       ALL
 
 \#\# Allows members of the 'sys' group to run networking, software, 
 \#\# service management apps and more.
-admin ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+**admin ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS**
 
 \#\# Allows people in group wheel to run all commands
 \# %wheel        ALL=(ALL)       ALL
