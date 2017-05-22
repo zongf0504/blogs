@@ -317,11 +317,10 @@ export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
 
 ### 2. 修改JVM 内存
 tomcat 默认启动占用内存 256M, 有的web 应用占用内存大, 所以可能出现内存溢出的现象,这样的话,就需要修改jvm 的配置, 在catalina.sh 文件头添加配置:
-``` bash
 
+***
 JAVA_OPTS="-Xms256m -Xmx1024m -XX:PermSize=512m -XX:MaxPermSize=512m"
-
-```
+***
 
 
 
