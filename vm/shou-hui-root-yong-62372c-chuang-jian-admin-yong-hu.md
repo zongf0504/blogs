@@ -180,7 +180,7 @@ iptables: Only usable by root.
 ```
 
 ### 4.2 使用 sudo 命令查看
-第一次使用sudo 时,需要输入 admin 密码
+第一次使用sudo 时,需要输入 admin 密码, 此时就可以使用service 命令了
 
 ``` bash
 [admin@localhost ~]$ sudo service iptables status
