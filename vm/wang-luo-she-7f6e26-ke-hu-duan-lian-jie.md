@@ -90,5 +90,35 @@ IPV6INIT=no
 
 ## 3. 远程连接工具
 ### 3.1 远程命令执行工具
+linux 命令远程连接工具有很多, 比如说putty, SecureCRT, XShell 等, 笔者习惯使用 SecureCRT 和putty, 此处仅演示SecureCRT 的使用方式.
+
+![](/assets/vm_scrt_2017-05-22_192134.png)
+![](/assets/vm_scrt_2017-05-22_192207.png)
+![](/assets/vm_scrt_2017-05-22_192226.png)
+![](/assets/vm_scrt_2017-05-22_192250.png)
+![](/assets/vm_scrt_2017-05-22_192306.png)
+![](/assets/vm_scrt_2017-05-22_192319.png)
+![](/assets/vm_scrt_2017-05-22_192352.png)
+![](/assets/vm_scrt_2017-05-22_192413.png)
 
 ### 3.2 远程文件上传下载工具
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
