@@ -7,7 +7,7 @@
 * perl
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
-  * [网络设置&客户端连接](vm/wang-luo-she-7f6e26-ke-hu-duan-lian-jie.md)
+  * [虚拟机网络设置&客户端连接](vm/wang-luo-she-7f6e26-ke-hu-duan-lian-jie.md)
   * [收回root账号,新建管理员账号](vm/shou-hui-root-yong-62372c-chuang-jian-admin-yong-hu.md)
   * [设置本地 yum 源, 安装gcc](vm/she-zhi-ben-di-yum-6e902c-an-zhuang-gcc.md)
   * [安装java 环境 jdk](vm/an-zhuang-java-huan-jing-jdk.md)
