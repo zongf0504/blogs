@@ -22,4 +22,4 @@
 ....... ![](/assets/vm_install_2017-05-22_102149.png)
 
 ### 1.7 点击编辑虚拟机设置,选择CD/DVD, 点击浏览, 修改ISO 镜像文件为Centos 镜像文件
-![](/assets/vm_install_2017-05-22_112218.png)
+....... ![](/assets/vm_install_2017-05-22_112218.png)
