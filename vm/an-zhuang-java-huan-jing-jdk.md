@@ -79,7 +79,7 @@ export CLASSPATH=.:$JAVA\_HOME/lib/dt.jar:$JAVA\_HOME/lib/tools.jar
 ```
 
 ### 5.4 检测是否生效
-
+设置成功之后, 不使用绝对路径的话, 默认使用jdk1.7; 若想使用jdk 1.8 , 需要使用绝对路径,或在启动脚本中设置全局变量JAVA_HOME的值,这个在安装tomcat 服务器时会讲到.
 ```bash
 
 [admin@localhost jdk]$ java -version
