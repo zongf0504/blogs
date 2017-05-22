@@ -10,7 +10,7 @@
   * [网络设置&客户端连接](vm/wang-luo-she-7f6e26-ke-hu-duan-lian-jie.md)
   * [收回root账号,新建管理员账号](vm/shou-hui-root-yong-62372c-chuang-jian-admin-yong-hu.md)
   * 设置本地 yum 源, 安装gcc
-  * 安装java 环境 jdk
+  * [安装java 环境 jdk](vm/an-zhuang-java-huan-jing-jdk.md)
   * 安装tomcat 服务器
   * 安装maven 环境
   * 安装nginx 服务器
