@@ -3,11 +3,13 @@
 
 ## 1. 新建管理员用户
 ### 1.1 创建管理员用户admin, 并添加到root 组
+
 ``` bash
 [root@localhost ~] useradd admin
 ```
 
 ### 1.2 设置密码
+
 ``` bash
 [root@localhost ~]# passwd admin
 Changing password for user admin.
@@ -26,6 +28,7 @@ passwd: all authentication tokens updated successfully.
 ```
 
 ### 1.4 查看管理员账号
+
 ``` bash
 [root@localhost ~]# id admin
 uid=500(admin) gid=500(admin) groups=500(admin),0(root)
@@ -33,6 +36,7 @@ uid=500(admin) gid=500(admin) groups=500(admin),0(root)
 ```
 
 ## 2. 修改分区权限
+
 ``` bash
 [root@localhost ~]# chmod 775 /opt/ /usr/etc /usr/local/ /var/data /var/logs  /var/run
 [root@localhost ~]# ll -d /opt/ /usr/etc /usr/local/ /var/data /var/logs  /var/run    
