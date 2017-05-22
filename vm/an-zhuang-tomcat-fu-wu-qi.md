@@ -309,7 +309,7 @@ tomcat 8之前的默认编码为iso-8859-1, 因此tomcat 在处理get 请求时�
 在文件第一非注释行,添加以下配置:
 ***
 
-#set java home
+\# set java home
 export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
 
 ***
