@@ -5,4 +5,5 @@
   * [nginx 安装](chapter1/nginx-an-zhuang.md)
 * jenkins
 * perl
+* [vm](vm.md)
 
