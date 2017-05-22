@@ -53,7 +53,7 @@ drwxrwxr-x. 21 root root 4096 May 22 22:13 /var/run
 ```bash
 [root@localhost ~]# visudo
 ```
-
+***
 \#\# Sudoers allows particular users to run various commands as
 \#\# the root user, without needing the root password.
 \#\#
