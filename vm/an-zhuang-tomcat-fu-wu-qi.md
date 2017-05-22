@@ -62,6 +62,29 @@ drwxrwxr-x. 9 admin admin 4096 May 21 06:28 tomcat-8-8080
 * **...** : 一些说明文件
 
 ## 3. tomcat 启动 & 停止
+网上很多人会建议配置CATALINA_HOME 环境变量, 笔者认为并没有此必要, 使用绝对路径起停服务就好了, 毕竟tomcat 只是一个java 的应用而已, 况且通常情况下, 一台服务器上肯定不止部署一个tomcat.
+
+### 3.1 启动tomcat
+tomcat 自带启动脚本, 为bin 目录下的 startup.sh. 我们来启动tomcat-8-8080, 笔者启动前,喜欢清空一下tomcat 的输出日志, 方便查看本次启动应用的情况.
+
+``` bash
+
+[admin@localhost tomcat]$ echo "" > ./tomcat-8-8080/logs/catalina.out
+
+```
+
+``` bash
+
+[admin@localhost tomcat]$ /opt/app/tomcat/tomcat-8-8080/bin/startup.sh                          
+Using CATALINA_BASE:   /opt/app/tomcat/tomcat-8-8080
+Using CATALINA_HOME:   /opt/app/tomcat/tomcat-8-8080
+Using CATALINA_TMPDIR: /opt/app/tomcat/tomcat-8-8080/temp
+Using JRE_HOME:        /opt/app/jdk/jdk1.7.0_80
+Using CLASSPATH:       /opt/app/tomcat/tomcat-8-8080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-8-8080/bin/tomcat-juli.jar
+Tomcat started.
+[admin@localhost tomcat]$
+
+```
 
 ## 4. 修改tomcat 配置文件
 ### 1. 修改端口号
