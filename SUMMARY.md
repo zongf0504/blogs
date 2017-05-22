@@ -13,7 +13,7 @@
   * [安装java 环境 jdk](vm/an-zhuang-java-huan-jing-jdk.md)
   * [安装tomcat 服务器](vm/an-zhuang-tomcat-fu-wu-qi.md)
   * [安装maven 环境](vm/an-zhuang-maven-huan-jing.md)
-  * 安装nginx 服务器
-  * 安装 jenkins 应用
+  * [安装nginx 服务器](vm/an-zhuang-nginx-fu-wu-qi.md)
+  * [安装 jenkins 应用](vm/an-zhuang-jenkins-ying-yong.md)
 * 安装tomcat
 
