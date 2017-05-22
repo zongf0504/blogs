@@ -46,7 +46,8 @@ drwxrwxr-x. 13 root root 4096 May 21 04:50 /usr/local/
 drwxrwxr-x.  5 root root 4096 May 21 07:20 /var/data
 drwxrwxr-x.  4 root root 4096 May 21 07:24 /var/logs
 drwxrwxr-x. 21 root root 4096 May 22 22:13 /var/run
-``
+
+```
 ## 3. 修改sudo 文件
 
 
