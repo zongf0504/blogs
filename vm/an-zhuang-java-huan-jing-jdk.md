@@ -2,7 +2,7 @@
 
 > Linux 上安装jdk 是比较简单的,我们安装的是二进制包,并非源码包. 通常一台服务器上安装有多个不同版本的jdk 是正常的, 因为不同应用可能需要在不同版本上运行. 但是, 默认的jdk 只能有一个. 笔者同时安装jdk 7 和 jdk8.
 
-## 1. 下载:
+## 1. 下载jdk 到本地
 
 Oracle官网下载64位Linux版的jdk7 和 jdk8, 下载地址: [http://www.oracle.com/technetwork/java/javase/downloads/index.html](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
@@ -17,7 +17,7 @@ jdk 安装到/opt/app/jdk 目录, 压缩文件备份到 /opt/source 目录下,�
 ```
 通过 **Wincp** 软件将下载好的jdk文件,上传到 /opt/app/jdk 目录
 
-## 3. 解压
+## 3. 解压压缩文件
 
 ```bash
 [admin@localhost ~]$ cd /opt/app/jdk
@@ -44,12 +44,14 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
 [admin@localhost jdk]$
 ```
 
-## 5. 设置环境变量
+## 5. 设置默认jdk
+### 5.1 编辑/etc/profile 文件
 
 ```bash
 [admin@localhost jdk]$ vim /etc/profile
 ```
 
+### 5.2 文件末追加配置片段
 ---
 
 \#java env  
@@ -59,13 +61,13 @@ export CLASSPATH=.:$JAVA\_HOME/lib/dt.jar:$JAVA\_HOME/lib/tools.jar
 
 ---
 
-## 6. 设置配置文件立即生效
+### 5.3 设置配置文件立即生效
 
 ```bash
 [admin@localhost jdk]$ source /etc/profile
 ```
 
-## 7. 检测是否生效
+### 5.4 检测是否生效
 
 ```bash
 [admin@localhost jdk]$ java -version
