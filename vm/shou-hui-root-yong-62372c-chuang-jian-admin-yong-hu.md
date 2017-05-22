@@ -83,7 +83,7 @@ drwxrwxr-x. 21 root root 4096 May 22 22:13 /var/run
 **Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool**
 
 \#\# Installation and management of software
-Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
+** Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum **
 
 \#\# Services
 Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig
