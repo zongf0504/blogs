@@ -15,7 +15,7 @@ jdk 安装到/opt/app/jdk 目录, 压缩文件备份到 /opt/source 目录下,�
 ``` bash
 [admin@localhost ~]$ mkdir -p /opt/app/jdk /opt/source
 ```
-通过Wincp 软件将下载好的jdk文件,上传到 /opt/app/jdk 目录
+通过 **Wincp** 软件将下载好的jdk文件,上传到 /opt/app/jdk 目录
 
 ## 3. 解压
 
