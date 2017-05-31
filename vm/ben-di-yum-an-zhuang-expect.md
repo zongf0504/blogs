@@ -33,10 +33,27 @@ expect 提供了四个常用命令
 
 
 ## 3. expect 使用demo
+
 ### 3.1 ssh 自动登录
 ``` bash
 #!/usr/bin/expect -f
 spawn ssh root@192.168.145.101
-expect "*password:" { send "gaofeng\r" }
+expect "*password:" { send "root\r" }
 interact
 ```
+
+### 3.2 scp 自动下载文件
+``` bash
+#!/usr/bin/expect -f
+
+spawn scp root@192.168.145.101:/tmp/name.txt .
+expect "*password:" { send "root\r" }
+interact
+```
+
+
+
+
+
+
+
