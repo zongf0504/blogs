@@ -38,10 +38,21 @@ jdk 1.8 和 tomcat 8 安装此处就不介绍了
 * jenkins 默认会将所有数据存放在~/.jenkins 目录中, 这样并不是最佳方案,而且容易产生多种问题, 所以我们需要在启动tomcat 时指定一下JENKINS_HOME 目录
 * 启动tomcat 默认占用256 M内存, 如果编译项目过大的话, 可能不够, 可以修改参数调整
 * 启动tomcat 默认使用环境变量中的jdk, 可以手工设置指定的jdk 
-编辑配置文件: bin/catalina.sh , 在文件非注释行前添加
+编辑配置文件: bin/catalina.sh , 在文件非注释行前添加:
 
 ``` bash
 export JAVA\_HOME=/opt/app/jdk/jdk1.8.0\_131  
 export JENKINS\_HOME=/var/data/jenkins  
 JAVA\_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 ```
+
+#### 1.2.4 启动tomcat
+``` bash
+/opt/app/jenkins/tomcat-8081-jenkins/bin/startup.sh
+```
+
+
+
+
+
+
