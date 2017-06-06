@@ -35,47 +35,49 @@ jdk 1.8 和 tomcat 8 安装此处就不介绍了
 | 8005 | 8105 |
 
 #### 1.2.3 修改启动脚本
-* jenkins 默认会将所有数据存放在~/.jenkins 目录中, 这样并不是最佳方案,而且容易产生多种问题, 所以我们需要在启动tomcat 时指定一下JENKINS_HOME 目录
+
+* jenkins 默认会将所有数据存放在~/.jenkins 目录中, 这样并不是最佳方案,而且容易产生多种问题, 所以我们需要在启动tomcat 时指定一下JENKINS\_HOME 目录
 * 启动tomcat 默认占用256 M内存, 如果编译项目过大的话, 可能不够, 可以修改参数调整
 * 启动tomcat 默认使用环境变量中的jdk, 可以手工设置指定的jdk 
-编辑配置文件: bin/catalina.sh , 在文件非注释行前添加:
+  编辑配置文件: bin/catalina.sh , 在文件非注释行前添加:
 
-``` bash
+```bash
 export JAVA\_HOME=/opt/app/jdk/jdk1.8.0\_131  
 export JENKINS\_HOME=/var/data/jenkins  
 JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 ```
 
 #### 1.2.4 启动tomcat
-``` bash
+
+```bash
 /opt/app/jenkins/tomcat-8081-jenkins/bin/startup.sh
 ```
 
 #### 1.2.5 查看jenkins 默认密码
-``` bash
+
+```bash
 [admin@localhost ~]$ cat /var/data/jenkins/secrets/initialAdminPassword
 ca8d3ce1e9784eab8c1a2b9d0dd0156c
 ```
 
 #### 1.2.6 访问jenkins
+
 1. 确保防火墙已关闭, 或端口号8081 已释放
-2. 使用火狐浏览器访问: http://192.168.145.100:8081/jenkins
+2. 使用火狐浏览器访问: [http://192.168.145.100:8081/jenkins](http://192.168.145.100:8081/jenkins)
 
 #### 1.2.7 初始化设置
-1. ** 输入默认的密码, 密码记录在图片中位置 **
-![](/assets/jenkins_2017-06-06_165838.png)
 
-2. ** 选择跳过安装默认插件步骤**
-![](/assets/jenkins_2017-06-06_170031.png)
+1. ** 输入默认的密码, 密码记录在图片中位置 **  
+   ![](/assets/jenkins_2017-06-06_165838.png)
 
-3. ** 创建一个管理员用户 **
-![](/assets/jenkins_2017-06-06_170106.png)
+2. ** 选择跳过安装默认插件步骤**  
+   ![](/assets/jenkins_2017-06-06_170031.png)
 
-4. ** jenkins 主页 **
-![](/assets/jenkins_2017-06-06_170430.png)
+3. ** 创建一个管理员用户 **  
+   ![](/assets/jenkins_2017-06-06_170106.png)
 
-
-
+4. ** jenkins 主页 **  
+   ![](/assets/jenkins_2017-06-06_170430.png)
 
 
 
