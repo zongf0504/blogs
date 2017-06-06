@@ -22,11 +22,13 @@
 
 #### 1.2.1 安装jdk 1.8 和 tomcat8 到指定目录
 
-jdk 1.8 和 tomcat 8 安装此处就不介绍了
+* 安装 jdk1.8
+* 安装 tomcat 8, 重命名为 tomcat-8081-jenkins
+* 将jenkins.war 拷贝到${tomcat_home}/webapps 目录下
 
 #### 1.2.2 修改tomcat 端口号
 
-编辑配置文件 conf/server.xml , 修改一下端口号
+编辑配置文件 ${tomcat_home}/conf/server.xml , 修改一下端口号
 
 | 原端口号 | 新端口号 |
 | :---: | :---: |
@@ -39,7 +41,7 @@ jdk 1.8 和 tomcat 8 安装此处就不介绍了
 * jenkins 默认会将所有数据存放在~/.jenkins 目录中, 这样并不是最佳方案,而且容易产生多种问题, 所以我们需要在启动tomcat 时指定一下JENKINS\_HOME 目录
 * 启动tomcat 默认占用256 M内存, 如果编译项目过大的话, 可能不够, 可以修改参数调整
 * 启动tomcat 默认使用环境变量中的jdk, 可以手工设置指定的jdk 
-  编辑配置文件: bin/catalina.sh , 在文件非注释行前添加:
+  编辑配置文件: ${tomcat_home}/bin/catalina.sh , 在文件非注释行前添加:
 
 ```bash
 export JAVA\_HOME=/opt/app/jdk/jdk1.8.0\_131  
