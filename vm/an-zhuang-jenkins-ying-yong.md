@@ -43,7 +43,7 @@ jdk 1.8 和 tomcat 8 安装此处就不介绍了
 ``` bash
 export JAVA\_HOME=/opt/app/jdk/jdk1.8.0\_131  
 export JENKINS\_HOME=/var/data/jenkins  
-JAVA\_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
+JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 ```
 
 #### 1.2.4 启动tomcat
@@ -51,6 +51,15 @@ JAVA\_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 /opt/app/jenkins/tomcat-8081-jenkins/bin/startup.sh
 ```
 
+#### 1.2.5 查看jenkins 默认密码
+``` bash
+[admin@localhost ~]$ cat /var/data/jenkins/secrets/initialAdminPassword
+ca8d3ce1e9784eab8c1a2b9d0dd0156c
+```
+
+#### 1.2.6 访问jenkins
+1. 确保防火墙已关闭, 或端口号8081 已释放
+2. 使用火狐浏览器访问: http://192.168.145.100:8081/jenkins
 
 
 
