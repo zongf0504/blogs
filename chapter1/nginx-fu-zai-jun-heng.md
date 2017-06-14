@@ -18,9 +18,47 @@
 ![](/assets/nginx_2017-06-14_154939.png)
 
 ### 2. Nginx 反向代理配置
-nginx 配置:
+nginx 配置反向代理很简单, 在location 中添加proxy_pass 即可.
 ``` 
 location /jenkins {
     proxy_pass http://localhost:8180/jenkins;
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  Host  $host:$server_port;
 }
 ```
+
+### 3. 负载均衡配置
+
+nginx 负载均衡是通过upstream 模块儿完成的, 配置需要需要两步: 
+1. 配置负载服务器集群
+2. 配置映射路径
+
+#### 3.1 http 节点中配置负载集群
+```
+upstream jenkins{
+   server 192.168.145.100:8180 weight=2 max_fails=3 fail_timeout=30s;
+   server 192.168.145.100:8280 weight=2 max_fails=3 fail_timeout=30s;
+   server 192.168.145.100:8380 weight=2 max_fails=3 fail_timeout=30s;
+}
+
+```
+参数说明:
+* server: 指定服务器的ip 和端口号
+* weight: 设置服务器权重, 权重越高, 被分配的请求次数越多
+* max_fails & fail_timeout: 当连接失败了max_fails 次数之后, 认为此服务器有问题, 暂停向此服务器分发请求 fail_timeout 
+
+#### 3.2 server 节点中配置映射规则
+
+```
+location /jenkins {
+   proxy_pass http://jenkins;
+   proxy_set_header  X-Real-IP  $remote_addr;
+   proxy_set_header  Host  $host:$server_port;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
+
+
+
+
+
