@@ -38,14 +38,15 @@ nginx 负载均衡是通过upstream 模块儿完成的, 配置需要需要两步
 upstream jenkins{
    server 192.168.145.100:8180 weight=2 max_fails=3 fail_timeout=30s;
    server 192.168.145.100:8280 weight=2 max_fails=3 fail_timeout=30s;
-   server 192.168.145.100:8380 weight=2 max_fails=3 fail_timeout=30s;
+   server 192.168.145.100:8380 weight=2 max_fails=3 fail_timeout=30s down;
 }
 
 ```
-参数说明:
+常用参数说明:
 * server: 指定服务器的ip 和端口号
 * weight: 设置服务器权重, 权重越高, 被分配的请求次数越多
 * max_fails & fail_timeout: 当连接失败了max_fails 次数之后, 认为此服务器有问题, 暂停向此服务器分发请求 fail_timeout 
+* down: 标识此服务器已宕机, 不再向此服务器分发请求 
 
 #### 3.2 server 节点中配置映射规则
 
@@ -54,11 +55,11 @@ location /jenkins {
    proxy_pass http://jenkins;
    proxy_set_header  X-Real-IP  $remote_addr;
    proxy_set_header  Host  $host:$server_port;
-   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 ```
 
-
+常用指令说明:
+* proxy_set_header: 设置请求转发时头信息, 通常需要设置 X-Real-IP 和 Host, 保证后台引用服务器拿到真实的访问IP(在有代理时, 如果不设置, 则后端服务器拿到的是代理服务器ip)
 
 
 
