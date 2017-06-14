@@ -61,5 +61,39 @@ location /jenkins {
 常用指令说明:
 * proxy_set_header: 设置请求转发时头信息, 通常需要设置 X-Real-IP 和 Host, 保证后台引用服务器拿到真实的访问IP(在有代理时, 如果不设置, 则后端服务器拿到的是代理服务器ip)
 
+### 4. upstream 相关日志变量
+在upstream 模块可以自定义日志格式和日志输出文件, 并且upstream 提供了几个相关的变量:
+
+#### 4.1 server 节点中配置
+```
+log_format up_jenkins'$remote_addr - $remote_user [$time_local] "$request"'
+                      '$upstream_addr $upstream_response_time $request_time $upstream_http_content_type';
+```
+
+#### 4.2 location 节点中使用:
+```
+location /jenkins {
+   proxy_pass http://jenkins;
+   proxy_set_header  X-Real-IP  $remote_addr;
+   proxy_set_header  Host  $host:$server_port;
+   access_log /var/logs/nginx/upstream.log up_jenkins;
+}
+```
+
+变量说明:
+* $upstream_addr: 分发给集群中处理请求的服务器的地址信息(ip:port)
+* $upstream_status: 服务器的应答状态
+* $upstream_response_time: 服务器响应时间(毫秒),多个响应以逗号冒号隔开
+* $upstream_http_$HEADER: 任意的HTTP协议头信息, 如: $upstream_http_host, $upstream_http_content_type
+
+#### 4.3 注意
+* location 中指定日志之后, 日志就不会再输出到全局配置的日志文件中了
+
+
+
+
+
+
+
 
 
