@@ -32,7 +32,7 @@ location /jenkins {
 
 ### 3. 负载均衡配置
 
-nginx 负载均衡是通过upstream 模块儿完成的, 配置需要需要两步:   
+nginx 负载均衡是通过upstream 模块儿完成的, 配置需要需要两步:  
 1. 配置负载服务器集群  
 2. 配置映射路径
 
@@ -97,10 +97,12 @@ location /jenkins {
 * $upstream_http_$HEADER: 任意的HTTP协议头信息, 如: $upstream\_http\_host, $upstream\_http\_content\_type
 
 #### 4.3 日志输出
+
 ```
 192.168.145.1 - - [14/Jun/2017:16:36:53 +0800] "GET /jenkins HTTP/1.1"192.168.145.100:8180 0.023 0.023 text/html;charset=UTF-8
 192.168.145.1 - - [14/Jun/2017:16:36:59 +0800] "GET /jenkins HTTP/1.1"192.168.145.100:8280 0.015 0.015 text/html;charset=UTF-8
 ```
+
 #### 4.4 注意
 
 * location 中指定日志之后, 日志就不会再输出到全局配置的日志文件中了

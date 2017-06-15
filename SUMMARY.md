@@ -3,9 +3,8 @@
 * [Introduction](README.md)
 * [Nginx](chapter1.md)
   * [nginx 安装](chapter1/nginx-an-zhuang.md)
-  * Nginx  web 服务器
+  * [Nginx  web 服务器](chapter1/nginx-web-fu-wu-qi.md)
   * [Nginx 日志管理](chapter1/nginx-ri-zhi-guan-li.md)
-  * Nginx 反向代理
   * [Nginx 负载均衡](chapter1/nginx-fu-zai-jun-heng.md)
   * [Nginx https 服务器](chapter1/nginx-https-fu-wu-qi.md)
 * [jenkins](jenkins.md)
