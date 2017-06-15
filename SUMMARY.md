@@ -11,6 +11,7 @@
 * [jenkins](jenkins.md)
   * [ jenkins 安装](vm/an-zhuang-jenkins-ying-yong.md)
   * [jenkins 常用插件安装](vm/jenkins-chang-yong-cha-jian-an-zhuang.md)
+  * [jenkins 基本设置](vm/jenkins-chu-she-zhi.md)
 * perl
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
