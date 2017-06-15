@@ -7,6 +7,7 @@
   * [Nginx 日志管理](chapter1/nginx-ri-zhi-guan-li.md)
   * [Nginx 负载均衡](chapter1/nginx-fu-zai-jun-heng.md)
   * [Nginx https 服务器](chapter1/nginx-https-fu-wu-qi.md)
+  * [Nginx 自动索引](chapter1/nginx-zi-dong-suo-yin.md)
 * [jenkins](jenkins.md)
   * [ jenkins 安装](vm/an-zhuang-jenkins-ying-yong.md)
   * [jenkins 常用插件安装](vm/jenkins-chang-yong-cha-jian-an-zhuang.md)
