@@ -47,3 +47,14 @@ Installed:
 
 Complete!
 ```
+
+
+
+## 查看安装
+```
+[root@localhost ~]# rpm -qa | grep vsftpd
+vsftpd-2.2.2-24.el6.x86_64
+```
+
+
+
