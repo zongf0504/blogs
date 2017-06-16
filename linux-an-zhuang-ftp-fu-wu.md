@@ -111,8 +111,9 @@ tftp_use_nfs --> off
 [root@localhost var]# setsebool allow_ftpd_full_access on
 ```
 
-
-
+### 3. linux本地未安装ftp命令
+安装ftp命令:
+yum -y install ftp
 
 
 
