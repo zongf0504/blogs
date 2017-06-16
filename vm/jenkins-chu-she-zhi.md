@@ -27,9 +27,15 @@
 
 其中${ITEM_FULLNAME}为jenkins内置变量, 此变量为新建job 时job 的名称,
 
-### 2.2 publish over SSH
+### 2.2 设置全局变量属性
+在自动化部署项目时, 应该定期对部署成功的项目做备份, 这样既可以记录部署成功的次数,又能当新版本出现问题时及时回滚.但是jenkins 并未提供备份相关的内置变量,所以需要手工设置全局变量.全局变量在构建任务配置中任何地方都可以使用, 比如说svn地址中, 脚本中... 此处我们先设置两个备份相关的全局变量:
+* ITEM_BACKUP: 备份文件的根文件夹
+* ITEM_BID_FILE: 备份成功的记录信息文件
+![](/assets/jenkins_2017-06-17_064301.png)
 
-### 2.3 Publish over FTP
+### 2.3 publish over SSH
+
+### 2.4 Publish over FTP
 
 ##　3. 全局工具设置
 
