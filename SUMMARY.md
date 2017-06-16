@@ -25,4 +25,6 @@
   * [安装nginx 服务器](vm/an-zhuang-nginx-fu-wu-qi.md)
   * [安装ftp服务](vm/an-zhuang-ftp-fu-wu.md)
 * 安装tomcat
+* [Linux](linux.md)
+  * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
 
