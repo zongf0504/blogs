@@ -160,5 +160,6 @@ date_time=`date "+%Y%m%d-%H%M"`
 echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
-
+## 4. 完整示例
+![](/assets/jenkins_2017-06-16_212844.png)
 
