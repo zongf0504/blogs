@@ -57,4 +57,62 @@ vsftpd-2.2.2-24.el6.x86_64
 ```
 
 
+## 错误
+#### 1. Linux 系统非root 用户登录报错: OOPS: child died
+解决方案:
+1. 查看SELinux 状态:
+```
+[root@localhost vsftpd]# sestatus -b | grep ftp
+allow_ftpd_anon_write                       off
+allow_ftpd_full_access                      off
+allow_ftpd_use_cifs                         off
+allow_ftpd_use_nfs                          off
+ftp_home_dir                                off
+ftpd_connect_db                             off
+ftpd_use_fusefs                             off
+ftpd_use_passive_mode                       off
+httpd_enable_ftp_server                     off
+tftp_anon_write                             off
+tftp_use_cifs                               off
+tftp_use_nfs                                off
+```
+2. 将ftp_home_dir 状态设置为on
+```
+[root@localhost vsftpd]# setsebool -P ftp_home_dir on
+[root@localhost vsftpd]#
+```
+
+3. 重启ftp 服务
+```
+[root@localhost vsftpd]# service vsftpd restart
+Shutting down vsftpd:                                      [  OK  ]
+Starting vsftpd for vsftpd:                                [  OK  ]
+[root@localhost vsftpd]# 
+```
+
+### 2. 不能上传文件:vsftpd Could not create file.
+1. 确认目录权限是否可写:默认目录为 /var/ftp
+
+2. 查看seLinuxStatus: allow_ftpd_full_access 
+```
+[root@localhost var]# getsebool -a | grep ftp
+allow_ftpd_anon_write --> off
+allow_ftpd_full_access --> off
+allow_ftpd_use_cifs --> off
+allow_ftpd_use_nfs --> off
+ftp_home_dir --> on
+ftpd_connect_db --> off
+ftpd_use_fusefs --> off
+ftpd_use_passive_mode --> off
+httpd_enable_ftp_server --> off
+tftp_anon_write --> off
+tftp_use_cifs --> off
+tftp_use_nfs --> off
+[root@localhost var]# setsebool allow_ftpd_full_access on
+```
+
+
+
+
+
 
