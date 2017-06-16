@@ -24,17 +24,13 @@
 * 参数化过程是指配置中的一些变量可接收点击构建时传入的参数.
 * 点击添加参数, 选择 String Parameter
 
-| 名字 | 默认值 |描述 |
-| :--- | :--- |:--- |
+| 名字 | 默认值 | 描述 |
+| :--- | :--- | :--- |
 | warName | LoadBalance | war包名称 |
 | warDir | /tmp | war 包所在目录 |
 | testUrl | http://172.22.12.225:7080/LoadBalance/index.jsp | 测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | 服务器路径 |
-| timeout | 100 | 超时时间(s) |
-
-
-
-
+| timeout | 100 | 超时时间\(s\) |
 
 
 
