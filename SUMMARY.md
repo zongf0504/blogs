@@ -13,8 +13,10 @@
   * [jenkins 常用插件安装](vm/jenkins-chang-yong-cha-jian-an-zhuang.md)
   * [jenkins 基本设置](vm/jenkins-chu-she-zhi.md)
   * [jenkins 自动化部署](jenkins-zi-dong-hua-bu-shu.md)
-    * [本地war包\_本地Tomcat](ben-di-war-bao-ben-di-tomcat.md)
-    * [本地war包\_远程Tomcat](ben-di-war-bao-yuan-cheng-tomcat.md)
+    * [直接war包部署](zhi-jie-war-bao-bu-shu.md)
+      * [本地war包\_远程Tomcat](ben-di-war-bao-yuan-cheng-tomcat.md)
+      * [本地war包\_本地Tomcat](ben-di-war-bao-ben-di-tomcat.md)
+    * 源码部署
 * perl
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
