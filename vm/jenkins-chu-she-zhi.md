@@ -34,8 +34,8 @@
 ![](/assets/jenkins_2017-06-17_064301.png)
 
 ### 2.3 publish over SSH
-
-### 2.4 Publish over FTP
+当部署的应用服务器(如tomcat) 和jenkins 并不在同一台Linux 服务器上时, 称为远程Linux服务器部署. 此种情况需要借助于Publish over ssh 插件, 在本地准备好jar包, 通过Publish over ssh 插件将war包发送到远程服务器, 并通过此插件在远程服务器上执行重部署脚本. 远程服务器需要在系统设置中配置ip 地址, 用户名, 密码, 默认目录等基本信息.
+![](/assets/jenkins_2017-06-17_064204.png)
 
 ##　3. 全局工具设置
 
