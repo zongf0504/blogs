@@ -42,7 +42,7 @@
 | :--- | :--- | :--- |
 | warName | LoadBalance | war包名称 |
 | warDir | /tmp | war 包所在目录 |
-| testUrl | [http://172.22.12.225:7080/LoadBalance/index.jsp](http://172.22.12.225:7080/LoadBalance/index.jsp) | 测试地址 |
+| testUrl | [http://192.168.145.100:7080/LoadBalance/index.jsp](http://192.168.145.100:7080/LoadBalance/index.jsp) | 测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | 服务器路径 |
 | timeout | 100 | 超时时间\(s\) |
 
