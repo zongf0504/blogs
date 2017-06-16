@@ -57,7 +57,7 @@ JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 
 #### 1.2.5 查看jenkins 默认密码
 
-```bash
+``` bash
 [admin@localhost ~]$ cat /var/data/jenkins/secrets/initialAdminPassword
 ca8d3ce1e9784eab8c1a2b9d0dd0156c
 ```

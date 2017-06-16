@@ -28,21 +28,23 @@
 | :--- | :--- | :--- |
 | warName | LoadBalance | war包名称 |
 | warDir | /tmp | war 包所在目录 |
-| testUrl | http://172.22.12.225:7080/LoadBalance/index.jsp | 测试地址 |
+| testUrl | [http://172.22.12.225:7080/LoadBalance/index.jsp](http://172.22.12.225:7080/LoadBalance/index.jsp) | 测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | 服务器路径 |
 | timeout | 100 | 超时时间\(s\) |
 
 ### 2.4 选择jdk 版本
+
 * 当在全局工具中配置了多个jdk时,才有此选择. 默认是第一个jdk
 
-
 ## 3. 构建
+
 此中模式, 只需要在本地执行shell 脚本就行了, 所以点击增加构建步骤, 选择Execute Shell 来添加脚本
 
 ### 3.1 获取war包脚本
+
 * 将war包从上传的tmp 目录拷贝到服务器的temp 目录中
 
-``` bash
+```bash
 #!/bin/bash
 #DESC 获取war 包脚本
 
@@ -51,18 +53,18 @@ echo "[info] begin get project: $warName"
 
 #拷贝war包到服务器的temp 目录中
 cp /$warDir/$warName.war $serverHome/temp
-
 ```
 
 ### 3.2 重部署项目
+
 1. 关闭服务器
 2. 删除服务器部署目录中的war包和文件夹
 3. 删除服务器工作目录
 4. 清空tomcat 输出日志
 5. 重新启动服务器
-7. 监控服务器是否能启动成功
+6. 监控服务器是否能启动成功
 
-``` bash
+```bash
 #!/bin/bash
 #DESC 重新部署项目
 
@@ -125,6 +127,7 @@ fi
 ```
 
 ### 3.3 备份项目
+
 * 如果备份文件夹不存在, 则创建备份文件夹
 * 如果备份文件夹存在, 则删除上次成功的文件
 * 备份文件, 文件名为:warName.第几次构建序号
@@ -156,13 +159,6 @@ cp $bk_dir/$warName.war $bk_dir/$warName.war.$BUILD_NUMBER
 date_time=`date "+%Y%m%d-%H%M"`
 echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
-
-
-
-
-
-
-
 
 
 
