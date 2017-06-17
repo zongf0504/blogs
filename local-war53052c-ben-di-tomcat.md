@@ -141,7 +141,7 @@ LoadBalance.war  LoadBalance.war.3  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
-
+![](/assets/local-local.png)
 
 
 
