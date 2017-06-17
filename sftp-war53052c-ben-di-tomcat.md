@@ -143,10 +143,7 @@ echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```bash
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
-[root@localhost backup]# ls
-[root@localhost backup]# ls
-LB-free-local-local
-[root@localhost backup]# ls ./LB-free-local-local/
+[root@localhost backup]# ls ./LB-free-sftp-local/
 LoadBalance.war  LoadBalance.war.3  SUCCESSBID
 ```
 
