@@ -18,7 +18,7 @@
       * [local war包, 本地tomcat](local-war53052c-ben-di-tomcat.md)
       * [sftp war包, 本地tomcat](sftp-war53052c-ben-di-tomcat.md)
       * [ftp war包,  本地tomcat](ftp-war53052c-ben-di-tomcat.md)
-      * svn war包, 本地tomcat
+      * [svn war包, 本地tomcat](svn-war53052c-ben-di-tomcat.md)
     * 源码部署
 * perl
 * [vm](vm.md)
