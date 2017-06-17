@@ -1,5 +1,10 @@
-# 本地war包, 本地tomcat 应用服务器
-> 此种模式时最简单的, jenkins, tomcat , war包在统一服务器上, 全部都是本地脚本执行.但是,此种情况需要通过wincp 等工具, 将war包上传到jenkins 所在服务器的指定目录之后, 然后再执行任务
+# 远程Linux服务器war包, 本地tomcat 应用服务器
+> 此种模式和本地war包比较相似, war包同样是在一台linux 服务器上, 只不过和jenkins 不在同一台Linux服务器上而已. 解决思路是:通过jenkins 插件从远程linux 服务器下载到本地, 那么就成功转换为本地war包模式了.需要在系统配置中配置远程linux 服务器相关信息.
+
+## 0. 配置sftp 下载
+打开 jenkins -> 系统管理 -> 系统设置 -> [Server Groups Center]
+配置方式有点儿奇葩, 需要先配置组, 然后再配置服务器实例
+![](/assets/jenkins_2017-06-17_105328.png)
 
 
 ## 1. 任务配置
@@ -15,7 +20,12 @@
 ### 2. 构建
 
 #### 2.1 获取war包脚本
-由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
+由于war包不在本地, 而在远程Linux 服务器上, 所以需要插件来辅助下载war包. 点击新增构建步骤, 选择远程ftp 下载
+* 虽然写着是ftp, 但是其实是sftp 下载, 这也是插件的一个bug 吧
+* 需要在系统设置中设置远程服务器的信息
+* 参数不能使用变量, 必须使用字符串, 这个设计有点儿恶心
+![](/assets/jenkins_2017-06-17_105739.png)
+
 
 #### 2.2 上传&部署脚本
 * 将$warDir中的war包上传到tomcat服务器的temp 目录, 由于是本地,直接使用cp 指令就行了
@@ -141,7 +151,7 @@ LoadBalance.war  LoadBalance.war.3  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
-
+![](/assets/sftp-local.png)
 
 
 
