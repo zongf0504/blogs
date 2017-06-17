@@ -1,13 +1,13 @@
 # jenkins 直接war包部署
 > jenkins 直接war包部署是指, 直接由开发同事提供编译好的war包, 直接部署到应用服务器(如tomcat)即可. 此种方式相对比较简单, 也比较常用, 通常这种情况, jenkins job 类型选择 '构建一个自由风格的软件项目' 即可.但是, 根据war包来源和服务器位置,也可衍生出很多组合.
 
-1. war 包获取方式
+war 包获取方式
 * 本地获取方式: war包和jenkins 在同一台Linux 服务器上
 * ftp 获取方式: war包存放在ftp服务器上, 通过写ftp 脚本去获取war包
 * sftp后去方式: war包存放在其他linux服务器上, 需要通过插件自动下载
 * svn 获取方式: war包存放在svn服务器上, 需要使用源码方式下载
 
-2. 应用服务器位置:
+应用服务器位置:
 * 本地应用服务器: 应用服务器(如tomcat)和jenkins在同一台服务器上, 通过写本地脚本即可实现重部署
 * 远程应哟服务器: 应用服务器(如tomcat)和jenkins不在同一台linux服务器上, 需要借助Publish Over SSH Plugin 插件进行war包上传, 执行远程服务器上的重部署脚本
 
@@ -42,9 +42,21 @@
 ![](/assets/jenkins_2017-06-17_073616.png)
 
 ### 2.2 源码管理
-war 包
-### 2.2.1 从svn 上下载ftp
+根据war包是否在svn/git服务器上,此配置模块儿有两种方式
 
+
+### 2.2.1 从svn 服务器上获取war包
+1. 配置svn 地址: 
+Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建议一个war包创建一个目录,因为下载时, 会将整个目录中的文件全部下载到本地
+![](/assets/jenkins_2017-06-17_075113.png)
+
+2. 配置用户名密码:
+如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略.
+![](/assets/jenkins_2017-06-17_075524.png)
+
+### 2.2.2 不从svn/git 服务器上获取war包
+不从svn 服务器上获取war包, 配置为None 即可
+![](/assets/jenkins_2017-06-17_074903.png)
 
 
 
