@@ -91,25 +91,17 @@ Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建�
 
 #### 2.5.2.1 本地应用服务器(tomcat)
 本地tomcat 依然是执行本地脚本即可, 因此构建步骤还是选择Execute Shell
+![](/assets/jenkins_2017-06-17_085024.png)
 
 #### 2.5.2.2 远程应用服务器(tomcat)
 远程Linux服务器上的tomcat, 需要借助Publish Over SSH Plugin 插件来进行远程部署
+* Name: 系统配置中,Publish SSH 模块配置的服务器
+* Source files: war包所在位置
+* Remove prefix: 移除war包目录前缀
+* Remote Directory: war包上传到服务器的位置
+* Exec command: 远程服务器执行的脚本命令
 ![](/assets/jenkins_2017-06-17_084015.png)
 
 ### 2.5.3 备份项目
 笔者习惯于将成功部署后的war包记录归档, 并简单记录日志,所以部署成功之后, 还会执行一个备份脚本.由于备份脚本是在本地执行的, 所以构建步骤选择 Execute shell 即可
 ![](/assets/jenkins_2017-06-17_084100.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
