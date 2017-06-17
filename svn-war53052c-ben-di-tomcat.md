@@ -12,13 +12,29 @@
 5. JDK: 选择jdk 版本
 
 ### 1.5 源码管理
-配置war包下载地址
+1. 配置svn 地址: 
+Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建议一个war包创建一个目录,因为下载时, 会将整个目录中的文件全部下载到本地
+![](/assets/jenkins_2017-06-17_075113.png)
 
+2. 配置用户名密码:
+如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略.
+![](/assets/jenkins_2017-06-17_075524.png)
 
 ### 2. 构建
 
 #### 2.1 获取war包脚本
-由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
+由于war熬直接从svn 上下载到了$WORKSPACE目录下, 所以需要将war包从$WORKSPACE目录中拷贝到$warDir 目录.
+```bash
+#!/bin/bash
+#DESC 获取war 包脚本
+#PARM 参数化参数: $warName, $warDir, $serverHome
+
+#输出日志
+echo "[info] begin get project: $warName"
+
+# 从工作空间中拷贝项目war包到$warDir 目录, 回头用于备份
+cp $WORKSPACE/$warName.war $warDir
+```
 
 #### 2.2 上传&部署脚本
 * 将$warDir中的war包上传到tomcat服务器的temp 目录, 由于是本地,直接使用cp 指令就行了
@@ -136,15 +152,12 @@ echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```bash
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
-[root@localhost backup]# ls
-[root@localhost backup]# ls
-LB-free-local-local
-[root@localhost backup]# ls ./LB-free-local-local/
+[root@localhost backup]# ls ./LB-free-svn-local/
 LoadBalance.war  LoadBalance.war.3  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
-
+![](/assets/svn-local.png)
 
 
 
