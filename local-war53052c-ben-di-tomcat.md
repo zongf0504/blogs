@@ -186,13 +186,13 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 3. 点击版本号 #15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 
-## 3. 测试:
+## 4. 测试:
 
-### 3.1 测试
+### 4.1 测试
 
 浏览器中输入测试地址, 能看到页面证明部署成. 此时得注意, 看服务器防火墙是否关闭或者测试端口是否释放了, 否则会被防火墙拦截的.
 
-### 3.2 查看备份
+### 4.2 查看备份
 
 通过linux 远程工具登录Linux 服务器, 可以进入备份文件夹, 会发现新增了三个文件
 
@@ -203,11 +203,8 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 ```bash
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
-[root@localhost backup]# ls
-[root@localhost backup]# ls
-LB-free-local-local
 [root@localhost backup]# ls ./LB-free-local-local/
-LoadBalance.war  LoadBalance.war.3  SUCCESSBID
+LoadBalance.war  LoadBalance.war.14  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
