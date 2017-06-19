@@ -177,11 +177,9 @@ echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```bash
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
-[root@localhost backup]# ls
-[root@localhost backup]# ls
-LB-free-local-local
-[root@localhost backup]# ls ./LB-free-local-remote/
+[root@localhost backup]# ls ./LB-free-ftp-remote/
 LoadBalance.war  LoadBalance.war.2  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
+![](/assets/ftp-remote.png)
