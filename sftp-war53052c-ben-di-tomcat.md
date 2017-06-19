@@ -14,7 +14,7 @@ sftp-local 模式自动化部署逻辑:
 ![](/assets/jenkins_2017-06-17_105328.png)
 
 
-## 1. 任务配置
+## 2. 任务配置
 点击jenkins ,新建自有风格的任务
 
 ### 1. 配置General
