@@ -44,7 +44,7 @@ sftp-local 模式自动化部署逻辑:
 | testUrl | [http://192.168.145.100:7080/LoadBalance/index.jsp](http://192.168.145.100:7080/LoadBalance/index.jsp) | tomcat 服务器测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | tomcat服务器路径, bin 目录的父目录 |
 | timeout | 100 | 部署超时时间, 非整个job超时时间 |
-| description |  | 重部署描述, 会写入备份文件 |
+| description | | 重部署描述, 会写入备份文件 |
 
 #### 1.1.5 配置-JDK
 
@@ -63,26 +63,26 @@ sftp-local 模式自动化部署逻辑:
 
 #检测文件是否存在, 文件不存在, 直接退出构建
 if [ ! -f "$warDir/$warName.war" ]; then
-  echo "[error] The file $warDir/$warName.war is not exsits !!!"
-  exit 1
+echo "[error] The file $warDir/$warName.war is not exsits !!!"
+exit 1
 
 else
-  # 拷贝war包到tomcat服务器的temp 目录中
-  cp -f $warDir/$warName.war $serverHome/temp
+# 拷贝war包到tomcat服务器的temp 目录中
+cp -f $warDir/$warName.war $serverHome/temp
 
 fi
 ```
 
 #### 2.2 重部署脚本
 
-war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
-0. 检测temp 目录中war 文件是否存在  
-1. 停止 tomcat 服务器  
-2. 删除webapps 目录中的war文件和文件夹  
-3. 清空服务器工作目录  
-4. 清空日志文件  
-5. 将项目war包从临时目录\(temp\)移动到部署目录\(webapps\)  
-6. 重新启动tomcat服务器  
+war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
+0. 检测temp 目录中war 文件是否存在
+1. 停止 tomcat 服务器
+2. 删除webapps 目录中的war文件和文件夹
+3. 清空服务器工作目录
+4. 清空日志文件
+5. 将项目war包从临时目录\(temp\)移动到部署目录\(webapps\)
+6. 重新启动tomcat服务器
 7. 检测服务器是否能启动成功
 
 ```bash
@@ -105,8 +105,8 @@ serverWork=$serverHome/work/Catalina/localhost
 ##################### 执行脚本 #####################
 # 0. 检测文件是否存在
 if [ ! -f "$serverTemp/$warName.war" ]; then
-  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
-  exit 1
+echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
+exit 1
 fi
 
 # 1. 关闭服务器
@@ -133,23 +133,23 @@ $serverBin/startup.sh &
 cost=0
 statusCode=0
 while [ $statusCode -ne 200 -a $cost -le $timeout ]
-  do
-    statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
-    echo "cost:$cost ms, statusCode:$statusCode"
-    cost=$(( $cost + 5 ))
-    sleep 5
-  done
+do
+statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
+echo "cost:$cost ms, statusCode:$statusCode"
+cost=$(( $cost + 5 ))
+sleep 5
+done
 
 if [ $statusCode -ne 200 ] ; then
-  #如果启动不成功则杀死进程
-  echo "[faild] shutdown server ..."
-  ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
-  exit 1
+#如果启动不成功则杀死进程
+echo "[faild] shutdown server ..."
+ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
+exit 1
 else
-  #服务器启动成功
-  #tomcat服务器在本地时,需要添加此限制
-  BUILD_ID=dontKillMe bash $serverBin/startup.sh
-  exit 0
+#服务器启动成功
+#tomcat服务器在本地时,需要添加此限制
+BUILD_ID=dontKillMe bash $serverBin/startup.sh
+exit 0
 fi
 ```
 
@@ -172,9 +172,9 @@ bk_dir=$ITEM_BACKUP/$JOB_NAME
 
 # 创建备份文件夹: 如果文件夹不存在则创建文件夹, 否则删除原来的文件$warName.war
 if [ ! -d "$bk_dir" ]; then
-  mkdir -p $bk_dir
+mkdir -p $bk_dir
 else
-  rm -f $bk_dir/$warName.war
+rm -f $bk_dir/$warName.war
 fi
 
 # 备份文件
@@ -183,14 +183,14 @@ cp $bk_dir/$warName.war $bk_dir/$warName.war.$BUILD_NUMBER
 
 # 记录成功的id
 date_time=`date "+%Y%m%d-%H%M"`
-echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
+echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
 ## 3. 执行jenkins 任务
 
-1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
+1. 点击 jenkins -&gt; LB-free-local-local -&gt; Build with Parameters
 2. 输入部署描述信息, 点击
-   ![](/assets/jenkins_2017-06-19_163752.png)
+![](/assets/jenkins_2017-06-19_163752.png)
 3. 点击版本号 \#15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 4. 测试:
@@ -211,7 +211,7 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
 [root@localhost backup]# ls ./LB-free-local-local/
-LoadBalance.war  LoadBalance.war.14  SUCCESSBID
+LoadBalance.war LoadBalance.war.14 SUCCESSBID
 ```
 
 ### 5. 注意:
@@ -220,7 +220,6 @@ LoadBalance.war  LoadBalance.war.14  SUCCESSBID
 * 新建local-local 模式的任务时, 只需要修改参数化定义的相关值就行了, 脚本无须做任何修改, 这就是参数化的好处.
 
 ## 附:完整配置示例
-
 
 
 
