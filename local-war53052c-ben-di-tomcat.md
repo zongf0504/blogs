@@ -183,6 +183,7 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 1. 点击 jenkins -> LB-free-local-local ->  Build with Parameters 
 2. 输入部署描述信息, 点击
 ![](/assets/jenkins_2017-06-19_163752.png)
+3. 点击版本号 #15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 
 ## 3. 测试:
