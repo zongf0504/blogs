@@ -70,7 +70,7 @@ JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 #### 1.2.7 初始化设置
 
 1. ** 输入默认的密码, 密码记录在图片中位置 **  
-   ![](/assets/jenkins_2017-06-06_165838.png)
+ ![](/assets/jenkins_2017-06-19_144426.png)
 
 2. ** 选择跳过安装默认插件步骤 **  
    ![](/assets/jenkins_2017-06-06_170031.png)
