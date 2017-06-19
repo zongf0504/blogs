@@ -34,7 +34,7 @@
 * Source files: 要上传的文件, 
 * Remove Prefix: 如果Source files 填写的包含路径, 如/tmp/LoadBalance.war, 那么这个地方就建议移除前缀/tmp/ 
 * Remote Directory: 远程Linux 服务器的文件夹, 此处为远程tomcat 的temp 目录
-* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: 
+* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: BUILD_ID=dontKillMe bash $serverBin/startup.sh
 
 ```bash
 #!/bin/bash
