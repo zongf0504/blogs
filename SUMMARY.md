@@ -20,7 +20,6 @@
       * [ftp war包,  本地tomcat](ftp-war53052c-ben-di-tomcat.md)
       * [svn war包, 本地tomcat](svn-war53052c-ben-di-tomcat.md)
     * 源码部署
-* perl
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
   * [虚拟机网络设置&客户端连接](vm/wang-luo-she-7f6e26-ke-hu-duan-lian-jie.md)
@@ -32,7 +31,7 @@
   * [安装maven 环境](vm/an-zhuang-maven-huan-jing.md)
   * [安装nginx 服务器](vm/an-zhuang-nginx-fu-wu-qi.md)
   * [安装ftp服务](vm/an-zhuang-ftp-fu-wu.md)
-* 安装tomcat
 * [Linux](linux.md)
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
+* Shell
 
