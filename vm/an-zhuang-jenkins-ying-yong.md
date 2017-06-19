@@ -76,7 +76,7 @@ JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
    ![](/assets/jenkins_2017-06-06_170031.png)
 
 3. ** 创建一个管理员用户 **  
-   ![](/assets/jenkins_2017-06-06_170106.png)
+   ![](/assets/jenkins_2017-06-19_135705.png)
 
 4. ** jenkins 主页 **  
    ![](/assets/jenkins_2017-06-06_170430.png)
