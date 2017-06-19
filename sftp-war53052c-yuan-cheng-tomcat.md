@@ -1,5 +1,6 @@
 # 本地war包, 远程tomcat 应用服务器
 > ftp-remote 模式是指, 项目war包需要从FTP服务器上获取, tomcat 和jenkins 也安装在不同的Linux服务器上. 此种模式和local-remote, ftp-local模式都比较相似的.
+
 解决方案:
 1. 本地执行shell 脚本, 从FTP 服务器上下载war包到本地
 2. 通过Publish over SSH 插件, 将war包上传到远程linux服务器上, 并执行远程重新部署脚本
