@@ -39,6 +39,7 @@
 | testUrl | http://192.168.145.100:7080/LoadBalance/index.jsp | tomcat 服务器测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | tomcat服务器路径, bin 目录的父目录 |
 | timeout | 100 | 部署超时时间, 非整个job超时时间 |
+| description |  | 重部署描述, 会写入备份文件 |
 
 #### 1.5 配置-JDK
 当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
@@ -46,15 +47,36 @@
 
 ### 2. 构建
 
-#### 2.1 获取war包脚本
+#### 2.1 上传war包脚本
+* 将war包上传到tomcat 服务器中的临时目录temp 中
 
-由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
+```
+#!/bin/bash
+#DESC 上传war包到tomcat 服务器的临时目录
+#PARM 参数化参数: warDir, warName
 
-#### 2.2 上传&部署脚本
+#检测文件是否存在, 文件不存在, 直接退出构建
+if [ ! -f "$warDir/$warName.war" ]; then
+  echo "[error] The file $warDir/$warName.war is not exsits !!!"
+  exit 1
+  
+else
+  # 拷贝war包到tomcat服务器的temp 目录中
+  cp -f $warDir/$warName.war $serverHome/temp
+  
+fi
+```
 
-* 将$warDir中的war包上传到tomcat服务器的temp 目录, 由于是本地,直接使用cp 指令就行了
-* 执行重新部署的tomcat 的六步操作
-* 检测服务器是否能启动成功
+#### 2.2 重部署脚本
+war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
+0. 检测temp 目录中war 文件是否存在
+1. 停止 tomcat 服务器
+2. 删除webapps 目录中的war文件和文件夹
+3. 清空服务器工作目录
+4. 清空日志文件
+5. 将项目war包从临时目录(temp)移动到部署目录(webapps)
+6. 重新启动tomcat服务器  
+7. 检测服务器是否能启动成功
 
 ```bash
 #!/bin/bash
@@ -74,9 +96,11 @@ serverWork=$serverHome/work/Catalina/localhost
 
 
 ##################### 执行脚本 #####################
-
-# 0.拷贝war包到服务器的temp 目录中
-cp $warDir/$warName.war $serverHome/temp
+# 0. 检测文件是否存在
+if [ ! -f "$serverTemp/$warName.war" ]; then
+  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
+  exit 1
+fi
 
 # 1. 关闭服务器
 ps -ef | grep -v grep | grep "$serverHome"| awk '{print $2}' | xargs kill -9
@@ -101,7 +125,7 @@ $serverBin/startup.sh &
 # 7. 监控服务器是否启动成功
 cost=0
 statusCode=0
-while [ $statusCode -ne 200 -a $cost -le $timeout ]  
+while [ $statusCode -ne 200 -a $cost -le $timeout ]
   do
     statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
     echo "cost:$cost ms, statusCode:$statusCode"
@@ -109,16 +133,16 @@ while [ $statusCode -ne 200 -a $cost -le $timeout ]
     sleep 5
   done
 
-if [ $statusCode -ne 200 ] ; then 
-   #如果启动不成功则杀死进程
-   echo "[faild] shutdown server ..."
-   ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
-   exit 1
+if [ $statusCode -ne 200 ] ; then
+  #如果启动不成功则杀死进程
+  echo "[faild] shutdown server ..."
+  ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
+  exit 1
 else
-   #服务器启动成功
-   #tomcat服务器在本地时,需要添加此限制   
-   BUILD_ID=dontKillMe bash $serverBin/startup.sh
-   exit 0
+  #服务器启动成功
+  #tomcat服务器在本地时,需要添加此限制
+  BUILD_ID=dontKillMe bash $serverBin/startup.sh
+  exit 0
 fi
 ```
 
@@ -141,7 +165,7 @@ bk_dir=$ITEM_BACKUP/$JOB_NAME
 
 # 创建备份文件夹: 如果文件夹不存在则创建文件夹, 否则删除原来的文件$warName.war
 if [ ! -d "$bk_dir" ]; then
-  mkdir $bk_dir
+  mkdir -p $bk_dir
 else
   rm -f $bk_dir/$warName.war
 fi
@@ -152,7 +176,7 @@ cp $bk_dir/$warName.war $bk_dir/$warName.war.$BUILD_NUMBER
 
 # 记录成功的id
 date_time=`date "+%Y%m%d-%H%M"`
-echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
+echo "$date_time $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
 ## 3. 测试:
