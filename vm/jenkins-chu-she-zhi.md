@@ -47,8 +47,8 @@
 ### 3.1 设置jdk 环境
 
 点击 jenkins -&gt; 系统管理 -&gt; Global Tool Configuration:  
-点击新增JDK, 输入别名和JAVA\_HOME 目录, 前提是你服务器已经安装了jdk环境, 不要勾选自动安装, 用服务器上已经安装好的jdk 即可. 笔者服务器上安装了三个版本的jdk, 所以配置了三个, 这个按需配置即可.  
-![](/assets/jenkins_2017-06-15_194650.png)
+点击新增JDK, 输入别名和JAVA\_HOME 目录, 前提是你服务器已经安装了jdk环境, 不要勾选自动安装, 用服务器上已经安装好的jdk 即可. 笔者服务器上安装了两个版本的jdk, 所以配置了两个, 这个为默认选中的jdk.  
+![](/assets/jenkins_20170619150455.png)
 
 ### 3.2 设置maven 环境
 
