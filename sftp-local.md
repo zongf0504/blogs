@@ -3,6 +3,8 @@
 
 
 ## 0. 配置远程linux服务器信息
+
+### 0.1 配置tomcat所在远程服务器信息
 点击 jenkins -> 系统管理 -> 系统设置, 配置 Publish over SSH
 * Name: 为服务器取个别名, 笔者习惯命名为: ip@username
 * HostName: 域名或ip地址
@@ -11,6 +13,10 @@
 * Passphrase / Password	: 远程登录密码, 这个在高级选项里
 ![](/assets/jenkins_2017-06-17_064204.png)
 
+### 0.2 配置war包所在linux 服务器信息
+打开 jenkins -> 系统管理 -> 系统设置 -> [Server Groups Center]
+配置方式有点儿奇葩, 需要先配置组, 然后再配置服务器实例
+![](/assets/jenkins_2017-06-17_105328.png)
 
 ## 1. 任务配置
 点击jenkins ,新建自有风格的任务
