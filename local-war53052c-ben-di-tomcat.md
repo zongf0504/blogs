@@ -207,7 +207,11 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 LoadBalance.war  LoadBalance.war.14  SUCCESSBID
 ```
 
-## 4. 完整配置示例
+### 5. 注意:
+* 每次运行任务时, 都需要重新通过wincp 工具, 经war包上传到$warDir 指定的目录中
+* 新建local-local 模式的任务时, 只需要修改参数化定义的相关值就行了, 脚本无须做任何修改, 这就是参数化的好处.
+
+## 附:完整配置示例
 
 ![](/assets/local-local.png)
 
