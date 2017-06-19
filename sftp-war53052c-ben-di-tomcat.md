@@ -1,5 +1,12 @@
 # 远程Linux服务器war包, 本地tomcat 应用服务器
-> 此种模式和本地war包比较相似, war包同样是在一台linux 服务器上, 只不过和jenkins 不在同一台Linux服务器上而已. 解决思路是:通过jenkins 插件从远程linux 服务器下载到本地, 那么就成功转换为本地war包模式了.需要在系统配置中配置远程linux 服务器相关信息.
+> sftp-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, 而war包在另外的一台Linux 服务器上. 这种模式比local-local 很相似, 唯一不同的是, local-local 模式是通过wincp 将war包上传到jenkins 所在服务器上, 而sftp-local 模式需要通过jenkins 插件, 将war包从远程Linux 服务器上下载到jenkins服务器上. 
+
+sftp-local 模式自动化部署逻辑:
+1. 通过jenkins 插件将war包下载到jenkins服务器
+2. 将war包拷贝到tomcat 临时目录, temp 目录下
+3. 执行重部署tomcat 脚本
+4. 重新部署成功之后, 执行备份脚本
+
 
 ## 0. 配置sftp 下载
 打开 jenkins -> 系统管理 -> 系统设置 -> [Server Groups Center]
