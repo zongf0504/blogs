@@ -226,9 +226,10 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 通过linux 远程工具登录Linux 服务器, 可以进入备份文件夹, 会发现新增了三个文件
 
-* # warName: 上次重部署成功的war包
-* $warName.\*: 部署成功的war记录
+* LoadBalance.war: 上次重部署成功的war包
+* LoadBalance.war.1: 部署成功的war记录
 * SUCCESSBID: 部署成功的记录
+
 
 ```bash
 [root@localhost backup]# pwd
