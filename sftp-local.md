@@ -31,7 +31,11 @@
 ### 2. 构建
 
 #### 2.1 获取war包脚本
-由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
+由于war包不在本地, 而在远程Linux 服务器上, 所以需要插件来辅助下载war包. 点击新增构建步骤, 选择远程ftp 下载
+* 虽然写着是ftp, 但是其实是sftp 下载, 这也是插件的一个bug 吧
+* 需要在系统设置中设置远程服务器的信息
+* 参数不能使用变量, 必须使用字符串, 这个设计有点儿恶心
+![](/assets/jenkins_2017-06-17_105739.png)
 
 #### 2.2 上传&部署脚本
 由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功此处需要借助于 Publish Over SSH Plugin 插件. 点击新增构建步骤-> Send files or execute commonds over SSH.
