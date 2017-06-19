@@ -19,7 +19,7 @@
       * [ftp war包,  本地tomcat](ftp-war53052c-ben-di-tomcat.md)
       * [svn war包, 本地tomcat](svn-war53052c-ben-di-tomcat.md)
       * [local war包, 远程tomcat](local-war53052c-yuan-cheng-tomcat.md)
-      * [sftp war包, 远程tomcat](sftp-war53052c-yuan-cheng-tomcat.md)
+      * [ftp war包, 远程tomcat](sftp-war53052c-yuan-cheng-tomcat.md)
     * 源码部署
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)

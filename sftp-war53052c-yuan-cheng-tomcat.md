@@ -1,6 +1,9 @@
 # 本地war包, 远程tomcat 应用服务器
-> local-remote 模式是指, 项目war包和jenkins 同在一台服务器上, 而要部署的应用服务器tomcat 安装在另外一台linux 服务器上. 这种模式也是比较常用的, 和local-local模式比较相似的,唯一不同的是,部署war包和执行重部署脚本的方式不同. 还有, 远程服务器需要在系统设置中提前配置好.
-
+> ftp-remote 模式是指, 项目war包需要从FTP服务器上获取, tomcat 和jenkins 也安装在不同的Linux服务器上. 此种模式和local-remote, ftp-local模式都比较相似的.
+解决方案:
+1. 本地执行shell 脚本, 从FTP 服务器上下载war包到本地
+2. 通过Publish over SSH 插件, 将war包上传到远程linux服务器上, 并执行远程重新部署脚本
+3. 部署成功后, 执行本地备份脚本
 
 ## 0. 配置远程linux服务器信息
 点击 jenkins -> 系统管理 -> 系统设置, 配置 Publish over SSH
@@ -25,7 +28,36 @@
 ### 2. 构建
 
 #### 2.1 获取war包脚本
-由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
+由于war包需要从FTP 服务器上获取, 但是jenkins 又不提供从ftp 服务器下载文件的插件, 所以需要自己手工编写下载脚本.文件直接下载到$warDir 目录中.
+
+```bash
+#!/bin/bash
+#DESC 获取war 包脚本
+#PARM 参数化参数: $warName, $warDir, $serverHome
+
+#输出日志
+echo "[info] begin get project: $warName"
+
+##################### 变量定义 #####################
+#设置ftp服务器相关信息
+ftp_ip="192.168.145.100"
+ftp_user="admin"
+ftp_pwd="admin"
+
+#要下载文件所在目录
+remote_dir="pub"
+
+##################### 执行脚本 #####################
+#执行 ftp 命令: binary 用于设置下载文件为二进制类型
+ftp -n <<EOF 
+open $ftp_ip
+user $ftp_user $ftp_pwd
+binary
+get $remote_dir/$warName.war $warDir/$warName.war
+bye
+EOF
+
+```
 
 #### 2.2 上传&部署脚本
 由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功此处需要借助于 Publish Over SSH Plugin 插件. 点击新增构建步骤-> Send files or execute commonds over SSH.
@@ -34,7 +66,7 @@
 * Source files: 要上传的文件, 
 * Remove Prefix: 如果Source files 填写的包含路径, 如/tmp/LoadBalance.war, 那么这个地方就建议移除前缀/tmp/ 
 * Remote Directory: 远程Linux 服务器的文件夹, 此处为远程tomcat 的temp 目录
-* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: 
+* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: BUILD_ID=dontKillMe bash $serverBin/startup.sh
 
 ```bash
 #!/bin/bash
