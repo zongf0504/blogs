@@ -81,8 +81,6 @@ JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 4. ** jenkins 主页 **  
    ![](/assets/jenkins_2017-06-06_170430.png)
 
-5. ** 修改系统配置 **  
-   打开jenkins -&gt; 系统管理-&gt; 系统配置, 修改工作根空间和构建记录根空间目录
 
 
 
