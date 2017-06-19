@@ -15,7 +15,36 @@
 ### 2. 构建
 
 #### 2.1 获取war包脚本
-由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
+由于war包需要从FTP 服务器上获取, 但是jenkins 又不提供从ftp 服务器下载文件的插件, 所以需要自己手工编写下载脚本.文件直接下载到$warDir 目录中.
+
+```bash
+#!/bin/bash
+#DESC 获取war 包脚本
+#PARM 参数化参数: $warName, $warDir, $serverHome
+
+#输出日志
+echo "[info] begin get project: $warName"
+
+##################### 变量定义 #####################
+#设置ftp服务器相关信息
+ftp_ip="192.168.145.100"
+ftp_user="admin"
+ftp_pwd="admin"
+
+#要下载文件所在目录
+remote_dir="pub"
+
+##################### 执行脚本 #####################
+#执行 ftp 命令: binary 用于设置下载文件为二进制类型
+ftp -n <<EOF 
+open $ftp_ip
+user $ftp_user $ftp_pwd
+binary
+get $remote_dir/$warName.war $warDir/$warName.war
+bye
+EOF
+
+```
 
 #### 2.2 上传&部署脚本
 * 将$warDir中的war包上传到tomcat服务器的temp 目录, 由于是本地,直接使用cp 指令就行了
