@@ -148,8 +148,8 @@ echo "$date_time  $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 [root@localhost backup]# ls
 [root@localhost backup]# ls
 LB-free-local-local
-[root@localhost backup]# ls ./LB-free-local-local/
-LoadBalance.war  LoadBalance.war.3  SUCCESSBID
+[root@localhost backup]# ls ./LB-free-local-remote/
+LoadBalance.war  LoadBalance.war.2  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
