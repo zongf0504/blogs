@@ -1,5 +1,15 @@
 # 本地war包, 远程tomcat 应用服务器
-> local-remote 模式是指, 项目war包和jenkins 同在一台服务器上, 而要部署的应用服务器tomcat 安装在另外一台linux 服务器上. 这种模式也是比较常用的, 和local-local模式比较相似的,唯一不同的是,部署war包和执行重部署脚本的方式不同.
+> local-remote 模式是指, 项目war包和jenkins 同在一台服务器上, 而要部署的应用服务器tomcat 安装在另外一台linux 服务器上. 这种模式也是比较常用的, 和local-local模式比较相似的,唯一不同的是,部署war包和执行重部署脚本的方式不同. 还有, 远程服务器需要在系统设置中提前配置好.
+
+
+## 0. 配置远程linux服务器信息
+点击 jenkins -> 系统管理 -> 系统设置, 配置 Publish over SSH
+* Name: 为服务器取个别名, 笔者习惯命名为: ip@username
+* HostName: 域名或ip地址
+* Username: 登录用户名
+* RemoteDirectory: 远程登录之后,进入的默认目录, 建议写根目录就行
+* Passphrase / Password	: 远程登录密码, 这个在高级选项里
+![](/assets/jenkins_2017-06-17_064204.png)
 
 
 ## 1. 任务配置
@@ -18,9 +28,13 @@
 由于war包需要通过wincp 上传到linux 服务器, 所以笔者在使用wincp 上传时, 直接将war包上传到参数$warDir 指定的目录, 即$warDir 目录, 所以此处就不需要货物war包的脚本了
 
 #### 2.2 上传&部署脚本
-* 将$warDir中的war包上传到tomcat服务器的temp 目录, 由于是本地,直接使用cp 指令就行了
-* 执行重新部署的tomcat 的六步操作
-* 检测服务器是否能启动成功
+由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功此处需要借助于 Publish Over SSH Plugin 插件. 点击新增构建步骤-> Send files or execute commonds over SSH.
+
+* Name: 选择要上传或执行脚本的远程Linux服务器, 这个是在系统设置中配置的
+* Source files: 要上传的文件, 
+* Remove Prefix: 如果Source files 填写的包含路径, 如/tmp/LoadBalance.war, 那么这个地方就建议移除前缀/tmp/ 
+* Remote Directory: 远程Linux 服务器的文件夹, 此处为远程tomcat 的temp 目录
+* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: 
 
 ```bash
 #!/bin/bash
@@ -82,8 +96,6 @@ if [ $statusCode -ne 200 ] ; then
    exit 1
 else
    #服务器启动成功
-   #tomcat服务器在本地时,需要添加此限制   
-   BUILD_ID=dontKillMe bash $serverBin/startup.sh
    exit 0
 fi
 ```
