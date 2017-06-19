@@ -85,13 +85,11 @@ fi
 
 #检测文件是否存在, 文件不存在, 直接退出构建
 if [ ! -f "$warDir/$warName.war" ]; then
-echo "[error] The file $warDir/$warName.war is not exsits !!!"
-exit 1
-
+  echo "[error] The file $warDir/$warName.war is not exsits !!!"
+  exit 1
 else
-# 拷贝war包到tomcat服务器的temp 目录中
-cp -f $warDir/$warName.war $serverHome/temp
-
+  # 拷贝war包到tomcat服务器的temp 目录中
+  cp -f $warDir/$warName.war $serverHome/temp
 fi
 ```
 
@@ -155,23 +153,23 @@ $serverBin/startup.sh &
 cost=0
 statusCode=0
 while [ $statusCode -ne 200 -a $cost -le $timeout ]
-do
-statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
-echo "cost:$cost ms, statusCode:$statusCode"
-cost=$(( $cost + 5 ))
-sleep 5
-done
+  do
+    statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
+    echo "cost:$cost ms, statusCode:$statusCode"
+    cost=$(( $cost + 5 ))
+    sleep 5
+  done
 
 if [ $statusCode -ne 200 ] ; then
-#如果启动不成功则杀死进程
-echo "[faild] shutdown server ..."
-ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
-exit 1
+  #如果启动不成功则杀死进程
+  echo "[faild] shutdown server ..."
+  ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
+  exit 1
 else
-#服务器启动成功
-#tomcat服务器在本地时,需要添加此限制
-BUILD_ID=dontKillMe bash $serverBin/startup.sh
-exit 0
+  #服务器启动成功
+  #tomcat服务器在本地时,需要添加此限制
+  BUILD_ID=dontKillMe bash $serverBin/startup.sh
+  exit 0
 fi
 ```
 
@@ -194,9 +192,9 @@ bk_dir=$ITEM_BACKUP/$JOB_NAME
 
 # 创建备份文件夹: 如果文件夹不存在则创建文件夹, 否则删除原来的文件$warName.war
 if [ ! -d "$bk_dir" ]; then
-mkdir -p $bk_dir
+  mkdir -p $bk_dir
 else
-rm -f $bk_dir/$warName.war
+  rm -f $bk_dir/$warName.war
 fi
 
 # 备份文件
