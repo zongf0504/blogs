@@ -47,19 +47,21 @@
 ### 3.1 设置jdk 环境
 
 点击 jenkins -&gt; 系统管理 -&gt; Global Tool Configuration:  
-点击新增JDK, 输入别名和JAVA\_HOME 目录, 前提是你服务器已经安装了jdk环境, 不要勾选自动安装, 用服务器上已经安装好的jdk 即可. 笔者服务器上安装了两个版本的jdk, 所以配置了两个, 这个为默认选中的jdk.  
+点击新增JDK, 输入别名和JAVA\_HOME 目录, 前提是你服务器已经安装了jdk环境, 不要勾选自动安装, 用服务器上已经安装好的jdk 即可. 笔者服务器上安装了两个版本的jdk, 所以配置了两个, 这个为默认选中的jdk. ** 不要勾选自动安装** 
 ![](/assets/jenkins_20170619150455.png)
 
 ### 3.2 设置maven 环境
 
 点击 jenkins -&gt; 系统管理 -&gt; Global Tool Configuration:  
-点击 新增Maven, 设置Name 和 MAVEN\_HOME 变量\(Maven 安装目录\), 此处需要注意, 通常maven 需要做基本的设置, 比如本地工厂位置, nexus 私服镜像等, 这个修改maven 的settings 文件即可.  
-![](/assets/jenkins_2017-06-15_195203.png)
+点击 新增Maven, 设置Name 和 MAVEN\_HOME 变量\(Maven 安装目录\), 此处需要注意, 通常maven 需要做基本的设置, 比如本地工厂位置, nexus 私服镜像等, 这个修改maven 的settings 文件即可.  ** 不要勾选自动安装** 
+
+![](/assets/jenkins_2017-06-19_150704.png)
 
 ### 3.3 设置git 环境
 
 点击 jenkins -&gt; 系统管理 -&gt; Global Tool Configuration:  
-点击 新增Git, 输入本地安装的git 命令位置, 可在本地使用 which git 命令查看  
+点击 新增Git, 输入本地安装的git 命令位置, 可在本地使用 which git 命令查看.  ** 不要勾选自动安装** 
+
 ![](/assets/jenkins_2017-06-15_195249.png)
 
 ## 4. 全局安全设置
