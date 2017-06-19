@@ -160,3 +160,4 @@ LoadBalance.war  LoadBalance.war.2  SUCCESSBID
 ```
 
 ## 4. 完整配置示例
+![](/assets/sftp-remote.png)
