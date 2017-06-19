@@ -2,7 +2,7 @@
 
 > local-local模式是指, tomcat 和 jenkins 安装在同一台服务器, war 包通过wincp 工具直接上传到jenkins 所在服务器上某一路径下. 此种模式是最简单的.
 
-自动化 部署逻辑:
+local-local 模式自动化部署逻辑:
 
 1. 通过wincp 工具, 将war包上传到jenkins 所在服务器指定目录, 如 /tmp
 2. 将war包拷贝到tomcat 临时目录, temp 目录下
@@ -30,24 +30,25 @@
 #### 1.4 配置-参数化构建过程
 
 * 参数化构建过程是一个比较好用的功能, 脚本中可以使用定义的参数,但是jenkins 的插件却支持的不是特别好, 使用的时候需要注意一下.
-* 对于local-local 模式的人物, 笔者会创建以下几个String 类型常用变量: ** 点击添加参数 -> String Parameter **
+* 对于local-local 模式的人物, 笔者会创建以下几个String 类型常用变量: ** 点击添加参数 -&gt; String Parameter **
 
 | 参数名称 | 默认值 | 描述 |
-| :--- | :--- |
+| :--- | :--- | :--- |
 | warName | LoadBalance | 项目war包名称,不包含后缀名 |
 | warDir | /tmp | war 文件所目录, 绝对路径 |
-| testUrl | http://192.168.145.100:7080/LoadBalance/index.jsp | tomcat 服务器测试地址 |
+| testUrl | [http://192.168.145.100:7080/LoadBalance/index.jsp](http://192.168.145.100:7080/LoadBalance/index.jsp) | tomcat 服务器测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | tomcat服务器路径, bin 目录的父目录 |
 | timeout | 100 | 部署超时时间, 非整个job超时时间 |
 | description |  | 重部署描述, 会写入备份文件 |
 
 #### 1.5 配置-JDK
-当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
 
+当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
 
 ### 2. 构建
 
 #### 2.1 上传war包脚本
+
 * 将war包上传到tomcat 服务器中的临时目录temp 中
 
 ```
@@ -59,22 +60,23 @@
 if [ ! -f "$warDir/$warName.war" ]; then
   echo "[error] The file $warDir/$warName.war is not exsits !!!"
   exit 1
-  
+
 else
   # 拷贝war包到tomcat服务器的temp 目录中
   cp -f $warDir/$warName.war $serverHome/temp
-  
+
 fi
 ```
 
 #### 2.2 重部署脚本
-war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
-0. 检测temp 目录中war 文件是否存在
-1. 停止 tomcat 服务器
-2. 删除webapps 目录中的war文件和文件夹
-3. 清空服务器工作目录
-4. 清空日志文件
-5. 将项目war包从临时目录(temp)移动到部署目录(webapps)
+
+war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
+0. 检测temp 目录中war 文件是否存在  
+1. 停止 tomcat 服务器  
+2. 删除webapps 目录中的war文件和文件夹  
+3. 清空服务器工作目录  
+4. 清空日志文件  
+5. 将项目war包从临时目录\(temp\)移动到部署目录\(webapps\)  
 6. 重新启动tomcat服务器  
 7. 检测服务器是否能启动成功
 
@@ -180,11 +182,11 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 ```
 
 ## 3. 执行jenkins 任务
-1. 点击 jenkins -> LB-free-local-local ->  Build with Parameters 
-2. 输入部署描述信息, 点击
-![](/assets/jenkins_2017-06-19_163752.png)
-3. 点击版本号 #15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
+1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
+2. 输入部署描述信息, 点击
+   ![](/assets/jenkins_2017-06-19_163752.png)
+3. 点击版本号 \#15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 4. 测试:
 
@@ -208,6 +210,7 @@ LoadBalance.war  LoadBalance.war.14  SUCCESSBID
 ```
 
 ### 5. 注意:
+
 * 每次运行任务时, 都需要重新通过wincp 工具, 经war包上传到$warDir 指定的目录中
 * 新建local-local 模式的任务时, 只需要修改参数化定义的相关值就行了, 脚本无须做任何修改, 这就是参数化的好处.
 
