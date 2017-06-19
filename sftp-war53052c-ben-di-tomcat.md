@@ -50,9 +50,9 @@ sftp-local 模式自动化部署逻辑:
 
 当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
 
-### 2. 构建
+### 1.2. 构建
 
-#### 2.1 清空下载目录
+#### 1.2.1 清空下载目录
 点击 增加构建步骤 -> Execute Shell:
 
 ```bash
@@ -66,7 +66,7 @@ if [ -f "$warDir/$warName.war" ]; then
 fi
 ```
 
-#### 2.2 从远程Linux 上下载war包
+#### 1.2.2 从远程Linux 上下载war包
 
 点击 增加构建步骤 -> 远程FTP 下载
 * 虽然写着是ftp, 但是其实是sftp 下载, 这也是插件的一个bug 吧
@@ -75,7 +75,7 @@ fi
 
 ![](/assets/jenkins_2017-06-19_175225.png)
 
-#### 2.3 上传war包脚本
+#### 1.2.3 上传war包脚本
 * 将war包上传到tomcat 服务器中的临时目录temp 中
 
 ```
@@ -93,7 +93,7 @@ else
 fi
 ```
 
-#### 2.4 重部署脚本
+#### 1.2.4 重部署脚本
 
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
 0. 检测temp 目录中war 文件是否存在
@@ -173,7 +173,7 @@ else
 fi
 ```
 
-#### 2.3 备份项目脚本
+#### 1.2.3 备份项目脚本
 
 重新部署成功之后, 对新版本进行备份
 
@@ -206,20 +206,20 @@ date_time=`date "+%Y%m%d-%H%M"`
 echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
-## 3. 执行jenkins 任务
+## 2. 执行jenkins 任务
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt; Build with Parameters
 2. 输入部署描述信息, 点击
 ![](/assets/jenkins_2017-06-19_163752.png)
 3. 点击版本号 \#15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
-## 4. 测试:
+## 3. 测试:
 
-### 4.1 测试
+### 3.1 测试
 
 浏览器中输入测试地址, 能看到页面证明部署成. 此时得注意, 看服务器防火墙是否关闭或者测试端口是否释放了, 否则会被防火墙拦截的.
 
-### 4.2 查看备份
+### 3.2 查看备份
 
 通过linux 远程工具登录Linux 服务器, 可以进入备份文件夹, 会发现新增了三个文件
 
@@ -234,7 +234,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
-### 5. 注意:
+### 4. 注意:
 
 * 每次运行任务时, 都需要重新通过wincp 工具, 经war包上传到$warDir 指定的目录中
 * 新建local-local 模式的任务时, 只需要修改参数化定义的相关值就行了, 脚本无须做任何修改, 这就是参数化的好处.
