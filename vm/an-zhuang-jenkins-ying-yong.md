@@ -62,6 +62,11 @@ JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 17f4c544ab1f4b419b048446a09d5603
 ```
 
+#### 1.2.6 创建备份文件夹
+```bash
+[admin@localhost ~]$ mkdir -p /var/data/.jenkins/backup
+```
+
 #### 1.2.6 访问jenkins
 
 1. 确保防火墙已关闭, 或端口号8081 已释放
