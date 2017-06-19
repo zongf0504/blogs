@@ -14,11 +14,11 @@
   * [jenkins 基本设置](vm/jenkins-chu-she-zhi.md)
   * [jenkins 自动化部署](jenkins-zi-dong-hua-bu-shu.md)
     * [直接war包部署](zhi-jie-war-bao-bu-shu.md)
-      * [本地war包\_本地Tomcat](ben-di-war-bao-ben-di-tomcat.md)
       * [local war包, 本地tomcat](local-war53052c-ben-di-tomcat.md)
       * [sftp war包, 本地tomcat](sftp-war53052c-ben-di-tomcat.md)
       * [ftp war包,  本地tomcat](ftp-war53052c-ben-di-tomcat.md)
       * [svn war包, 本地tomcat](svn-war53052c-ben-di-tomcat.md)
+      * [local war包, 远程tomcat](local-war53052c-yuan-cheng-tomcat.md)
     * 源码部署
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
