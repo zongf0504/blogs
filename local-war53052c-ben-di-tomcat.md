@@ -1,6 +1,13 @@
 # 本地war包, 本地tomcat 应用服务器
 
-> 此种模式时最简单的, jenkins, tomcat , war包在统一服务器上, 全部都是本地脚本执行.但是,此种情况需要通过wincp 等工具, 将war包上传到jenkins 所在服务器的指定目录之后, 然后再执行任务
+> local-local模式是指, tomcat 和 jenkins 安装在同一台服务器, war 包通过wincp 工具直接上传到jenkins 所在服务器上某一路径下. 此种模式是最简单的.
+
+自动化 部署逻辑:
+
+1. 通过wincp 工具, 将war包上传到jenkins 所在服务器指定目录, 如 /tmp
+2. 将war包拷贝到tomcat 临时目录, temp 目录下
+3. 执行重部署tomcat 脚本
+4. 重部署成功之后, 执行备份脚本
 
 ## 1. 任务配置
 
