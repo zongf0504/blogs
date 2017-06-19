@@ -16,7 +16,7 @@
 * jdk1.8 : /opt/app/jdk/jdk1.8.0\_131
 * tomcat8 : /opt/app/jenkins/tomcat-8081-jenkins
 * jenkins.war : /opt/app/jenkins/tomcat-8081-jenkins/webapps
-* jenkins data: /var/data/.jenkins
+* jenkins data: /var/data/.jenkins/jenkins
 
 ### 1.2 安装
 
