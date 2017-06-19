@@ -44,8 +44,8 @@
   编辑配置文件: ${tomcat\_home}/bin/catalina.sh , 在文件非注释行前添加:
 
 ```bash
-export JAVA\_HOME=/opt/app/jdk/jdk1.8.0\_131  
-export JENKINS\_HOME=/var/data/jenkins  
+export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131  
+export JENKINS_HOME=/var/data/jenkins  
 JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 ```
 
@@ -57,7 +57,7 @@ JAVA_OPTS="-Xms256m -Xmx1024m -Xss1024K -XX:PermSize=256m -XX:MaxPermSize=256m"
 
 #### 1.2.5 查看jenkins 默认密码
 
-``` bash
+```bash
 [admin@localhost ~]$ cat /var/data/jenkins/secrets/initialAdminPassword
 ca8d3ce1e9784eab8c1a2b9d0dd0156c
 ```
@@ -75,12 +75,14 @@ ca8d3ce1e9784eab8c1a2b9d0dd0156c
 2. ** 选择跳过安装默认插件步骤 **  
    ![](/assets/jenkins_2017-06-06_170031.png)
 
-3. ** 创建一个管理员用户 **   
+3. ** 创建一个管理员用户 **  
    ![](/assets/jenkins_2017-06-06_170106.png)
 
 4. ** jenkins 主页 **  
    ![](/assets/jenkins_2017-06-06_170430.png)
 
-5. ** 修改系统配置 **
-打开jenkins -> 系统管理-> 系统配置, 修改工作根空间和构建记录根空间目录
+5. ** 修改系统配置 **  
+   打开jenkins -&gt; 系统管理-&gt; 系统配置, 修改工作根空间和构建记录根空间目录
+
+
 
