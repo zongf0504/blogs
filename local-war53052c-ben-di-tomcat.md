@@ -176,8 +176,14 @@ cp $bk_dir/$warName.war $bk_dir/$warName.war.$BUILD_NUMBER
 
 # 记录成功的id
 date_time=`date "+%Y%m%d-%H%M"`
-echo "$date_time $BUILD_NUMBER" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
+echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
+
+## 3. 执行jenkins 任务
+1. 点击 jenkins -> LB-free-local-local ->  Build with Parameters 
+2. 输入部署描述信息, 点击
+![](/assets/jenkins_2017-06-19_163752.png)
+
 
 ## 3. 测试:
 
