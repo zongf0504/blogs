@@ -52,8 +52,30 @@ sftp-local 模式自动化部署逻辑:
 
 ### 2. 构建
 
-#### 2.1 上传war包脚本
+#### 2.1 清空下载目录
+点击 增加构建步骤 -> Execute Shell:
 
+```bash
+#!/bin/bash
+#DESC 清空下载目录
+#PARM 参数化参数: warDir, warName
+
+#检测文件是否存在, 文件不存在, 直接退出构建
+if [ -f "$warDir/$warName.war" ]; then
+  rm -f $warDir/$warName
+fi
+```
+
+#### 2.2 从远程Linux 上下载war包
+
+点击 增加构建步骤 -> 远程FTP 下载
+* 虽然写着是ftp, 但是其实是sftp 下载, 这也是插件的一个bug 吧
+* 需要在系统设置中设置远程服务器的信息
+* 参数不能使用变量, 必须使用字符串, 这个设计有点儿恶心 
+
+![](/assets/jenkins_2017-06-19_175225.png)
+
+#### 2.3 上传war包脚本
 * 将war包上传到tomcat 服务器中的临时目录temp 中
 
 ```
@@ -73,7 +95,7 @@ cp -f $warDir/$warName.war $serverHome/temp
 fi
 ```
 
-#### 2.2 重部署脚本
+#### 2.4 重部署脚本
 
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
 0. 检测temp 目录中war 文件是否存在
@@ -210,8 +232,8 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
-[root@localhost backup]# ls ./LB-free-local-local/
-LoadBalance.war LoadBalance.war.14 SUCCESSBID
+[root@localhost backup]# ls ./LB-free-sftp-local/
+LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 5. 注意:
@@ -220,7 +242,7 @@ LoadBalance.war LoadBalance.war.14 SUCCESSBID
 * 新建local-local 模式的任务时, 只需要修改参数化定义的相关值就行了, 脚本无须做任何修改, 这就是参数化的好处.
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_2017-06-19_174553.png)
 
 
 
