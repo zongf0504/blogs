@@ -47,6 +47,15 @@ sftp-local 模式自动化部署逻辑:
 
 
 ### 1.2 源码管理
+#### 1.2.1 输入svn 服务器的相关信息
+* Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建议在svn上一个war包创建一个目录,因为下载时, 会将整个目录中的文件全部下载到本地 
+* Credentials: 用户身份认证信息
+* Local module directory: 点代表的是$WORKSPACE 目录
+![](/assets/jenkins_2017-06-19_183516.png)
+
+#### 1.2.2 填写用户身份信息
+如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略. 
+![](/assets/jenkins_2017-06-19_182912.png)
 
 ### 2.2 构建
 
@@ -60,14 +69,17 @@ sftp-local 模式自动化部署逻辑:
 #PARM 参数化参数: warDir, warName
 
 #检测文件是否存在, 文件不存在, 直接退出构建
-if [ ! -f "$warDir/$warName.war" ]; then
+if [ ! -f "$WORKSPACE/$warName.war" ]; then
   echo "[error] The file $warDir/$warName.war is not exsits !!!"
   exit 1
-
 else
+  
+  # 从工作空间目录中拷贝war包到warDir目录中
+  rm -f $warDir/$warName.war
+  cp $WORKSPACE/$warName.war $warDir
+
   # 拷贝war包到tomcat服务器的temp 目录中
   cp -f $warDir/$warName.war $serverHome/temp
-
 fi
 ```
 
@@ -187,9 +199,9 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 ## 3. 执行jenkins 任务
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
-2. 输入部署描述信息, 点击
-   ![](/assets/jenkins_2017-06-19_163752.png)
-3. 点击版本号 \#15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
+2. 输入部署描述信息, 点击立即构建
+   ![](/assets/jenkins_2017-06-19_183720.png)
+3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 4. 测试:
 
@@ -208,17 +220,18 @@ echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BI
 ```bash
 [root@localhost backup]# pwd
 /var/data/.jenkins/backup
-[root@localhost backup]# ls ./LB-free-local-local/
+[root@localhost backup]# ls ./LB-free-svn-local/
 LoadBalance.war  LoadBalance.war.14  SUCCESSBID
 ```
 
 ### 5. 注意:
 
-* 每次运行任务时, 都需要重新通过wincp 工具, 经war包上传到$warDir 指定的目录中
-* 新建local-local 模式的任务时, 只需要修改参数化定义的相关值就行了, 脚本无须做任何修改, 这就是参数化的好处.
+* svn 地址有两种格式, 一种是svn://, 一种是http://, 当svn://时, 如果定时去检测是否有更新, 那么即使无更新也会触发重新构建任务.也就是说, 使用svn://时, 不能使用Poll SCM 触发机制
+* svn 服务器上, 建议一个war文件防止在一个文件夹中
+* 新建svn-local模式任务时, 除了要修改参数化定义的参数外, 还需要注意修改源码部分svn的地址和用户身份信息. 
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_2017-06-19_184354.png)
 
 
 
