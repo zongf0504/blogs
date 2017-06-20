@@ -25,6 +25,7 @@
       * [sftp war, remote tomcat](sftp-war-remote-tomcat.md)
       * [svn war, remote tomcat](svn-war-remote-tomcat.md)
     * [源码部署](yuan-ma-bu-shu.md)
+  * [jenkins 视图管理](jenkins-shi-tu-guan-li.md)
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
   * [虚拟机网络设置&客户端连接](vm/wang-luo-she-7f6e26-ke-hu-duan-lian-jie.md)
@@ -39,5 +40,4 @@
 * [Linux](linux.md)
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
 * Shell
-* [jenkins 视图管理](jenkins-shi-tu-guan-li.md)
 
