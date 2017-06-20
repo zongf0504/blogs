@@ -1,8 +1,8 @@
-# http 上获取war包, 本地tomcat
-> http-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 存放在web 服务器上, 需要通过http 协议方式获取. 通过wget 命令将war包下载到本地之后, 就转换成了local-local模式了.
+# ftp 上获取war包, 本地tomcat
+> ftp-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 存放在FTP 服务器上, 需要通过FTP 脚本获取. 通过ftp 脚本将war包下载到本地之后, 就转换成了local-local模式了.
 
-http-local 模式自动化部署逻辑:
-1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
+ftp-local 模式自动化部署逻辑:
+1. 通过ftp脚本, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
 2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下
 3. 执行重部署tomcat 脚本
 4. 重新部署成功之后, 执行备份脚本
@@ -10,13 +10,13 @@ http-local 模式自动化部署逻辑:
 ## 1. 任务配置
 
 点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
-![](/assets/jenkins_2017-06-20_124131.png)
+![](/assets/jenkins_2017-06-20_112446.png)
 
 ### 1.1 配置General
 
 #### 1.1.1 配置-项目名称
 
-笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-local
+笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-ftp-local
 
 #### 1.1.2 配置-任务描述
 
@@ -55,18 +55,30 @@ http-local 模式自动化部署逻辑:
 #DESC 获取war 包脚本
 #PARM 参数化参数: $warName, $warDir, $serverHome
 
-#下载路径
-url=http://192.168.145.100:81/wars/LoadBalance.war 
-
 #输出日志
 echo "[info] begin to download project: $warName"
 
 #清楚原来的文件
 rm -f $warDir/$warName.war
 
-#下载war文件
-wget $url -O $warDir/$warName.war
+##################### 变量定义 #####################
+#设置ftp服务器相关信息
+ftp_ip="192.168.145.100"
+ftp_user="admin"
+ftp_pwd="admin"
 
+#要下载文件所在目录
+remote_dir="wars"
+
+##################### 执行脚本 #####################
+#执行 ftp 命令: binary 用于设置下载文件为二进制类型
+ftp -n <<EOF 
+open $ftp_ip
+user $ftp_user $ftp_pwd
+binary
+get $remote_dir/$warName.war $warDir/$warName.war
+bye
+EOF
 ```
 
 #### 1.2.2 上传war包到tomcat 服务器临时目录
@@ -224,7 +236,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-httpd-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-   ![](/assets/jenkins_2017-06-20_135845.png)
+   ![](/assets/jenkins_2017-06-20_142739.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 4. 测试:
@@ -245,15 +257,14 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [admin@localhost backup]# pwd
 /var/data/.jenkins/backup
-[admin@localhost backup]# ls ./LB-free-http-local/
+[admin@localhost backup]# ls ./LB-free-ftp-local/
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 5. 注意:
-* 新建httpd-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改下载war包中url的路径的值
-* 可以将下载war包中的url 也做成参数化变量
+* 新建ftp-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改下载war包脚本中ftp的相关信息:ip,  用户名, 密码, 路径
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_ftp_local_2017-06-20_140824.png)
 
 
