@@ -296,7 +296,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [admin@localhost backup]# pwd
 /var/data/.jenkins/backup
-[admin@localhost backup]# ls ./LB-free-local-remote/
+[admin@localhost backup]# ls ./LB-free-http-remote/
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
