@@ -1,5 +1,5 @@
 # svn 上获取war包, 本地tomcat
-> local-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 需要从svn 服务器上下载. 此种模式和其它模式类似, 先从svn 上下载war包到jenkins 所在服务器上, 然后就转换成了local-local 模式, 但是不同的是, svn 并不是在构建模块进行下载war包的, 而是在源码模块儿中配置下载的.
+> svn-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 需要从svn 服务器上下载. 此种模式和其它模式类似, 先从svn 上下载war包到jenkins 所在服务器上, 然后就转换成了local-local 模式, 但是不同的是, svn 并不是在构建模块进行下载war包的, 而是在源码模块儿中配置下载的.
 
 svn-local 模式自动化部署逻辑:
 1. 通过jenkins subversion 插件下载到jenkins 所在服务器上的指定目录, 如/tmp
@@ -16,7 +16,7 @@ svn-local 模式自动化部署逻辑:
 
 #### 1.1.1 配置-项目名称
 
-笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-local
+笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-svn-local
 
 #### 1.1.2 配置-任务描述
 
@@ -44,13 +44,24 @@ svn-local 模式自动化部署逻辑:
 
 当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
 
-### 1.2 构建
+### 1.2 源码管理
+#### 1.2.1 输入svn 服务器的相关信息
+* Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建议在svn上一个war包创建一个目录,因为下载时, 会将整个目录中的文件全部下载到本地 
+* Credentials: 用户身份认证信息
+* Local module directory: 点代表的是$WORKSPACE 目录
+![](/assets/jenkins_2017-06-19_183516.png)
 
-#### 1.2.1 上传war包
+#### 1.2.2 填写用户身份信息
+如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略.
+![](/assets/jenkins_2017-06-19_182912.png)
+
+### 1.3 构建
+
+#### 1.3.1 上传war包
 
 通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
 
-#### 1.2.2 上传war包到tomcat 服务器临时目录
+#### 1.3.2 上传war包到tomcat 服务器临时目录
 构建模块中, 点击新增构建步骤 -> Execute Shell
 
 ```bash
@@ -72,7 +83,7 @@ else
 fi
 ```
 
-#### 1.2.3 重部署脚本
+#### 1.3.3 重部署脚本
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
@@ -163,7 +174,7 @@ else
 fi
 ```
 
-#### 1.2.4 备份项目脚本
+#### 1.3.4 备份项目脚本
 
 重新部署成功之后, 对新版本进行备份
 
@@ -196,21 +207,21 @@ date_time=`date "+%Y%m%d-%H%M"`
 echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
-## 3. 执行jenkins 任务
+## 2. 执行jenkins 任务
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
 ![](/assets/jenkins_2017-06-20_142030.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
-## 4. 测试:
+## 3. 测试:
 
-### 4.1 测试
+### 3.1 测试
 * 确定防火墙已关闭或者释放了tomcat 服务器端口7080
 * 浏览器中输入测试地址:
 ![](/assets/jenkins_100_2017-06-20_135051.png)
 
-### 4.2 查看备份
+### 3.2 查看备份
 
 通过linux 远程工具登录Linux 服务器, 可以进入备份文件夹, 会发现新增了三个文件
 
@@ -225,7 +236,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
-### 5. 注意:
+### 4. 注意:
 * 新建local-local 模式任务时, 只需要修改参数化定义的值即可,其它脚本均不用修改, 这就是参数化的好处
 * 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
