@@ -1,8 +1,8 @@
-# http 上获取war包, 本地tomcat
-> http-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 存放在web 服务器上, 需要通过http 协议方式获取. 通过wget 命令将war包下载到本地之后, 就转换成了local-local模式了.
+# 本地war包, 本地tomcat
+> local-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 通过wincp工具直接上传到jenkins 所在Linux 服务器上. 这是最简单的一种模式, 也是其它所有模式的基础. 其它模式都是基于local-local 模式, 稍做修改而成.
 
-http-local 模式自动化部署逻辑:
-1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
+local-local 模式自动化部署逻辑:
+1. 通过wincp 工具将war包上传到jenkins 所在服务器上的指定目录, 如/tmp
 2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下
 3. 执行重部署tomcat 脚本
 4. 重新部署成功之后, 执行备份脚本
@@ -10,7 +10,7 @@ http-local 模式自动化部署逻辑:
 ## 1. 任务配置
 
 点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
-![](/assets/jenkins_2017-06-20_124131.png)
+(/assets/jenkins_2017-06-19_152404.png)
 
 ### 1.1 配置General
 
@@ -46,28 +46,9 @@ http-local 模式自动化部署逻辑:
 
 ### 1.2 构建
 
-#### 1.2.1 从web 服务器上, 下载war包
+#### 1.2.1 上传war包
 
-构建模块中, 点击新增构建步骤 -> Execute Shell
-
-```
-#!/bin/bash
-#DESC 获取war 包脚本
-#PARM 参数化参数: $warName, $warDir, $serverHome
-
-#下载路径
-url=http://192.168.145.100:81/wars/LoadBalance.war 
-
-#输出日志
-echo "[info] begin to download project: $warName"
-
-#清楚原来的文件
-rm -f $warDir/$warName.war
-
-#下载war文件
-wget $url -O $warDir/$warName.war
-
-```
+通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
 
 #### 1.2.2 上传war包到tomcat 服务器临时目录
 构建模块中, 点击新增构建步骤 -> Execute Shell
@@ -78,16 +59,11 @@ wget $url -O $warDir/$warName.war
 #PARM 参数化参数: warDir, warName
 
 #检测文件是否存在, 文件不存在, 直接退出构建
-if [ ! -f "$warDir/$warName.war" ]; then
-  echo "[error] The file $warDir/$warName.war is not exsits !!!"
+if [ ! -f "$WORKSPACE/$warName.war" ]; then
+  echo "[error] The file $WORKSPACE/$warName.war is not exsits !!!"
   exit 1
 else
     
-  # 将war包移动到工作空间目录中
-  echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
-  rm -f $WORKSPACE/$warName.war 
-  mv $warDir/$warName.war $WORKSPACE
-  
   # 将工作空间中war包上传到tomcat服务器的temp 目录中
   echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
   rm -f $serverHome/temp/$warName.war
@@ -222,9 +198,9 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 ## 3. 执行jenkins 任务
 
-1. 点击 jenkins -&gt; LB-free-httpd-local -&gt;  Build with Parameters 
+1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-   ![](/assets/jenkins_2017-06-20_135845.png)
+![](/assets/jenkins_2017-06-20_142030.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 4. 测试:
@@ -245,15 +221,15 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [admin@localhost backup]# pwd
 /var/data/.jenkins/backup
-[admin@localhost backup]# ls ./LB-free-http-local/
+[admin@localhost backup]# ls ./LB-free-local-local/
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 5. 注意:
-* 新建httpd-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改下载war包中url的路径的值
-* 可以将下载war包中的url 也做成参数化变量
+* 新建local-local 模式任务时, 只需要修改参数化定义的值即可,其它脚本均不用修改, 这就是参数化的好处
+* 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_local_local_2017-06-20_140642.png)
 
 
