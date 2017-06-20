@@ -39,4 +39,5 @@
 * [Linux](linux.md)
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
 * Shell
+* [jenkins 视图管理](jenkins-shi-tu-guan-li.md)
 
