@@ -1,4 +1,4 @@
-# svn 上获取war包, 本地tomcat
+![](/assets/jenkins_svn_local_2017-06-20_141024.png)# svn 上获取war包, 本地tomcat
 > svn-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 需要从svn 服务器上下载. 此种模式和其它模式类似, 先从svn 上下载war包到jenkins 所在服务器上, 然后就转换成了local-local 模式, 但是不同的是, svn 并不是在构建模块进行下载war包的, 而是在源码模块儿中配置下载的.
 
 svn-local 模式自动化部署逻辑:
@@ -233,10 +233,11 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
-* 新建local-local 模式任务时, 只需要修改参数化定义的值即可,其它脚本均不用修改, 这就是参数化的好处
-* 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
+* 新建svn-local 模式任务时, 不仅需要修改参数化定义的值即可,还得修改源码模块儿的svn 信息
+* svn 服务有两种方式, 体现在url 上是 http:// 和 svn:// , 当路径为 svn:// 时, 触发器不能使用Poll SCM 模式, 因为无论是否发生变化, 都会进行重新部署, 这或许是jenkins 不能解决的一个bug吧.
+
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_svn_local_2017-06-20_141025.png)
 
 
