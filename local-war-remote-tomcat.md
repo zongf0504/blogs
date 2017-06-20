@@ -1,22 +1,30 @@
-# 本地war包, 本地tomcat
-> local-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 通过wincp工具直接上传到jenkins 所在Linux 服务器上. 这是最简单的一种模式, 也是其它所有模式的基础. 其它模式都是基于local-local 模式, 稍做修改而成.
+# 本地war包, 远程 tomcat
+> local-remote 模式是指, tomcat 和 jenkins 安装在不同Linux服务器上, war 通过wincp工具直接上传到jenkins 所在Linux 服务器上. 这和local-local 方式很像, 不同的是, 需要将war包上传到远程Linux 服务器上, 并在远程Linux 服务器上执行脚本.
 
 local-local 模式自动化部署逻辑:
 1. 通过wincp 工具将war包上传到jenkins 所在服务器上的指定目录, 如/tmp
-2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下
-3. 执行重部署tomcat 脚本
-4. 重新部署成功之后, 执行备份脚本
+2. 通过Publish Over SSH 插件将war包上传到远程服务器, 并在远程服务器上执行重部署脚本
+3. 重新部署成功之后, 在本地执行备份脚本
+
+## 0. 配置远程linux服务器信息
+点击 jenkins -> 系统管理 -> 系统设置, 配置 Publish over SSH
+* Name: 为服务器取个别名, 笔者习惯命名为: ip@username
+* HostName: 域名或ip地址
+* Username: 登录用户名
+* RemoteDirectory: 远程登录之后,进入的默认目录, 建议写根目录就行
+* Passphrase / Password	: 远程登录密码, 这个在高级选项里
+![](/assets/jenkins_2017-06-20_151008.png)
 
 ## 1. 任务配置
-
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
-(/assets/jenkins_2017-06-19_152404.png)
+新建自由风格任务时, 我们选择copy 配置, 从已有配置中copy 一份, 略加修改接口.
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-local-local, 点击OK
+![](/assets/jenkins_2017-06-19_185353.png)
 
 ### 1.1 配置General
 
 #### 1.1.1 配置-项目名称
 
-笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-local
+笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-remote
 
 #### 1.1.2 配置-任务描述
 
@@ -35,7 +43,7 @@ local-local 模式自动化部署逻辑:
 | :--- | :--- | :--- |
 | warName | LoadBalance | 项目war包名称,不包含后缀名 |
 | warDir | /tmp | war 文件所目录, 绝对路径 |
-| testUrl | [http://192.168.145.100:7080/LoadBalance/index.jsp](http://192.168.145.100:7080/LoadBalance/index.jsp) | tomcat 服务器测试地址 |
+| testUrl | [http://192.168.145.102:7080/LoadBalance/index.jsp](http://192.168.145.102:7080/LoadBalance/index.jsp) | tomcat 服务器测试地址 |
 | serverHome | /opt/app/tomcat/tomcat-7-7080 | tomcat服务器路径, bin 目录的父目录 |
 | timeout | 100 | 部署超时时间, 非整个job超时时间 |
 | description |  | 重部署描述, 会写入备份文件 |
@@ -50,7 +58,8 @@ local-local 模式自动化部署逻辑:
 
 通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
 
-#### 1.2.2 上传war包到tomcat 服务器临时目录
+#### 1.2.2 移动war包到当前工作空间中
+因为不同的任务, 工作空间是不同的,所以将war 直接上传到临时目录$warDir 比较方便.而Publish Overs SSH 插件只能上传当前工作空间及其子目录中的文件, 所以此处需要将war包从临时目录中移动到当前工作空间中.
 构建模块中, 点击新增构建步骤 -> Execute Shell
 
 ```bash
@@ -59,16 +68,116 @@ local-local 模式自动化部署逻辑:
 #PARM 参数化参数: warDir, warName
 
 #检测文件是否存在, 文件不存在, 直接退出构建
-if [ ! -f "$WORKSPACE/$warName.war" ]; then
-  echo "[error] The file $WORKSPACE/$warName.war is not exsits !!!"
+if [ ! -f "$warDir/$warName.war" ]; then
+  echo "[error] The file $warDir/$warName.war is not exsits !!!"
   exit 1
 else
     
-  # 将工作空间中war包上传到tomcat服务器的temp 目录中
-  echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
-  rm -f $serverHome/temp/$warName.war
-  cp $WORKSPACE/$warName.war $serverHome/temp
+  # 将war包移动到工作空间目录中
+  echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
+  rm -f $WORKSPACE/$warName.war 
+  mv $warDir/$warName.war $WORKSPACE
+  
+fi
+```
 
+
+#### 1.2.2 上传war包到远程服务器, 并在远程服务器上执行重部署脚本
+* 由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功 
+* 重部署脚本逻辑：
+0. 检测temp 目录中war 文件是否存在  
+1. 停止 tomcat 服务器  
+2. 删除webapps 目录中的war文件和文件夹  
+3. 清空服务器工作目录  
+4. 清空日志文件  
+5. 将项目war包从临时目录\(temp\)移动到部署目录\(webapps\)  
+6. 重新启动tomcat服务器  
+7. 检测服务器是否能启动成功
+
+
+* 点击新增构建步骤-> Send files or execute commonds over SSH.
+
+* Name: 选择要上传或执行脚本的远程Linux服务器, 这个是在系统设置中配置的
+* Source files: 要上传的文件, 不支持绝对路径, 只能写相对路径, 相对目录为当前工作空间
+* Remove Prefix: 如果Source files 填写的包含路径, 如target/LoadBalance.war, 那么这个地方就建议移除前缀target/ 
+* Remote Directory: 远程Linux 服务器的文件夹, 此处为远程tomcat 的temp 目录
+* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: BUILD_ID=dontKillMe bash $serverBin/startup.sh
+* 需要勾选高级中的: Fail the build if an error occurs, 意思是如果出现错误的话, 就停止构建.
+
+远程重部署脚本:
+```bash
+#!/bin/bash
+#DESC 部署项目
+#PARM 参数化参数: serverHome, testUrl, timeout, $warName
+
+#输出日志
+echo "[info ] begin deploy project: $warName"
+
+##################### 常量定义 #####################
+# 应用服务器相关文件夹
+serverBin=$serverHome/bin
+serverLog=$serverHome/logs
+serverTemp=$serverHome/temp
+serverDeploy=$serverHome/webapps
+serverWork=$serverHome/work/Catalina/localhost
+
+
+##################### 执行脚本 #####################
+# 0. 检测文件是否存在
+if [ ! -f "$serverTemp/$warName.war" ]; then
+  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
+  exit 1
+else
+   echo "[info ] Find file: $serverTemp/$warName.war";
+
+fi
+
+# 1. 关闭服务器
+echo "[info ] shutdown the server ..."
+ps -ef | grep -v grep | grep "$serverHome"| awk '{print $2}' | xargs kill -9
+
+# 2. 删除部署项目的war包和文件夹
+echo "[info ] delete the old project: $serverDeploy/$warName $serverDeploy/$warName.war"
+rm -rf $serverDeploy/$warName $serverDeploy/$warName.war
+
+# 3. 清空服务器工作目录
+echo "[info ] clean the project work directory: $serverWork/$warName"
+rm -rf $serverWork/$warName
+
+# 4. 清空日志文件
+echo "[info ] clean the server log: $serverLog/catalina.out"
+echo "" > $serverLog/catalina.out
+
+# 5. 将新项目文件移动到服务器部署文件夹中
+echo "[info ] deploy the project: $serverTemp/$warName.war"
+mv $serverTemp/$warName.war $serverDeploy
+
+# 6. 重新启动服务器
+echo "[info ] start the server: $serverBin/startup.sh &"
+$serverBin/startup.sh &
+
+
+# 7. 监控服务器是否启动成功
+echo "[info ] monitor the server start ..."
+cost=0
+statusCode=0
+while [ $statusCode -ne 200 -a $cost -le $timeout ]
+  do
+    statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
+    echo "cost:$cost ms, statusCode:$statusCode"
+    cost=$(( $cost + 5 ))
+    sleep 5
+  done
+
+if [ $statusCode -ne 200 ] ; then
+  #如果启动不成功则杀死进程
+  echo "[error] the server startup faild ! begin shutdown the server "
+  ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
+  exit 1
+else
+  #服务器启动成功
+  echo "[info ] the server startup successful !"
+  exit 0
 fi
 ```
 
