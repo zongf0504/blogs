@@ -244,6 +244,7 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 
 * 新建svn-local 模式任务时, 不仅需要修改参数化定义的值即可,还得修改源码模块儿的svn 信息
 * svn 服务有两种方式, 体现在url 上是 http:// 和 svn:// , 当路径为 svn:// 时, 触发器不能使用Poll SCM 模式, 因为无论是否发生变化, 都会进行重新部署, 这或许是jenkins 不能解决的一个bug吧.
+* svn 服务器建议一个war包放在一个单独的文件夹中, 因为svn 下载的时候是以文件夹为单位的, 会下载同一个文件夹中的所有文件.
 
 ## 附:完整配置示例
 

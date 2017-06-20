@@ -15,7 +15,6 @@
   * [jenkins 自动化部署](jenkins-zi-dong-hua-bu-shu.md)
     * [直接war包部署](zhi-jie-war-bao-bu-shu.md)
       * [sftp war包, 本地tomcat](sftp-war53052c-ben-di-tomcat.md)
-      * [svn war包, 本地tomcat](svn-war53052c-ben-di-tomcat.md)
       * [local war包, 远程tomcat](local-war53052c-yuan-cheng-tomcat.md)
       * [ftp war包, 远程tomcat](sftp-war53052c-yuan-cheng-tomcat.md)
       * [sftp war包, 远程tomcat](sftp-local.md)
