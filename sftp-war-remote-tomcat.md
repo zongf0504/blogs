@@ -66,15 +66,34 @@ sftp-local 模式自动化部署逻辑:
 
 ### 1.2 构建
 
-#### 1.2.1 上传war包
+#### 1.2.1 清空下载目录
+点击 增加构建步骤 -> Execute Shell:
 
-通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
+```bash
+#!/bin/bash
+#DESC 清空下载目录
+#PARM 参数化参数: warDir, warName
 
-#### 1.2.2 移动war包到当前工作空间中
+#检测文件是否存在, 文件存在, 则删除文件
+if [ -f "$warDir/$warName.war" ]; then
+  echo "[info ] delete the file $warDir/$warName "
+  rm -f $warDir/$warName
+fi
+```
 
-因为不同的任务, 工作空间是不同的,所以将war 直接上传到临时目录$warDir 比较方便.而Publish Overs SSH 插件只能上传当前工作空间及其子目录中的文件, 所以此处需要将war包从临时目录中移动到当前工作空间中.
+#### 1.2.2 从远程Linux 上下载war包
 
-** 构建模块中, 点击新增构建步骤 -&gt; Execute Shell **
+点击 增加构建步骤 -> 远程FTP 下载
+虽然写着是ftp, 但是其实是sftp 下载, 这也是插件的一个bug 吧! 输入框内容不支持参数化定义变量, 需要手动将参数化变量的值输入进去, 这个有点儿恶心, 但是必须这样中, 因为脚本中用到了这些信息.
+* Target Server: 远程服务器信息, 需要预先在系统设置中设置
+* remoteFile: 远程文件全路径名称, 不能使用参数化变量
+* localFolder: 下载到本地哪个目录, 值为$warName 定义的目录, 不能使用参数化变量
+* fileName: 下载到本地文件名, 值为$warName.war, 不能使用参数化变量
+![](/assets/jenkins_2017-06-19_175225.png)
+
+
+#### 1.2.3 上传war包到tomcat 服务器临时目录
+构建模块中, 点击新增构建步骤 -> Execute Shell
 
 ```bash
 #!/bin/bash
@@ -82,20 +101,20 @@ sftp-local 模式自动化部署逻辑:
 #PARM 参数化参数: warDir, warName
 
 #检测文件是否存在, 文件不存在, 直接退出构建
-if [ ! -f "$warDir/$warName.war" ]; then
-  echo "[error] The file $warDir/$warName.war is not exsits !!!"
+if [ ! -f "$WORKSPACE/$warName.war" ]; then
+  echo "[error] The file $WORKSPACE/$warName.war is not exsits !!!"
   exit 1
 else
-
-  # 将war包移动到工作空间目录中
-  echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
-  rm -f $WORKSPACE/$warName.war 
-  mv $warDir/$warName.war $WORKSPACE
+    
+  # 将工作空间中war包上传到tomcat服务器的temp 目录中
+  echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
+  rm -f $serverHome/temp/$warName.war
+  cp $WORKSPACE/$warName.war $serverHome/temp
 
 fi
 ```
 
-#### 1.2.3 上传war包到远程服务器, 并在远程服务器上执行重部署脚本
+#### 1.2.4 上传war包到远程服务器, 并在远程服务器上执行重部署脚本
 
 由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功
 
@@ -196,7 +215,7 @@ else
 fi
 ```
 
-#### 1.2.4 本地执行备份脚本
+#### 1.2.5 本地执行备份脚本
 
 * 重新部署成功之后, 对新版本进行备份
 
@@ -235,7 +254,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-   ![](/assets/jenkins_2017-06-20_153310.png)
+   ![](/assets/jenkins_2017-06-20_161357.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
@@ -257,17 +276,17 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [admin@localhost backup]# pwd
 /var/data/.jenkins/backup
-[admin@localhost backup]# ls ./LB-free-local-remote/
+[admin@localhost backup]# ls ./LB-free-sftp-remote/
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
 
 * 新建local-remote 模式任务时, 需要在系统设置中配置远程Linux 服务器信息
-* 复制此模式项目时, 只需要修改自定义参数和选择远程服务器即可
+* 复制此模式项目时, 需要修改自定义参数和远程FTP 下载路径信息, 选择远程服务器
 * Publish Over SSH 中Source file 只能写相对路径, 不能写绝对路径,相对于当前工作空间目录, 否则会上传不了文件, 笔者在此栽了不少跟头. 
-* 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
+* 远程FTP 下载模块中, 路径不能使用自定义参数, 这就导致了修改项目是,需要手工维护两个地方的变量.
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_sftp_remote_2017-06-20_161634.png)
 
