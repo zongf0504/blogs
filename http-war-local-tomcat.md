@@ -1,5 +1,5 @@
 # http 上获取war包, 本地tomcat
-> http-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 存放在web 服务器上, 需要通过http 协议方式获取.
+> http-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 存放在web 服务器上, 需要通过http 协议方式获取. 通过wget 命令将war包下载到本地之后, 就转换成了local-local模式了.
 
 http-local 模式自动化部署逻辑:
 1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
