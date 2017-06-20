@@ -1,23 +1,27 @@
 # 本地war包, 远程 tomcat
+
 > local-remote 模式是指, tomcat 和 jenkins 安装在不同Linux服务器上, war 通过wincp工具直接上传到jenkins 所在Linux 服务器上. 这和local-local 方式很像, 不同的是, 需要将war包上传到远程Linux 服务器上, 并在远程Linux 服务器上执行脚本.
 
-local-local 模式自动化部署逻辑:
-1. 通过wincp 工具将war包上传到jenkins 所在服务器上的指定目录, 如/tmp
-2. 通过Publish Over SSH 插件将war包上传到远程服务器, 并在远程服务器上执行重部署脚本
+local-local 模式自动化部署逻辑:  
+1. 通过wincp 工具将war包上传到jenkins 所在服务器上的指定目录, 如/tmp  
+2. 通过Publish Over SSH 插件将war包上传到远程服务器, 并在远程服务器上执行重部署脚本  
 3. 重新部署成功之后, 在本地执行备份脚本
 
 ## 0. 配置远程linux服务器信息
-点击 jenkins -> 系统管理 -> 系统设置, 配置 Publish over SSH
+
+点击 jenkins -&gt; 系统管理 -&gt; 系统设置, 配置 Publish over SSH
+
 * Name: 为服务器取个别名, 笔者习惯命名为: ip@username
 * HostName: 域名或ip地址
 * Username: 登录用户名
 * RemoteDirectory: 远程登录之后,进入的默认目录, 建议写根目录就行
-* Passphrase / Password	: 远程登录密码, 这个在高级选项里
-![](/assets/jenkins_2017-06-20_151008.png)
+* Passphrase / Password    : 远程登录密码, 这个在高级选项里
+  ![](/assets/jenkins_2017-06-20_151008.png)
 
 ## 1. 任务配置
-新建自由风格任务时, 我们选择copy 配置, 从已有配置中copy 一份, 略加修改接口.
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-local-local, 点击OK
+
+新建自由风格任务时, 我们选择copy 配置, 从已有配置中copy 一份, 略加修改即可.   
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-local-local, 点击OK  
 ![](/assets/jenkins_2017-06-19_185353.png)
 
 ### 1.1 配置General
@@ -59,9 +63,11 @@ local-local 模式自动化部署逻辑:
 通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
 
 #### 1.2.2 移动war包到当前工作空间中
+
 因为不同的任务, 工作空间是不同的,所以将war 直接上传到临时目录$warDir 比较方便.而Publish Overs SSH 插件只能上传当前工作空间及其子目录中的文件, 所以此处需要将war包从临时目录中移动到当前工作空间中.
 
-** 构建模块中, 点击新增构建步骤 -> Execute Shell **
+** 构建模块中, 点击新增构建步骤 -&gt; Execute Shell **
+
 ```bash
 #!/bin/bash
 #DESC 上传war包到tomcat 服务器的临时目录
@@ -72,20 +78,20 @@ if [ ! -f "$warDir/$warName.war" ]; then
   echo "[error] The file $warDir/$warName.war is not exsits !!!"
   exit 1
 else
-    
+
   # 将war包移动到工作空间目录中
   echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
   rm -f $WORKSPACE/$warName.war 
   mv $warDir/$warName.war $WORKSPACE
-  
+
 fi
 ```
 
 #### 1.2.3 上传war包到远程服务器, 并在远程服务器上执行重部署脚本
 
-由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功 
+由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功
 
-**重部署脚本逻辑：**
+**重部署脚本逻辑：**  
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
 2. 删除webapps 目录中的war文件和文件夹  
@@ -95,16 +101,17 @@ fi
 6. 重新启动tomcat服务器  
 7. 检测服务器是否能启动成功
 
+** 点击新增构建步骤-&gt; Send files or execute commonds over SSH. **
 
-** 点击新增构建步骤-> Send files or execute commonds over SSH. **
 * Name: 选择要上传或执行脚本的远程Linux服务器, 这个是在系统设置中配置的
 * Source files: 要上传的文件, 不支持绝对路径, 只能写相对路径, 相对目录为当前工作空间
 * Remove Prefix: 如果Source files 填写的包含路径, 如target/LoadBalance.war, 那么这个地方就建议移除前缀target/ 
 * Remote Directory: 远程Linux 服务器的文件夹, 此处为远程tomcat 的temp 目录
-* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: BUILD_ID=dontKillMe bash $serverBin/startup.sh
+* Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: BUILD\_ID=dontKillMe bash $serverBin/startup.sh
 * 需要勾选高级中的: Fail the build if an error occurs, 意思是如果出现错误的话, 就停止构建.
 
 ** 远程重部署脚本: **
+
 ```bash
 #!/bin/bash
 #DESC 部署项目
@@ -180,11 +187,13 @@ else
   exit 0
 fi
 ```
+
 #### 1.2.4 本地执行备份脚本
 
 * 重新部署成功之后, 对新版本进行备份
 
-** 构建模块中, 点击新增构建步骤 -> Execute Shell **
+** 构建模块中, 点击新增构建步骤 -&gt; Execute Shell **
+
 ```bash
 #!/bin/bash
 #DESC 部署成功后,备份项目
@@ -218,15 +227,16 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-![](/assets/jenkins_2017-06-20_153310.png)
+   ![](/assets/jenkins_2017-06-20_153310.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
 
 ### 3.1 测试
+
 * 确定防火墙已关闭或者释放了tomcat 服务器端口7080
 * 浏览器中输入测试地址:
-![](/assets/jenkins_102_2017-06-20_135132.png)
+  ![](/assets/jenkins_102_2017-06-20_135132.png)
 
 ### 3.2 查看备份
 
@@ -244,12 +254,13 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
+
 * 新建local-remote 模式任务时, 需要在系统设置中配置远程Linux 服务器信息
 * 复制此模式项目时, 只需要修改自定义参数和选择远程服务器即可
 * Publish Over SSH 中Source file 只能写相对路径, 不能写绝对路径,相对于当前工作空间目录, 否则会上传不了文件, 笔者在此栽了不少跟头. 
 * 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
 ## 附:完整配置示例
-![](/assets/jenkins_local_remote_2017-06-20_152434.png)
 
+![](/assets/jenkins_local_remote_2017-06-20_152434.png)
 
