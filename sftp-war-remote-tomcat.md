@@ -23,12 +23,12 @@ sftp-local 模式自动化部署逻辑:
 ### 0.2 配置war包所在远程服务器信息
 打开 jenkins -> 系统管理 -> 系统设置 -> [Server Groups Center]
 配置方式有点儿奇葩, 需要先配置组, 然后保存, 然后再重新进入系统设置, 才能配置服务器实例
-![](/assets/jenkins_2017-06-20_111302.png)
+![](/assets/jenkins_2017-06-17_105328.png)
 
 ## 1. 任务配置
 
 新建自由风格任务时, 我们选择copy 配置, 从已有配置中copy 一份, 略加修改即可.   
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-local-local, 点击OK  
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-sftp-local, 点击OK  
 ![](/assets/jenkins_2017-06-20_111302.png)
 
 
