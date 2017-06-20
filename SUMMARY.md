@@ -21,6 +21,7 @@
       * [local war包, 远程tomcat](local-war53052c-yuan-cheng-tomcat.md)
       * [ftp war包, 远程tomcat](sftp-war53052c-yuan-cheng-tomcat.md)
       * [sftp war包, 远程tomcat](sftp-local.md)
+      * [local war, local tomcat](local-war-local-tomcat.md)
       * [http war , local tomcat](http-war-local-tomcat.md)
     * [源码部署](yuan-ma-bu-shu.md)
 * [vm](vm.md)
