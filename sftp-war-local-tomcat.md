@@ -13,7 +13,6 @@ sftp-local 模式自动化部署逻辑:
 配置方式有点儿奇葩, 需要先配置组, 然后保存, 然后再重新进入系统设置, 才能配置服务器实例
 ![](/assets/jenkins_2017-06-17_105328.png)
 
-
 ## 1. 任务配置
 
 点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
@@ -53,11 +52,33 @@ sftp-local 模式自动化部署逻辑:
 
 ### 1.2 构建
 
-#### 1.2.1 上传war包
+#### 1.2.1 清空下载目录
+点击 增加构建步骤 -> Execute Shell:
 
-通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
+```bash
+#!/bin/bash
+#DESC 清空下载目录
+#PARM 参数化参数: warDir, warName
 
-#### 1.2.2 上传war包到tomcat 服务器临时目录
+#检测文件是否存在, 文件存在, 则删除文件
+if [ -f "$warDir/$warName.war" ]; then
+  echo "[info ] delete the file $warDir/$warName "
+  rm -f $warDir/$warName
+fi
+```
+
+#### 1.2.2 从远程Linux 上下载war包
+
+点击 增加构建步骤 -> 远程FTP 下载
+虽然写着是ftp, 但是其实是sftp 下载, 这也是插件的一个bug 吧! 输入框内容不支持参数化定义变量, 需要手动将参数化变量的值输入进去, 这个有点儿恶心, 但是必须这样中, 因为脚本中用到了这些信息.
+* Target Server: 远程服务器信息, 需要预先在系统设置中设置
+* remoteFile: 远程文件全路径名称, 不能使用参数化变量
+* localFolder: 下载到本地哪个目录, 值为$warName 定义的目录, 不能使用参数化变量
+* fileName: 下载到本地文件名, 值为$warName.war, 不能使用参数化变量
+![](/assets/jenkins_2017-06-19_175225.png)
+
+
+#### 1.2.3 上传war包到tomcat 服务器临时目录
 构建模块中, 点击新增构建步骤 -> Execute Shell
 
 ```bash
@@ -79,7 +100,7 @@ else
 fi
 ```
 
-#### 1.2.3 重部署脚本
+#### 1.2.4 重部署脚本
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
@@ -170,7 +191,7 @@ else
 fi
 ```
 
-#### 1.2.4 备份项目脚本
+#### 1.2.5 备份项目脚本
 
 重新部署成功之后, 对新版本进行备份
 
@@ -207,7 +228,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-![](/assets/jenkins_2017-06-20_142030.png)
+![](/assets/jenkins_2017-06-20_145738.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
@@ -233,10 +254,10 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
-* 新建local-local 模式任务时, 只需要修改参数化定义的值即可,其它脚本均不用修改, 这就是参数化的好处
-* 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
+* 需要预先在系统设置中配置远程linux 服务器器信息, 只设置一次即可
+* 填写FTP 下载信息时, 不能使用参数化变量
+* 新建sftp-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改 FTP 步骤中的值
 
 ## 附:完整配置示例
-![](/assets/jenkins_local_local_2017-06-20_140642.png)
-
+![](/assets/jenkins_sftp_local_2017-06-20_141155.png)
 
