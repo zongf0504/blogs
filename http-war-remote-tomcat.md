@@ -1,11 +1,12 @@
-# 本地war包, 远程 tomcat
+# web 服务器获取war包, 远程 tomcat
 
-> local-remote 模式是指, tomcat 和 jenkins 安装在不同Linux服务器上, war 通过wincp工具直接上传到jenkins 所在Linux 服务器上. 这和local-local 方式很像, 不同的是, 需要将war包上传到远程Linux 服务器上, 并在远程Linux 服务器上执行脚本.
+> http-remote 模式是指, tomcat 和 jenkins 安装在不同Linux服务器上, war 存放在web 服务器上, 需要通过http 协议进行下载. 这和http-local 方式很像, 不同的是, 需要将war包上传到远程Linux 服务器上, 并在远程Linux 服务器上执行脚本.
 
-local-local 模式自动化部署逻辑:  
-1. 通过wincp 工具将war包上传到jenkins 所在服务器上的指定目录, 如/tmp  
-2. 通过Publish Over SSH 插件将war包上传到远程服务器, 并在远程服务器上执行重部署脚本  
-3. 重新部署成功之后, 在本地执行备份脚本
+http-local 模式自动化部署逻辑:  
+1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
+2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下 
+3. 通过Publish Over SSH 插件将war包上传到远程服务器, 并在远程服务器上执行重部署脚本  
+4. 重新部署成功之后, 在本地执行备份脚本
 
 ## 0. 配置远程linux服务器信息
 
