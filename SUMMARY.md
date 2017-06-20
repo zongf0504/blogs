@@ -22,6 +22,7 @@
       * [ftp war, local tomcat](ftp-war-local-tomcat.md)
       * [svn war , local tomcat](svn-war-local-tomcat.md)
       * [sftp war, local tomcat](sftp-war-local-tomcat.md)
+      * [local war , remote tomcat](local-war-remote-tomcat.md)
     * [源码部署](yuan-ma-bu-shu.md)
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
