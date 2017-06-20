@@ -23,7 +23,7 @@
       * [http war , remote tomcat](http-war-remote-tomcat.md)
       * [ftp war , remote tomcat](ftp-war-remote-tomcat.md)
       * [sftp war, remote tomcat](sftp-war-remote-tomcat.md)
-      * svn war, remote tomcat
+      * [svn war, remote tomcat](svn-war-remote-tomcat.md)
     * [源码部署](yuan-ma-bu-shu.md)
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
