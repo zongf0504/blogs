@@ -308,5 +308,5 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 * 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
 ## 附:完整配置示例
-![](/assets/jenkins_http_remote_2017-06-20_155018.png)
+![](/assets/jenkins_http_remote_2017-06-20_155019.png)
 
