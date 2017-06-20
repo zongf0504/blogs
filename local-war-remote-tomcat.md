@@ -185,7 +185,6 @@ fi
 * 重新部署成功之后, 对新版本进行备份
 
 ** 构建模块中, 点击新增构建步骤 -> Execute Shell **
-
 ```bash
 #!/bin/bash
 #DESC 部署成功后,备份项目
@@ -219,7 +218,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-![](/assets/jenkins_2017-06-20_142030.png)
+![](/assets/jenkins_2017-06-20_153310.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
@@ -227,7 +226,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ### 3.1 测试
 * 确定防火墙已关闭或者释放了tomcat 服务器端口7080
 * 浏览器中输入测试地址:
-![](/assets/jenkins_100_2017-06-20_135051.png)
+![](/assets/jenkins_102_2017-06-20_135132.png)
 
 ### 3.2 查看备份
 
@@ -240,15 +239,17 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [admin@localhost backup]# pwd
 /var/data/.jenkins/backup
-[admin@localhost backup]# ls ./LB-free-local-local/
+[admin@localhost backup]# ls ./LB-free-local-remote/
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
-* 新建local-local 模式任务时, 只需要修改参数化定义的值即可,其它脚本均不用修改, 这就是参数化的好处
+* 新建local-remote 模式任务时, 需要在系统设置中配置远程Linux 服务器信息
+* 复制此模式项目时, 只需要修改自定义参数和选择远程服务器即可
+* Publish Over SSH 中Source file 只能写相对路径, 不能写绝对路径,相对于当前工作空间目录, 否则会上传不了文件, 笔者在此栽了不少跟头. 
 * 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_local_remote_2017-06-20_152434.png)
 
 
