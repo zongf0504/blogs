@@ -51,7 +51,7 @@
 7. JDK: 选择jdk版本, 当在系统管理-&gt;Global Tool Configuration 配置多个JDK时才会有此选项,默认选中配置的第一个jdk, 因此在配置jdk时,建议将默认使用的jdk 配置为第一个. 此选项对于部署本地tomcat服务器有意义, 会影响启动tomcat 使用的jdk.
 8. 高级: 点击高级按钮, 还可以配置重试次数, 自定义工作空间等, 笔者通常都不配置这些.
 
-![](/assets/jenkins_2017-06-17_073616.png)
+![](/assets/jenkins_2017-06-20_165142.png)
 
 #### 2.2.2 源码管理
 
@@ -126,7 +126,7 @@
 * Remove prefix: 移除war包目录前缀
 * Remote Directory: war包上传到服务器的位置
 * Exec command: 远程服务器执行的脚本命令
-  ![](/assets/jenkins_2017-06-17_084015.png)
+![](/assets/jenkins_2017-06-20_165516.png)
 
 #### 2.2.5.3 备份项目
 
