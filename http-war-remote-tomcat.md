@@ -22,14 +22,14 @@ http-local 模式自动化部署逻辑:
 ## 1. 任务配置
 
 新建自由风格任务时, 我们选择copy 配置, 从已有配置中copy 一份, 略加修改即可.   
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-local-local, 点击OK  
-![](/assets/jenkins_2017-06-19_185353.png)
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-http-local, 点击OK 
+ ![](/assets/jenkins_2017-06-20_124656.png)
 
 ### 1.1 配置General
 
 #### 1.1.1 配置-项目名称
 
-笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-remote
+笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-http-remote
 
 #### 1.1.2 配置-任务描述
 
@@ -59,9 +59,55 @@ http-local 模式自动化部署逻辑:
 
 ### 1.2 构建
 
-#### 1.2.1 上传war包
+#### 1.2.1 从web 服务器上, 下载war包
 
-通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
+
+```
+#!/bin/bash
+#DESC 获取war 包脚本
+#PARM 参数化参数: $warName, $warDir, $serverHome
+
+#下载路径
+url=http://192.168.145.100:81/wars/LoadBalance.war 
+
+#输出日志
+echo "[info] begin to download project: $warName"
+
+#清楚原来的文件
+rm -f $warDir/$warName.war
+
+#下载war文件
+wget $url -O $warDir/$warName.war
+```
+
+#### 1.2.2 上传war包到tomcat 服务器临时目录
+
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
+
+```bash
+#!/bin/bash
+#DESC 上传war包到tomcat 服务器的临时目录
+#PARM 参数化参数: warDir, warName
+
+#检测文件是否存在, 文件不存在, 直接退出构建
+if [ ! -f "$warDir/$warName.war" ]; then
+  echo "[error] The file $warDir/$warName.war is not exsits !!!"
+  exit 1
+else
+
+  # 将war包移动到工作空间目录中
+  echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
+  rm -f $WORKSPACE/$warName.war 
+  mv $warDir/$warName.war $WORKSPACE
+
+  # 将工作空间中war包上传到tomcat服务器的temp 目录中
+  echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
+  rm -f $serverHome/temp/$warName.war
+  cp $WORKSPACE/$warName.war $serverHome/temp
+
+fi
+```
 
 #### 1.2.2 移动war包到当前工作空间中
 
@@ -226,9 +272,9 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 ## 2. 执行jenkins 任务
 
-1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
+1. 点击 jenkins -&gt; LB-free-http-remote -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-   ![](/assets/jenkins_2017-06-20_153310.png)
+![](/assets/jenkins_2017-06-20_154742.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
@@ -256,11 +302,11 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 
 ### 4. 注意:
 
-* 新建local-remote 模式任务时, 需要在系统设置中配置远程Linux 服务器信息
-* 复制此模式项目时, 只需要修改自定义参数和选择远程服务器即可
+* 新建http-remote 模式任务时, 需要在系统设置中配置远程Linux 服务器信息
+* 复制此模式项目时, 只需要修改自定义参数, 选择远程服务器, 修改下载地址
 * Publish Over SSH 中Source file 只能写相对路径, 不能写绝对路径,相对于当前工作空间目录, 否则会上传不了文件, 笔者在此栽了不少跟头. 
 * 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_http_remote_2017-06-20_155018.png)
 
