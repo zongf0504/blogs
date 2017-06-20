@@ -9,7 +9,8 @@ http-local 模式自动化部署逻辑:
 
 ## 1. 任务配置
 
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK![](/assets/jenkins_2017-06-19_152404.png)
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
+![](/assets/jenkins_2017-06-20_124131.png)
 
 ### 1.1 配置General
 
@@ -45,11 +46,33 @@ http-local 模式自动化部署逻辑:
 
 ### 1.2 构建
 
-#### 1.2.1 上传war包脚本
+#### 1.2.1 从web 服务器上, 下载war包
 
-* 将war包上传到tomcat 服务器中的临时目录temp 中
+构建模块中, 点击新增构建步骤 -> Execute Shell
 
 ```
+#!/bin/bash
+#DESC 获取war 包脚本
+#PARM 参数化参数: $warName, $warDir, $serverHome
+
+#下载路径
+url=http://192.168.145.100:81/wars/LoadBalance.war 
+
+#输出日志
+echo "[info] begin to download project: $warName"
+
+#清楚原来的文件
+rm -f $warDir/$warName.war
+
+#下载war文件
+wget $url -O $warDir/$warName.war
+
+```
+
+#### 1.2.2 上传war包到tomcat 服务器临时目录
+构建模块中, 点击新增构建步骤 -> Execute Shell
+
+```bash
 #!/bin/bash
 #DESC 上传war包到tomcat 服务器的临时目录
 #PARM 参数化参数: warDir, warName
@@ -58,16 +81,22 @@ http-local 模式自动化部署逻辑:
 if [ ! -f "$warDir/$warName.war" ]; then
   echo "[error] The file $warDir/$warName.war is not exsits !!!"
   exit 1
-
 else
-  # 拷贝war包到tomcat服务器的temp 目录中
-  cp -f $warDir/$warName.war $serverHome/temp
+    
+  # 将war包移动到工作空间目录中
+  echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
+  rm -f $WORKSPACE/$warName.war 
+  mv $warDir/$warName.war $WORKSPACE
+  
+  # 将工作空间中war包上传到tomcat服务器的temp 目录中
+  echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
+  rm -f $serverHome/temp/$warName.war
+  cp $WORKSPACE/$warName.war $serverHome/temp
 
 fi
 ```
 
-#### 1.2.2 重部署脚本
-
+#### 1.2.3 重部署脚本
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
@@ -78,13 +107,14 @@ war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
 6. 重新启动tomcat服务器  
 7. 检测服务器是否能启动成功
 
+构建模块中, 点击新增构建步骤 -> Execute Shell
 ```bash
 #!/bin/bash
 #DESC 部署项目
 #PARM 参数化参数: serverHome, testUrl, timeout, $warName
 
 #输出日志
-echo "[info] begin deploy project: $warName"
+echo "[info ] begin deploy project: $warName"
 
 ##################### 常量定义 #####################
 # 应用服务器相关文件夹
@@ -100,29 +130,38 @@ serverWork=$serverHome/work/Catalina/localhost
 if [ ! -f "$serverTemp/$warName.war" ]; then
   echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
   exit 1
+else
+   echo "[info ] Find file: $serverTemp/$warName.war";
+
 fi
 
 # 1. 关闭服务器
+echo "[info ] shutdown the server ..."
 ps -ef | grep -v grep | grep "$serverHome"| awk '{print $2}' | xargs kill -9
 
 # 2. 删除部署项目的war包和文件夹
-rm -rf $serverDeploy/$warName
-rm -f $serverDeploy/$warName.war
+echo "[info ] delete the old project: $serverDeploy/$warName $serverDeploy/$warName.war"
+rm -rf $serverDeploy/$warName $serverDeploy/$warName.war
 
 # 3. 清空服务器工作目录
+echo "[info ] clean the project work directory: $serverWork/$warName"
 rm -rf $serverWork/$warName
 
 # 4. 清空日志文件
+echo "[info ] clean the server log: $serverLog/catalina.out"
 echo "" > $serverLog/catalina.out
 
 # 5. 将新项目文件移动到服务器部署文件夹中
+echo "[info ] deploy the project: $serverTemp/$warName.war"
 mv $serverTemp/$warName.war $serverDeploy
 
 # 6. 重新启动服务器
+echo "[info ] start the server: $serverBin/startup.sh &"
 $serverBin/startup.sh &
 
 
 # 7. 监控服务器是否启动成功
+echo "[info ] monitor the server start ..."
 cost=0
 statusCode=0
 while [ $statusCode -ne 200 -a $cost -le $timeout ]
@@ -135,18 +174,20 @@ while [ $statusCode -ne 200 -a $cost -le $timeout ]
 
 if [ $statusCode -ne 200 ] ; then
   #如果启动不成功则杀死进程
-  echo "[faild] shutdown server ..."
+  echo "[error] the server startup faild ! begin shutdown the server "
   ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
   exit 1
 else
   #服务器启动成功
+  echo "[info ] the server startup successful !"
+  
   #tomcat服务器在本地时,需要添加此限制
   BUILD_ID=dontKillMe bash $serverBin/startup.sh
   exit 0
 fi
 ```
 
-#### 1.2.3 备份项目脚本
+#### 1.2.4 备份项目脚本
 
 重新部署成功之后, 对新版本进行备份
 
@@ -158,7 +199,7 @@ fi
 #PARM 全局自定义: $ITEM_BACKUP, $ITEM_BID_FILE
 
 #输出日志
-echo "[info] begin backup project: $warName"
+echo "[info ] begin backup project: $warName"
 
 # 备份文件夹
 bk_dir=$ITEM_BACKUP/$JOB_NAME
@@ -171,40 +212,12 @@ else
 fi
 
 # 备份文件
-mv $warDir/$warName.war $bk_dir
+mv $WORKSPACE/$warName.war $bk_dir
 cp $bk_dir/$warName.war $bk_dir/$warName.war.$BUILD_NUMBER
 
 # 记录成功的id
 date_time=`date "+%Y%m%d-%H%M"`
-echo "$date_time $BUILD_NUMBER  $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
-```
-
-## 2. 执行jenkins 任务
-
-1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
-2. 输入部署描述信息, 点击
-   ![](/assets/jenkins_2017-06-19_163752.png)
-3. 点击版本号 \#15 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
-
-## 3. 测试:
-
-### 3.1 测试
-
-浏览器中输入测试地址, 能看到页面证明部署成. 此时得注意, 看服务器防火墙是否关闭或者测试端口是否释放了, 否则会被防火墙拦截的.
-
-### 3.2 查看备份
-
-通过linux 远程工具登录Linux 服务器, 可以进入备份文件夹, 会发现新增了三个文件
-
-* LoadBalance.war: 上次重部署成功的war包
-* LoadBalance.war.1: 部署成功的war记录
-* SUCCESSBID: 部署成功的记录
-
-```bash
-[root@localhost backup]# pwd
-/var/data/.jenkins/backup
-[root@localhost backup]# ls ./LB-free-local-local/
-LoadBalance.war  LoadBalance.war.14  SUCCESSBID
+echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
 ### 4. 注意:
