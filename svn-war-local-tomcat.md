@@ -1,15 +1,16 @@
 # svn 上获取war包, 本地tomcat
+
 > svn-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 需要从svn 服务器上下载. 此种模式和其它模式类似, 先从svn 上下载war包到jenkins 所在服务器上, 然后就转换成了local-local 模式, 但是不同的是, svn 并不是在构建模块进行下载war包的, 而是在源码模块儿中配置下载的.
 
-svn-local 模式自动化部署逻辑:
-1. 通过jenkins subversion 插件下载到jenkins 所在服务器上的指定目录, 如/tmp
-2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下
-3. 执行重部署tomcat 脚本
+svn-local 模式自动化部署逻辑:  
+1. 通过jenkins subversion 插件下载到jenkins 所在服务器上的指定目录, 如/tmp  
+2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下  
+3. 执行重部署tomcat 脚本  
 4. 重新部署成功之后, 执行备份脚本
 
 ## 1. 任务配置
 
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK  
 ![](/assets/jenkins_2017-06-19_182623.png)
 
 ### 1.1 配置General
@@ -24,7 +25,7 @@ svn-local 模式自动化部署逻辑:
 
 #### 1.1.3 配置-旧的构建丢弃策略
 
-指定旧的构建记录删除策略, 默认事不删除的, 这样会占用大量的磁盘空间, 没有太大意义. 笔者设置删除策略为: 保持构建的最大个数: 10, 也就是说最多保留10条构建记录
+指定旧的构建记录删除策略, 默认事不删除的, 这样会占用大量的磁盘空间, 没有太大意义. 笔者设置删除策略为: 保持构建的最大个数: 10, 也就是说最多保留3条构建记录
 
 #### 1.1.4 配置-参数化构建过程
 
@@ -45,20 +46,24 @@ svn-local 模式自动化部署逻辑:
 当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
 
 ### 1.2 源码管理
+
 #### 1.2.1 输入svn 服务器的相关信息
+
 * Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建议在svn上一个war包创建一个目录,因为下载时, 会将整个目录中的文件全部下载到本地 
 * Credentials: 用户身份认证信息
 * Local module directory: 点代表的是$WORKSPACE 目录
-![](/assets/jenkins_2017-06-19_183516.png)
+  ![](/assets/jenkins_2017-06-19_183516.png)
 
 #### 1.2.2 填写用户身份信息
-如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略.
+
+如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略.  
 ![](/assets/jenkins_2017-06-19_182912.png)
 
 ### 1.3 构建
 
 #### 1.3.1 上传war包到tomcat 服务器临时目录
-构建模块中, 点击新增构建步骤 -> Execute Shell
+
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
 
 ```bash
 #!/bin/bash
@@ -70,7 +75,7 @@ if [ ! -f "$WORKSPACE/$warName.war" ]; then
   echo "[error] The file $WORKSPACE/$warName.war is not exsits !!!"
   exit 1
 else
-    
+
   # 将工作空间中war包上传到tomcat服务器的temp 目录中
   echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
   rm -f $serverHome/temp/$warName.war
@@ -80,6 +85,7 @@ fi
 ```
 
 #### 1.3.2 重部署脚本
+
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
@@ -90,7 +96,8 @@ war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
 6. 重新启动tomcat服务器  
 7. 检测服务器是否能启动成功
 
-构建模块中, 点击新增构建步骤 -> Execute Shell
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
+
 ```bash
 #!/bin/bash
 #DESC 部署项目
@@ -163,7 +170,7 @@ if [ $statusCode -ne 200 ] ; then
 else
   #服务器启动成功
   echo "[info ] the server startup successful !"
-  
+
   #tomcat服务器在本地时,需要添加此限制
   BUILD_ID=dontKillMe bash $serverBin/startup.sh
   exit 0
@@ -207,15 +214,16 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-![](/assets/jenkins_2017-06-20_144010.png)
+   ![](/assets/jenkins_2017-06-20_144010.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
 
 ### 3.1 测试
+
 * 确定防火墙已关闭或者释放了tomcat 服务器端口7080
 * 浏览器中输入测试地址:
-![](/assets/jenkins_100_2017-06-20_135051.png)
+  ![](/assets/jenkins_100_2017-06-20_135051.png)
 
 ### 3.2 查看备份
 
@@ -233,11 +241,11 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
+
 * 新建svn-local 模式任务时, 不仅需要修改参数化定义的值即可,还得修改源码模块儿的svn 信息
 * svn 服务有两种方式, 体现在url 上是 http:// 和 svn:// , 当路径为 svn:// 时, 触发器不能使用Poll SCM 模式, 因为无论是否发生变化, 都会进行重新部署, 这或许是jenkins 不能解决的一个bug吧.
 
-
 ## 附:完整配置示例
-![](/assets/jenkins_svn_local_2017-06-20_141025.png)
 
+![](/assets/jenkins_svn_local_2017-06-20_141025.png)
 
