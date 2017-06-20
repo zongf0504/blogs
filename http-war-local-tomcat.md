@@ -1,22 +1,23 @@
 # http 上获取war包, 本地tomcat
+
 > http-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 存放在web 服务器上, 需要通过http 协议方式获取. 通过wget 命令将war包下载到本地之后, 就转换成了local-local模式了.
 
-http-local 模式自动化部署逻辑:
-1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
-2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下
-3. 执行重部署tomcat 脚本
+http-local 模式自动化部署逻辑:  
+1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp  
+2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下  
+3. 执行重部署tomcat 脚本  
 4. 重新部署成功之后, 执行备份脚本
 
 ## 1. 任务配置
 
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目, 点击OK  
 ![](/assets/jenkins_2017-06-20_124131.png)
 
 ### 1.1 配置General
 
 #### 1.1.1 配置-项目名称
 
-笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-local
+笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-http-local
 
 #### 1.1.2 配置-任务描述
 
@@ -48,7 +49,7 @@ http-local 模式自动化部署逻辑:
 
 #### 1.2.1 从web 服务器上, 下载war包
 
-构建模块中, 点击新增构建步骤 -> Execute Shell
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
 
 ```
 #!/bin/bash
@@ -66,11 +67,11 @@ rm -f $warDir/$warName.war
 
 #下载war文件
 wget $url -O $warDir/$warName.war
-
 ```
 
 #### 1.2.2 上传war包到tomcat 服务器临时目录
-构建模块中, 点击新增构建步骤 -> Execute Shell
+
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
 
 ```bash
 #!/bin/bash
@@ -82,12 +83,12 @@ if [ ! -f "$warDir/$warName.war" ]; then
   echo "[error] The file $warDir/$warName.war is not exsits !!!"
   exit 1
 else
-    
+
   # 将war包移动到工作空间目录中
   echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
   rm -f $WORKSPACE/$warName.war 
   mv $warDir/$warName.war $WORKSPACE
-  
+
   # 将工作空间中war包上传到tomcat服务器的temp 目录中
   echo "[info ] copy $warDir/$warName.war to $serverHome/temp ..."
   rm -f $serverHome/temp/$warName.war
@@ -97,6 +98,7 @@ fi
 ```
 
 #### 1.2.3 重部署脚本
+
 war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:  
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
@@ -107,7 +109,8 @@ war包上传到tomcat 临时目录之后, 执行重新部署tomcat 脚本:
 6. 重新启动tomcat服务器  
 7. 检测服务器是否能启动成功
 
-构建模块中, 点击新增构建步骤 -> Execute Shell
+构建模块中, 点击新增构建步骤 -&gt; Execute Shell
+
 ```bash
 #!/bin/bash
 #DESC 部署项目
@@ -180,7 +183,7 @@ if [ $statusCode -ne 200 ] ; then
 else
   #服务器启动成功
   echo "[info ] the server startup successful !"
-  
+
   #tomcat服务器在本地时,需要添加此限制
   BUILD_ID=dontKillMe bash $serverBin/startup.sh
   exit 0
@@ -230,9 +233,10 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ## 4. 测试:
 
 ### 4.1 测试
+
 * 确定防火墙已关闭或者释放了tomcat 服务器端口7080
 * 浏览器中输入测试地址:
-![](/assets/jenkins_100_2017-06-20_135051.png)
+  ![](/assets/jenkins_100_2017-06-20_135051.png)
 
 ### 4.2 查看备份
 
@@ -250,10 +254,11 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 5. 注意:
+
 * 新建httpd-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改下载war包中url的路径的值
 * 可以将下载war包中的url 也做成参数化变量
 
 ## 附:完整配置示例
-![](/assets/jenkins_http_local_2017-06-20_135605.png)
 
+![](/assets/jenkins_http_local_2017-06-20_135605.png)
 
