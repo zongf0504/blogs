@@ -3,7 +3,7 @@
 
 http-local 模式自动化部署逻辑:
 1. 通过wget 命令, 先将war包下载到jenkins 所在服务器上的指定目录, 如/tmp
-2. 将war包拷贝到tomcat 临时目录, temp 目录下
+2. 将war包移动到工作空间中, 再拷贝到tomcat的 temp 目录下
 3. 执行重部署tomcat 脚本
 4. 重新部署成功之后, 执行备份脚本
 
@@ -227,8 +227,6 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
    ![](/assets/jenkins_2017-06-20_135845.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
-
-
 ## 4. 测试:
 
 ### 4.1 测试
@@ -252,11 +250,10 @@ LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 5. 注意:
-* 需要首先在系统设置中配置远程linux 服务器器信息
-* 填写FTP 下载信息时, 不能使用参数化变量
-* 新建sftp-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改 FTP 步骤中的值
+* 新建httpd-local 模式任务时, 不仅需要修改参数化定义的值, 还需要修改下载war包中url的路径的值
+* 可以将下载war包中的url 也做成参数化变量
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_http_local_2017-06-20_135605.png)
 
 
