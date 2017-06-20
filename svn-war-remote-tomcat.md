@@ -22,14 +22,14 @@ svn-remote 模式自动化部署逻辑:
 ## 1. 任务配置
 
 新建自由风格任务时, 我们选择copy 配置, 从已有配置中copy 一份, 略加修改即可.   
-点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-local-local, 点击OK  
-![](/assets/jenkins_2017-06-19_185353.png)
+点击jenkins ,新建自有风格的任务, 输入任务名称, 选中自有风格项目,copy from 输入LB-svn-local, 点击OK  
+![](/assets/jenkins_2017-06-20_111705.png)
 
 ### 1.1 配置General
 
 #### 1.1.1 配置-项目名称
 
-笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-local-remote
+笔者认为这个应该叫任务\(job\)名称更合适, 因为这个名称就是创建任务时填写的名称, jenkins用于标识它的内置变量也是 JOB\_NAME. 此名称一定要有一定的规则, 笔者命名为:LB-free-svn-remote
 
 #### 1.1.2 配置-任务描述
 
@@ -57,36 +57,23 @@ svn-remote 模式自动化部署逻辑:
 
 当系统设置中配置了多个jdk 时, 此时需要选择jdk 版本号, 笔者选择的是 jdk 1.7
 
-### 1.2 构建
+### 1.2 源码管理
 
-#### 1.2.1 上传war包
+#### 1.2.1 输入svn 服务器的相关信息
 
-通过Wincp 工具将war包上传到jenkins 所在服务器的$warDir 目录, 如/tmp, 此步骤不是配置, 而是每次执行任务前应该操作的部分
+* Repository URL 输入war包所在svn服务器父目录的svn 访问地址, 建议在svn上一个war包创建一个目录,因为下载时, 会将整个目录中的文件全部下载到本地 
+* Credentials: 用户身份认证信息
+* Local module directory: 点代表的是$WORKSPACE 目录
+  ![](/assets/jenkins_2017-06-19_183516.png)
 
-#### 1.2.2 移动war包到当前工作空间中
+#### 1.2.2 填写用户身份信息
 
-因为不同的任务, 工作空间是不同的,所以将war 直接上传到临时目录$warDir 比较方便.而Publish Overs SSH 插件只能上传当前工作空间及其子目录中的文件, 所以此处需要将war包从临时目录中移动到当前工作空间中.
+如果服务器svn 服务器必须登录的话,选择 Credetials, 如果无可选择的, 则点击add 新增svn 认证信息, 此处使用用户名密码认证策略.  
+![](/assets/jenkins_2017-06-19_182912.png)
 
-** 构建模块中, 点击新增构建步骤 -&gt; Execute Shell **
 
-```bash
-#!/bin/bash
-#DESC 上传war包到tomcat 服务器的临时目录
-#PARM 参数化参数: warDir, warName
-
-#检测文件是否存在, 文件不存在, 直接退出构建
-if [ ! -f "$warDir/$warName.war" ]; then
-  echo "[error] The file $warDir/$warName.war is not exsits !!!"
-  exit 1
-else
-
-  # 将war包移动到工作空间目录中
-  echo "[info ] move $warDir/$warName.war to $WORKSPACE ..."
-  rm -f $WORKSPACE/$warName.war 
-  mv $warDir/$warName.war $WORKSPACE
-
-fi
-```
+### 1.3 构建
+因为我们配置svn的 Local module directory 为. , 即工作空间目录, 所以不需要对war做移动处理.
 
 #### 1.2.3 上传war包到远程服务器, 并在远程服务器上执行重部署脚本
 
@@ -228,7 +215,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
-   ![](/assets/jenkins_2017-06-20_153310.png)
+  ![](/assets/jenkins_2017-06-20_163215.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
 ## 3. 测试:
@@ -250,17 +237,18 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 ```bash
 [admin@localhost backup]# pwd
 /var/data/.jenkins/backup
-[admin@localhost backup]# ls ./LB-free-local-remote/
+[admin@localhost backup]# ls ./LB-free-svn-remote/
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
 ### 4. 注意:
 
 * 新建local-remote 模式任务时, 需要在系统设置中配置远程Linux 服务器信息
-* 复制此模式项目时, 只需要修改自定义参数和选择远程服务器即可
+* 复制此模式项目时, 不仅需要修改参数化定义的值即可,还得修改源码模块儿的svn 信息
 * Publish Over SSH 中Source file 只能写相对路径, 不能写绝对路径,相对于当前工作空间目录, 否则会上传不了文件, 笔者在此栽了不少跟头. 
-* 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
+* svn 服务有两种方式, 体现在url 上是 http:// 和 svn:// , 当路径为 svn:// 时, 触发器不能使用Poll SCM 模式, 因为无论是否发生变化, 都会进行重新部署, 这或许是jenkins 不能解决的一个bug吧.
+* svn 服务器建议一个war包放在一个单独的文件夹中, 因为svn 下载的时候是以文件夹为单位的, 会下载同一个文件夹中的所有文件.
 
 ## 附:完整配置示例
-
+![](/assets/jenkins_svn_remote_2017-06-20_163053.png)
  
