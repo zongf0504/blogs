@@ -196,21 +196,21 @@ date_time=`date "+%Y%m%d-%H%M"`
 echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
 ```
 
-## 3. 执行jenkins 任务
+## 2. 执行jenkins 任务
 
 1. 点击 jenkins -&gt; LB-free-local-local -&gt;  Build with Parameters 
 2. 输入部署描述信息, 点击立即构建
 ![](/assets/jenkins_2017-06-20_142030.png)
 3. 点击版本号 \#1 右边的小三角, 会弹出菜单, 点击 console output, 可以查看日志输出
 
-## 4. 测试:
+## 3. 测试:
 
-### 4.1 测试
+### 3.1 测试
 * 确定防火墙已关闭或者释放了tomcat 服务器端口7080
 * 浏览器中输入测试地址:
 ![](/assets/jenkins_100_2017-06-20_135051.png)
 
-### 4.2 查看备份
+### 3.2 查看备份
 
 通过linux 远程工具登录Linux 服务器, 可以进入备份文件夹, 会发现新增了三个文件
 
@@ -225,7 +225,7 @@ echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID
 LoadBalance.war LoadBalance.war.1 SUCCESSBID
 ```
 
-### 5. 注意:
+### 4. 注意:
 * 新建local-local 模式任务时, 只需要修改参数化定义的值即可,其它脚本均不用修改, 这就是参数化的好处
 * 每次执行任务前, 都需要通过wincp 工具将war包上传到jenkins 所在服务器上的$warDir目录中, 笔者设置上的是/tmp
 
