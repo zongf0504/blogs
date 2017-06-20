@@ -1,4 +1,4 @@
-![](/assets/jenkins_svn_local_2017-06-20_141024.png)# svn 上获取war包, 本地tomcat
+# svn 上获取war包, 本地tomcat
 > svn-local 模式是指, tomcat 和 jenkins 安装在同一台服务器上, war 需要从svn 服务器上下载. 此种模式和其它模式类似, 先从svn 上下载war包到jenkins 所在服务器上, 然后就转换成了local-local 模式, 但是不同的是, svn 并不是在构建模块进行下载war包的, 而是在源码模块儿中配置下载的.
 
 svn-local 模式自动化部署逻辑:
