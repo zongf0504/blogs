@@ -131,8 +131,36 @@
 #### 2.2.5.3 备份项目
 
 笔者习惯于将成功部署后的war包记录归档, 并简单记录日志,所以部署成功之后, 还会执行一个备份脚本.由于备份脚本是在本地执行的, 所以构建步骤选择 Execute shell 即可  
-![](/assets/jenkins_2017-06-17_084100.png)
 
+备份脚本:
+```bash
+#!/bin/bash
+#DESC 部署成功后,备份项目
+#PARM 参数化参数: $warName, $warDir
+#PARM jk内置参数: $JOB_NAME, $BUILD_NUMBER
+#PARM 全局自定义: $ITEM_BACKUP, $ITEM_BID_FILE
+
+#输出日志
+echo "[info ] begin backup project: $warName"
+
+# 备份文件夹
+bk_dir=$ITEM_BACKUP/$JOB_NAME
+
+# 创建备份文件夹: 如果文件夹不存在则创建文件夹, 否则删除原来的文件$warName.war
+if [ ! -d "$bk_dir" ]; then
+  mkdir -p $bk_dir
+else
+  rm -f $bk_dir/$warName.war
+fi
+
+# 备份文件
+mv $WORKSPACE/$warName.war $bk_dir
+cp $bk_dir/$warName.war $bk_dir/$warName.war.$BUILD_NUMBER
+
+# 记录成功的id
+date_time=`date "+%Y%m%d-%H%M"`
+echo "$date_time $BUILD_NUMBER $description" >> $ITEM_BACKUP/$JOB_NAME/$ITEM_BID_FILE
+```
 #### 2.2.6 构建后操作
 
 构建成功之后, 可以进行邮件通知, 将war包上传到ftp, linux 服务器等操作.
