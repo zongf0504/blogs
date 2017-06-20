@@ -23,6 +23,7 @@
       * [sftp war包, 远程tomcat](sftp-local.md)
       * [local war, local tomcat](local-war-local-tomcat.md)
       * [http war , local tomcat](http-war-local-tomcat.md)
+      * [ftp war, local tomcat](ftp-war-local-tomcat.md)
     * [源码部署](yuan-ma-bu-shu.md)
 * [vm](vm.md)
   * [安装 Centos 6.8](vm/an-zhuang-centos-6-8.md)
