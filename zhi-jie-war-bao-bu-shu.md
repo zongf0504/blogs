@@ -117,6 +117,86 @@
 本地tomcat 依然是执行本地脚本即可, 因此构建步骤还是选择Execute Shell  
 ![](/assets/jenkins_2017-06-17_085024.png)
 
+本地重部署脚本:
+```bash
+#!/bin/bash
+#DESC 部署项目
+#PARM 参数化参数: serverHome, testUrl, timeout, $warName
+
+#输出日志
+echo "[info ] begin deploy project: $warName"
+
+##################### 常量定义 #####################
+# 应用服务器相关文件夹
+serverBin=$serverHome/bin
+serverLog=$serverHome/logs
+serverTemp=$serverHome/temp
+serverDeploy=$serverHome/webapps
+serverWork=$serverHome/work/Catalina/localhost
+
+
+##################### 执行脚本 #####################
+# 0. 检测文件是否存在
+if [ ! -f "$serverTemp/$warName.war" ]; then
+  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
+  exit 1
+else
+   echo "[info ] Find file: $serverTemp/$warName.war";
+
+fi
+
+# 1. 关闭服务器
+echo "[info ] shutdown the server ..."
+ps -ef | grep -v grep | grep "$serverHome"| awk '{print $2}' | xargs kill -9
+
+# 2. 删除部署项目的war包和文件夹
+echo "[info ] delete the old project: $serverDeploy/$warName $serverDeploy/$warName.war"
+rm -rf $serverDeploy/$warName $serverDeploy/$warName.war
+
+# 3. 清空服务器工作目录
+echo "[info ] clean the project work directory: $serverWork/$warName"
+rm -rf $serverWork/$warName
+
+# 4. 清空日志文件
+echo "[info ] clean the server log: $serverLog/catalina.out"
+echo "" > $serverLog/catalina.out
+
+# 5. 将新项目文件移动到服务器部署文件夹中
+echo "[info ] deploy the project: $serverTemp/$warName.war"
+mv $serverTemp/$warName.war $serverDeploy
+
+# 6. 重新启动服务器
+echo "[info ] start the server: $serverBin/startup.sh &"
+$serverBin/startup.sh &
+
+
+# 7. 监控服务器是否启动成功
+echo "[info ] monitor the server start ..."
+cost=0
+statusCode=0
+while [ $statusCode -ne 200 -a $cost -le $timeout ]
+  do
+    statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
+    echo "cost:$cost ms, statusCode:$statusCode"
+    cost=$(( $cost + 5 ))
+    sleep 5
+  done
+
+if [ $statusCode -ne 200 ] ; then
+  #如果启动不成功则杀死进程
+  echo "[error] the server startup faild ! begin shutdown the server "
+  ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
+  exit 1
+else
+  #服务器启动成功
+  echo "[info ] the server startup successful !"
+  
+  #tomcat服务器在本地时,需要添加此限制
+  BUILD_ID=dontKillMe bash $serverBin/startup.sh
+  exit 0
+fi
+```
+
 ##### 2.2.5.2.2 远程应用服务器\(tomcat\)
 
 远程Linux服务器上的tomcat, 需要借助Publish Over SSH Plugin 插件来进行远程部署
@@ -127,6 +207,83 @@
 * Remote Directory: war包上传到服务器的位置
 * Exec command: 远程服务器执行的脚本命令
 ![](/assets/jenkins_2017-06-20_165516.png)
+
+远程部署脚本:
+```bash
+#!/bin/bash
+#DESC 部署项目
+#PARM 参数化参数: serverHome, testUrl, timeout, $warName
+
+#输出日志
+echo "[info ] begin deploy project: $warName"
+
+##################### 常量定义 #####################
+# 应用服务器相关文件夹
+serverBin=$serverHome/bin
+serverLog=$serverHome/logs
+serverTemp=$serverHome/temp
+serverDeploy=$serverHome/webapps
+serverWork=$serverHome/work/Catalina/localhost
+
+
+##################### 执行脚本 #####################
+# 0. 检测文件是否存在
+if [ ! -f "$serverTemp/$warName.war" ]; then
+  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
+  exit 1
+else
+   echo "[info ] Find file: $serverTemp/$warName.war";
+
+fi
+
+# 1. 关闭服务器
+echo "[info ] shutdown the server ..."
+ps -ef | grep -v grep | grep "$serverHome"| awk '{print $2}' | xargs kill -9
+
+# 2. 删除部署项目的war包和文件夹
+echo "[info ] delete the old project: $serverDeploy/$warName $serverDeploy/$warName.war"
+rm -rf $serverDeploy/$warName $serverDeploy/$warName.war
+
+# 3. 清空服务器工作目录
+echo "[info ] clean the project work directory: $serverWork/$warName"
+rm -rf $serverWork/$warName
+
+# 4. 清空日志文件
+echo "[info ] clean the server log: $serverLog/catalina.out"
+echo "" > $serverLog/catalina.out
+
+# 5. 将新项目文件移动到服务器部署文件夹中
+echo "[info ] deploy the project: $serverTemp/$warName.war"
+mv $serverTemp/$warName.war $serverDeploy
+
+# 6. 重新启动服务器
+echo "[info ] start the server: $serverBin/startup.sh &"
+$serverBin/startup.sh &
+
+
+# 7. 监控服务器是否启动成功
+echo "[info ] monitor the server start ..."
+cost=0
+statusCode=0
+while [ $statusCode -ne 200 -a $cost -le $timeout ]
+  do
+    statusCode=`curl -o /dev/null -s -w %{http_code} $testUrl`
+    echo "cost:$cost ms, statusCode:$statusCode"
+    cost=$(( $cost + 5 ))
+    sleep 5
+  done
+
+if [ $statusCode -ne 200 ] ; then
+  #如果启动不成功则杀死进程
+  echo "[error] the server startup faild ! begin shutdown the server "
+  ps -ef | grep -v grep | grep "$serverName" | awk '{print $2}' | xargs kill -9
+  exit 1
+else
+  #服务器启动成功
+  echo "[info ] the server startup successful !"
+  exit 0
+fi
+```
 
 #### 2.2.5.3 备份项目
 
