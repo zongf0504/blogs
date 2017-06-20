@@ -84,10 +84,9 @@ fi
 
 #### 1.2.2 上传war包到远程服务器, 并在远程服务器上执行重部署脚本
 
-* 由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功 
+由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功 
 
-* 重部署脚本逻辑：
-
+**重部署脚本逻辑：**
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
 2. 删除webapps 目录中的war文件和文件夹  
@@ -98,8 +97,7 @@ fi
 7. 检测服务器是否能启动成功
 
 
-* 点击新增构建步骤-> Send files or execute commonds over SSH.
-
+** 点击新增构建步骤-> Send files or execute commonds over SSH. **
 * Name: 选择要上传或执行脚本的远程Linux服务器, 这个是在系统设置中配置的
 * Source files: 要上传的文件, 不支持绝对路径, 只能写相对路径, 相对目录为当前工作空间
 * Remove Prefix: 如果Source files 填写的包含路径, 如target/LoadBalance.war, 那么这个地方就建议移除前缀target/ 
