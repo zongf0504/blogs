@@ -87,6 +87,7 @@ fi
 * 由于tomcat 在远程linux 服务器, 所以需要将war包上传到远程tomcat 服务器的temp 目录下, 然后让远程服务器执行重新部署tomcat 脚本, 然后监测远程tomcat 是否重新部署成功 
 
 * 重部署脚本逻辑：
+
 0. 检测temp 目录中war 文件是否存在  
 1. 停止 tomcat 服务器  
 2. 删除webapps 目录中的war文件和文件夹  
