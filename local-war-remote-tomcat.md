@@ -105,7 +105,7 @@ fi
 * Exec Command: 要执行的远程linux 脚本, 此脚本和local-local 模式基本相同, 唯一不同的就是远程服务器不需要执行: BUILD_ID=dontKillMe bash $serverBin/startup.sh
 * 需要勾选高级中的: Fail the build if an error occurs, 意思是如果出现错误的话, 就停止构建.
 
-远程重部署脚本:
+** 远程重部署脚本: **
 ```bash
 #!/bin/bash
 #DESC 部署项目
