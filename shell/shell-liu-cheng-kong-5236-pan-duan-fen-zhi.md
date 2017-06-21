@@ -77,7 +77,7 @@ fi
 [admin@localhost shell]$ 
 ```
 
-## case
+## 2. case 多分支选择
 case 是多分枝选择结构, 即一个判断表达式可以有多种匹配选项.
 * ;; 为跳出case 语句,类似于java 中的break;
 * * 表示什么都不匹配时执行.
