@@ -69,7 +69,6 @@ ls /hhhh 执行结果: 2
 上次后台运行进程id: 22853
 [admin@localhost shell]$
  ```
-*
 
 ## 4. 脚本变量
 
