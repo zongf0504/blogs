@@ -110,7 +110,7 @@ unset name
 echo "name:$name"
 ```
 
-测试输出:
+** 测试输出: **
 ```bash
 \[admin@localhost shell\]$ ./var02.sh   
 name:java  
