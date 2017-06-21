@@ -54,8 +54,8 @@ echo "ls /hhhh 执行结果: $?"
 # 输出当前脚本进程id
 echo "当前进程PID: $$"
 
-ls / &> /dev/null &
 # 输出上次后台运行进程id
+ls / &> /dev/null &
 echo "上次后台运行进程id: $!"
 ```
 
