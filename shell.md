@@ -20,7 +20,7 @@ bash 是Linux 下的标准shell , 通常说的shell 也就是bash
 ### 2.1. 创建一个helloworld 脚本
 使用vim 等文本编辑器, 创建一个helloword 脚本, 
 
-``` bash
+```bash
 #!/bin/bash
 
 echo "hello,world!"
