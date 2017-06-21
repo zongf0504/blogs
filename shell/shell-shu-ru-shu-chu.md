@@ -96,6 +96,7 @@ echo -e 'name:\t$name'
 name="zhangsan"
 echo 'name:$name'
 ```
+
 #### 2.1.5 输出不换行
 默认一条echo 语句执行完会添加一个换行符,若想不输出换行符, 可以在开启转义功能的前提下末尾添加\c
 
