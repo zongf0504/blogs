@@ -58,8 +58,8 @@ brief:zhang
 
 ## 2. 标准输出
 shell 脚本中提供了两个用户输出的指令:
-* echo: 输出一行字符串
-* printf: 格式化输出字符串
+* echo: 输出一行字符串, 默认添加换行符
+* printf: 格式化输出字符串, 默认不添加换行符
 
 ### 2.1 echo 指令
 echo 指令有三种语法格式:
@@ -145,6 +145,7 @@ hello,world!
 [admin@localhost shell]$ 
 ```
 
+### 2.2 printf 指令
 
 
 
