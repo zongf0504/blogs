@@ -47,7 +47,7 @@ echo "${books[@]}"
 ```bash
 echo "length:${#name[*]}"
 echo "length:${#name[@]}"
-``
+```
 
 ## 3. 数组删除
 ### 3.1 删除数组元素
