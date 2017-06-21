@@ -127,7 +127,7 @@ echo "删除books 数组后, books:$books"
 
 ```
 
-测试输出:
+** 测试输出: **
 ```bash
 [admin@localhost shell]$ ./array.sh 
 数组元素引用:
