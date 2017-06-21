@@ -53,6 +53,10 @@ echo "ls /hhhh 执行结果: $?"
 
 # 输出当前脚本进程id
 echo "当前进程PID: $$"
+
+ls / &> /dev/null &
+# 输出上次后台运行进程id
+echo "上次后台运行进程id: $!"
 ```
 
 ** 输出结果: **
@@ -61,10 +65,10 @@ echo "当前进程PID: $$"
 ls / 执行结果: 0
 ls /hhhh 执行结果: 2
 当前进程PID: 22798
+上次后台运行进程id: 22853
 [admin@localhost shell]$
  ```
-   
-
+*
 
 ## 4. 脚本变量
 
