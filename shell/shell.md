@@ -103,7 +103,11 @@ unset name
 echo "name:$name"
 ```
 测试输出:
-
+[admin@localhost shell]$ ./var02.sh 
+name:java
+book:javaScript
+name:
+[admin@localhost shell]$ 
 
 
 
