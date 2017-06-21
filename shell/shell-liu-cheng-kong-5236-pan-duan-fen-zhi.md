@@ -185,14 +185,6 @@ Please input your chooise: 1
 | [ -n str ] | 判断非空,若字符串不为空,则返回true, 否则返回false |
 | [ s1 == s2 ] | 判断相等, 若s1和s2相等,则返回true, 否则返回false |
 | [ s1 != s2 ] | 判断不相等, 若s1和s2不相等,则返回true, 否则返回false |
-| [  ] |  |
-| [  ] |  |
-| [  ] |  |
-
-
-
-
-
 
 
 ### 3.3 逻辑表达式
@@ -205,7 +197,7 @@ Please input your chooise: 1
 | [ !expr ] | 逻辑非, 当表达式为假返回true, 否则返回false |
 
 
-### 3.4 文件判断
+### 3.4 单个文件判断
 **常用判断表达式**
 
 | 表达式 | 判断逻辑 |
@@ -219,8 +211,6 @@ Please input your chooise: 1
 | [ -w file ] | 判读当前用户对文件是否有写权限,若拥有,则返回true, 否则返回false  |
 | [ -x file ] | 判断当前用户对文件是否有执行权限,若拥有,则返回true, 否则返回false  |
 
-
-### 3.5 文件
 
 
 
