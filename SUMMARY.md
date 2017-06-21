@@ -40,5 +40,6 @@
 * [Linux](linux.md)
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
 * [Shell](shell.md)
-  * [Shell 变量](shell/shell.md)
+  * [Shell  变量](shell/shell.md)
+  * [数组变量](shu-zu.md)
 
