@@ -38,7 +38,7 @@ else
 fi  
 ```
 
-### 2. if-elif=else-fi
+### 3. if-elif=else-fi
 * 由于if 有两种写法, 所以对应的if-elif-else-fi 也有两种写法, 笔者就只列出第一种结构了
 * 含义: 如果条件表达式一为true,则执行程序块儿一,如果条件表达式二为true,则执行代码块儿二, 否则执行程序块儿三
 
@@ -54,6 +54,94 @@ fi
 ```
 
 ## case
+case 是多分枝选择结构, 即一个判断表达式可以有多种匹配选项.
+* ;; 为跳出case 语句,类似于java 中的break;
+* * 表示什么都不匹配时执行.
 
+### 1. case 结构
+```bash
+case 字符串表达式 in  
+  "值1")  
+    程序块儿  
+    ;; #跳出case结构,相当于break;  
+  "值2")  
+    程序块儿  
+    ;;  
+   ...  
+  *)  
+    程序块儿 (不满足以上所有条件)  
+    ;;  
+esac  
+```
 
+### 2. 示例程序
+
+```bash
+#!/bin/bash  
+
+#输出菜单
+echo "        Menu    "  
+echo "  1. Beijing - Tianjin"  
+echo "  2. Tianjin - Beijing"  
+echo "  3. qingdao - Beijing"  
+echo "  4. Beijing - Qingdao"  
+  
+#读入输出:
+read -p "Please input your chooise: " jour  
+ 
+#判断用户输入
+case "$jour" in  
+    "1")  
+        echo " Beijing - Tianjin "  
+        ;;  
+    "2")  
+        echo " Tianjin - Beijing "  
+        ;;  
+    "3")  
+        echo " Qingdao - Beijing "  
+        ;;  
+    "4")  
+        echo " Beijing - Qingdao "  
+        ;;  
+    *)  
+        echo " Your chooise Error ！"  
+        ;;  
+esac 
+```
+
+** 输出结果: **
+```bash
+[admin@localhost shell]$ ./case.sh 
+        Menu    
+  1. Beijing - Tianjin
+  2. Tianjin - Beijing
+  3. qingdao - Beijing
+  4. Beijing - Qingdao
+Please input your chooise: 1
+ Beijing - Tianjin 
+[admin@localhost shell]$ 
+```
 ## 判断表达式
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
