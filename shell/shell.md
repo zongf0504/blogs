@@ -61,6 +61,7 @@ echo "上次后台运行进程id: $!"
 ```
 
 ** 输出结果: **
+
 ```bash
 [admin@localhost shell]$ ./var01.sh 
 ls / 执行结果: 0
@@ -68,26 +69,32 @@ ls /hhhh 执行结果: 2
 当前进程PID: 22798
 上次后台运行进程id: 22853
 [admin@localhost shell]$
- ```
+```
 
 ## 4. 脚本变量
 
 ## 5. 用户之定义变量
+
 用户自定义的变量,作用域为当前脚本, 也就是说只能在脚本内使用.
 
 ### 1. 变量定义:
+
 * 格式: name=value
 * 注意: =号两边不能有空格
 
 ### 2. 变量引用:
+
 变量引用有两种方式, 格式1简单, 格式2能处理特殊情况, 如: ${name}script;
+
 * 格式1: $name
 * 格式2: ${name}
 
 ### 3. 变量删除:
+
 * 格式: unset name
 
 ### 4. 测试脚本:
+
 ```bash
 #!/bin/bash
 
@@ -102,18 +109,12 @@ echo "book:${name}Script"
 unset name
 echo "name:$name"
 ```
+
 测试输出:
-[admin@localhost shell]$ ./var02.sh 
-name:java
-book:javaScript
-name:
-[admin@localhost shell]$ 
-
-
-
-
-
-
-
-
+---  
+\[admin@localhost shell\]$ ./var02.sh   
+name:java  
+book:javaScript  
+name:  
+\[admin@localhost shell\]$
 
