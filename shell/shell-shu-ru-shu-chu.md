@@ -58,7 +58,7 @@ brief:zhang
 
 ## 2. 标准输出
 shell 脚本中提供了两个用户输出的指令:
-* echo: 输出字符串
+* echo: 输出一行字符串
 * printf: 格式化输出字符串
 
 ### 2.1 echo 指令
