@@ -22,7 +22,7 @@ Linux 的Shell 有很多种, 常见的有:
 
 ### 2.1. 创建一个helloworld 脚本
 
-使用vim 等文本编辑器, 创建一个helloword 脚本,
+使用vim 等文本编辑器, 创建一个helloword.sh 脚本,shell 脚本通常以后缀名.sh 结尾:
 
 * \# 号表示注释, 通常将\# 号放在行首
 * echo 为输出行命令, 会输出一行.

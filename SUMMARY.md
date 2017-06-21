@@ -42,5 +42,5 @@
 * [Shell](shell.md)
   * [Shell  变量](shell/shell.md)
   * [Shell 输入输出](shell/shell-shu-ru-shu-chu.md)
-  * [数组变量](shu-zu.md)
+  * [Shell 数组变量](shu-zu.md)
 
