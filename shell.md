@@ -33,4 +33,42 @@ echo "hello,world!"
 * 用户组: 可读, 可执行
 * 其他人: 可读, 可执行
 
+```bash
+[admin@localhost shell]$ chmod 755 helloworld.sh 
+[admin@localhost shell]$ ll helloworld.sh 
+-rwxr-xr-x. 1 admin admin 33 Jun 21 10:12 helloworld.sh
+[admin@localhost shell]$ 
+```
+
+### 2.3 执行脚本
+脚本执行时, 必须使用绝对路径,或者相对路径, 只输入脚本名称是不能执行的
+
+** 方式一: **
+```bash
+[admin@localhost shell]$ ls
+helloword.sh
+[admin@localhost shell]$ ./helloword.sh 
+hello,world!
+[admin@localhost shell]$ 
+```
+** 方式二: **
+```bash
+[admin@localhost ~]$ ls
+shell
+[admin@localhost ~]$ /home/admin/shell/helloword.sh 
+hello,world!
+[admin@localhost ~]$ 
+```
+** 错误方式: **
+```bash
+[admin@localhost shell]$ ls
+helloword.sh
+[admin@localhost shell]$ helloword.sh
+-bash: helloword.sh: command not found
+[admin@localhost shell]$ 
+```
+
+
+
+
 
