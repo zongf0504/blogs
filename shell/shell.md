@@ -56,12 +56,13 @@ echo "当前进程PID: $$"
 ```
 
 ** 输出结果: **
+```bash
 [admin@localhost shell]$ ./var.sh 
 ls / 执行结果: 0
 ls /hhhh 执行结果: 2
 当前进程PID: 22798
 [admin@localhost shell]$
- 
+ ```
    
 
 
