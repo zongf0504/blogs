@@ -68,7 +68,9 @@ helloword.sh
 [admin@localhost shell]$ 
 ```
 
-
+```perl
+$hello="hello,world'
+```
 
 
 
