@@ -1,15 +1,17 @@
-# Shell 流程控制-[判断分支
-> Shell 语言中用于判断的分支的语句有if-else 和 case. 
+# Shell 流程控制-\[判断分支
 
+> Shell 语言中用于判断的分支的语句有if-else 和 case.
 
 ## 1. if-else
-* if-else 的判断表达式为中括号[]
+
+* if-else 的判断表达式为中括号\[\]
 * 注意关键字elif, 不是elseif, 不要搞错了
 * 注意是以关键字fi 结尾, 不是以if 结尾
-* 注意if , [, 条件表达式, ] , ; , then 直接都要有空格
+* 注意if , \[, 条件表达式, \] , ; , then 直接都要有空格
 * 注意代码缩进
 
 ### 1.1 if-fi 结构
+
 * shell 中的if 语句有两种写法, 笔者习惯于使用第一种.
 * 含义: 如果表达式为true, 则执行程序
 
@@ -18,15 +20,16 @@
 if [ 条件判断表达式 ] ; then  
     # 程序块儿  
 fi  
-      
+
 # 第二中写法: 不需要写; 要注意缩进  
 if [ 条件判断表达式 ]  
   then  
      #程序块儿  
-fi  
+fi
 ```
 
 ### 1.2 if-else-fi 结构
+
 * 由于if 有两种写法, 所以对应的if-else-fi 也有两种写法, 笔者就只列出第一种结构了
 * 含义: 如果条件表达式为true,则执行程序块儿一, 否则执行程序块儿二
 
@@ -35,10 +38,11 @@ if [ 条件判断表达式 ] ; then
     # 程序块儿一  
 else   
     # 程序块儿二  
-fi  
+fi
 ```
 
 ### 1.3 if-elif=else-fi
+
 * 由于if 有两种写法, 所以对应的if-elif-else-fi 也有两种写法, 笔者就只列出第一种结构了
 * 含义: 如果条件表达式一为true,则执行程序块儿一,如果条件表达式二为true,则执行代码块儿二, 否则执行程序块儿三
 
@@ -49,40 +53,43 @@ elif [ 条件判断表达式二 ] ; then
     # 程序块儿二
 else   
     # 程序块儿三  
-fi  
-
+fi
 ```
 
 ### 1.4 示例程序
 
 ```bash
 #!/bin/bash  
-  
+
 read -p "请输入一个数字:" num  
-  
+
 if [ $num -eq 20 ] ; then  
   echo "$num > 20"  
 elif [ $num -eq 100 ] ; then  
   echo "$num > 100"  
 else  
   echo "$num < 20"  
-fi  
+fi
 ```
 
 ** 输出结果 **
+
 ```bash
 [admin@localhost shell]$ ./if.sh 
 请输入一个数字:1
 1 < 20
-[admin@localhost shell]$ 
+[admin@localhost shell]$
 ```
 
 ## 2. case 多分支选择
+
 case 是多分枝选择结构, 即一个判断表达式可以有多种匹配选项.
+
 * ;; 为跳出case 语句,类似于java 中的break;
 * * 表示什么都不匹配时执行.
 
 ### 2.1 case 结构
+
 ```bash
 case 字符串表达式 in  
   "值1")  
@@ -95,7 +102,7 @@ case 字符串表达式 in
   *)  
     程序块儿 (不满足以上所有条件)  
     ;;  
-esac  
+esac
 ```
 
 ### 2.2 示例程序
@@ -109,10 +116,10 @@ echo "  1. Beijing - Tianjin"
 echo "  2. Tianjin - Beijing"  
 echo "  3. qingdao - Beijing"  
 echo "  4. Beijing - Qingdao"  
-  
+
 #读入输出:
 read -p "Please input your chooise: " jour  
- 
+
 #判断用户输入
 case "$jour" in  
     "1")  
@@ -130,10 +137,11 @@ case "$jour" in
     *)  
         echo " Your chooise Error ！"  
         ;;  
-esac 
+esac
 ```
 
 ** 输出结果: **
+
 ```bash
 [admin@localhost shell]$ ./case.sh 
         Menu    
@@ -143,47 +151,76 @@ esac
   4. Beijing - Qingdao
 Please input your chooise: 1
  Beijing - Tianjin 
-[admin@localhost shell]$ 
+[admin@localhost shell]$
 ```
+
 ## 3. 判断表达式
-* 格式: [ 表达式 ]
+
+* 格式: \[ 表达式 \]
 * 结果: 判断表达是为真返回true, 为假返回false
 
-**常用判断表达式**
 
 
 ### 3.1 数字判断
+虽然说shell 脚本中任何变量都是字符串, 但是比较的表达式时, 却可以区分按数值比较还是按字符串比较. 比如:11 和 2 , 如果按数值比较那么11 > 2, 如果按字符串比较则 11 < 2
+
+**常用判断表达式**
+
+| 表达式 | 判断逻辑 |
+| :--- | :--- |
+| [ a -eq b ] | 判断相等, 若a==b, 则返回true, 否则返回false |
+| [ a -ne b ] | 判断不等, 若a!=b, 则返回true, 否则返回false |
+| [ a -gt b ] | 判断大于, 若a>b , 则返回true, 否则返回false |
+| [ a -lt b ] | 判断小于, 若a<b , 则返回true, 否则返回false |
+| [ a -ge b ] | 判断不小于, 若a>=b,则返回true, 否则返回false |
+| [ a -le b ] | 判断不大于, 若a<=b, 则返回true, 否则返回false |
+
 
 ### 3.2 字符串判断
 
-### 3.3 逻辑表达式
+**常用判断表达式**
+| 表达式 | 判断逻辑 |
+| :--- | :--- |
+| [ -z str ] | 判断为空, 若为空, 则返回true, 否则返回false |
+| [ -n str ] | 判断非空,若字符串不为空,则返回true, 否则返回false |
+| [ s1 == s2 ] | 判断相等, 若s1和s2相等,则返回true, 否则返回false |
+| [ s1 != s2 ] | 判断不相等, 若s1和s2不相等,则返回true, 否则返回false |
+| [  ] |  |
+| [  ] |  |
+| [  ] |  |
 
+
+
+
+
+
+
+### 3.3 逻辑表达式
+**常用判断表达式**
+
+| 表达式 | 判断逻辑 |
+| :--- | :--- |
+| [ expr1 -a expr2 ] | 逻辑与, 当表达式1 和表达式2 都为真, 返回true,否则返回false |
+| [ expr1 -o expr2 ] | 逻辑或,当表达式1和表达是2都为假,返回true, 否则返回false |
+| [ !expr ] | 逻辑非, 当表达式为假返回true, 否则返回false |
 
 
 ### 3.4 文件判断
+**常用判断表达式**
 
+| 表达式 | 判断逻辑 |
+| :--- | :--- |
+| [ -d file ] | 判断文件是否是目录,若是目录,则返回true, 否则返回false |
+| [ -e file ] | 判断文件是否存在, 不区分文件类型,若存在,则返回true, 否则返回false |
+| [ -f file ] | 判断普通文件是否存在,若存在,则返回true, 否则返回false |
+| [ -L file ] | 判断链接文件是否存在,若存在,则返回true, 否则返回false |
+| [ -h file ] | 判断硬链接文件是否存在,若存在,则返回true, 否则返回false |
+| [ -r file ] | 判断当前用户对文件是否有读权限,若拥有,则返回true, 否则返回false |
+| [ -w file ] | 判读当前用户对文件是否有写权限,若拥有,则返回true, 否则返回false  |
+| [ -x file ] | 判断当前用户对文件是否有执行权限,若拥有,则返回true, 否则返回false  |
 
 
 ### 3.5 文件
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
