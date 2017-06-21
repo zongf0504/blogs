@@ -55,3 +55,14 @@ brief:zhang
          san
 [admin@localhost shell]$ 
 ```
+
+## 2. 标准输出
+
+
+
+
+
+
+
+
+
