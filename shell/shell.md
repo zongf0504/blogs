@@ -29,6 +29,47 @@
 ## 2. 环境变量
 环境变量通常用于存储一些与系统操作相关的命令, 比如如JAVA_HOME. 在脚本中设置的环境变量, 只在当前脚本中生效, 不会修改系统的环境变量. 通常用于为某些程序的运行准备环境. 比如说, 系统默认安装的是jdk1.7, 而你的程序想要使用jdk 1.8运行 ,那么就可以创建一个脚本, 脚本中先设置JAVA_HOme 的值, 然后再执行你的程序就好了.
 
+# 1. 变量定义
+* 格式1: export NAME=value, 定义新的环境变量
+* 格式2: export NAME, 将已有用户自定义变量转换为环境变量
+
+# 2. 变量应用
+* 格式1: $NAME
+* 格式2: ${NAME}
+
+# 3. 变量删除:
+* 格式: unset NAME
+
+# 4. 测试脚本:
+``` bash
+#!/bin/bash
+
+#查看系统环境变量
+echo "JAV_HOME:$JAVA_HOME"
+
+# 设置环境变量
+export JAVA_HOME=/opt/app/jdk/jdk1.8.0_121
+echo "JAVA_HOME:$JAVA_HOME"
+
+# 删除环境变量
+unset JAVA_HOME
+echo "JAVA_HOME:$JAVA_HOME"
+```
+
+** 输出结果: **
+脚本中将环境变量JAVA_HOME 删除了, 脚本中便获取不到JAVA_HOME 环境变量了, 但是脚本执行完之后, 直接输出环境变量JAVA_HOME, 会发现依然存在.
+``` bash
+[admin@localhost shell]$ ./var03.sh 
+JAV_HOME:/opt/app/jdk/jdk1.6.0_31
+JAVA_HOME:/opt/app/jdk/jdk1.8.0_121
+JAVA_HOME:
+[admin@localhost shell]$ echo $JAVA_HOME
+/opt/app/jdk/jdk1.6.0_31
+[admin@localhost shell]$ 
+```
+
+
+
 ## 3. 预定义变量
 
 预定义变量是系统内置的, 用于表示特殊含义的一些变量. 常用的预定义变量有:
