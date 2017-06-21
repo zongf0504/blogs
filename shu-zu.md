@@ -64,20 +64,24 @@ unset books[0]
 unset books
 ```
 
-
 ## 4. 遍历数组
 ### 4.1 遍历元素:
+此种变量简单,但是不能获取元素索引值
+```bash
 for item in ${name[*]}
 do 
   echo $item
 done
+```
 
 ### 4.2 按序号遍历
+此种变量稍微麻烦, 但是能获取到元素索引
+```bash
 for (( i=0; i<${name[*]}; i++ )) 
 do
    echo "item$i: ${name[$i]}
 done
-
+```
 
 ## 5. 用法示例:
 ```bash
@@ -103,17 +107,23 @@ echo "数组长度:"
 echo "arrays length: ${#books[*]}"
 echo "books length: ${#books[@]}"
 
-echo "遍历数组 1:"
-for book in ${books[*]}
+echo "遍历数组arrays:"
+for item in ${arrays[*]}
 do
-   echo $book
+   echo $item
 done
 
-echo "遍历数组 2:"
+echo "遍历数组books:"
 for ((i=0; i<${#books[*]}; i++ ))
 do
-  echo "第i个元素: ${books[$i]}"
+  echo "第$i个元素: ${books[$i]}"
 done
+
+unset books[0]
+echo "删除第一个元素后,books:${books[*]}"
+
+unset books
+echo "删除books 数组后, books:$books"
 
 ```
 
@@ -129,14 +139,15 @@ books: JAVA SCRIPT LINUX MYSQL
 数组长度:
 arrays length: 3
 books length: 3
-遍历数组 1:
-JAVA
-SCRIPT
-LINUX
-MYSQL
-遍历数组 2:
-第i个元素: JAVA SCRIPT
-第i个元素: LINUX
-第i个元素: MYSQL
+遍历数组arrays:
+1
+2
+hello
+遍历数组books:
+第0个元素: JAVA SCRIPT
+第1个元素: LINUX
+第2个元素: MYSQL
+删除第一个元素后,books:LINUX MYSQL
+删除books 数组后, books:
 [admin@localhost shell]$ 
 ```
