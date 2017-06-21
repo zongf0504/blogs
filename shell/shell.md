@@ -62,7 +62,7 @@ echo "上次后台运行进程id: $!"
 
 ** 输出结果: **
 ```bash
-[admin@localhost shell]$ ./var.sh 
+[admin@localhost shell]$ ./var01.sh 
 ls / 执行结果: 0
 ls /hhhh 执行结果: 2
 当前进程PID: 22798
