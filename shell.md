@@ -1,0 +1,36 @@
+# Shell 脚本语言
+> Shell, 是一个用C 语言编写的程序, 它是用户操作Linux的桥梁, 也就是平时我们连接Linux 的所看到的命令行窗口. 平时我们输入的Linux 命令都是在Shell 程序中完成的. 
+> Shell 脚本, 笔者认为Shell 脚本就是一组在Shell 程序中能执行的命令按顺序执行的集合. 
+
+在Shell 程序窗口中, 通常我们只会输入简单的一行两行命令, 应该不会有人会直接在Shell 窗口中进行循环等复杂操作的吧, 而且输入的命令重用性不太好, 当想重复执行时, 还需要重新敲. 而Shell 脚本就可以很方便的解决这些问题.Shell 脚本能重复执行, 能写比较复杂的逻辑. 通常业界所说的shell 编程都指的是Shell 脚本编程.
+
+
+## 1. shell 分类
+Linux 的Shell 有很多种, 常见的有:
+* bash: Bourne Shell
+* sh: Bourne Again Shell
+* csh: C Shell
+* ksh: K Shell
+* ...
+bash 是Linux 下的标准shell , 通常说的shell 也就是bash
+
+## 2. Shell 入门程序
+通常一说到入门程序, 肯定是输出一个Hello,world!, 当然了Shell 脚本也不例外.
+
+### 2.1. 创建一个helloworld 脚本
+使用vim 等文本编辑器, 创建一个helloword 脚本, 
+
+```bash
+#!/bin/bash
+
+echo "hello,world!"
+
+```
+
+### 2.2 修改脚本权限
+在Linux 中默认新建文件是不具备可执行权限的, 而脚本要想运行需要可执行权限. 所以首先需要为脚本赋予可执行权限.通常我们会为脚本赋予755 权限, 755 权限含义:
+* 用户: 可读, 可写, 可执行
+* 用户组: 可读, 可执行
+* 其他人: 可读, 可执行
+
+

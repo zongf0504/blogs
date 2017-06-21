@@ -39,5 +39,5 @@
   * [安装ftp服务](vm/an-zhuang-ftp-fu-wu.md)
 * [Linux](linux.md)
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
-* Shell
+* [Shell](shell.md)
 
