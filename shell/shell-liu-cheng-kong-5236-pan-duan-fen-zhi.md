@@ -53,6 +53,30 @@ fi
 
 ```
 
+### 2.4 示例程序
+
+```bash
+#!/bin/bash  
+  
+read -p "请输入一个数字:" num  
+  
+if [ $num -eq 20 ] ; then  
+  echo "$num > 20"  
+elif [ $num -eq 100 ] ; then  
+  echo "$num > 100"  
+else  
+  echo "$num < 20"  
+fi  
+```
+
+** 输出结果 **
+```bash
+[admin@localhost shell]$ ./if.sh 
+请输入一个数字:1
+1 < 20
+[admin@localhost shell]$ 
+```
+
 ## case
 case 是多分枝选择结构, 即一个判断表达式可以有多种匹配选项.
 * ;; 为跳出case 语句,类似于java 中的break;
