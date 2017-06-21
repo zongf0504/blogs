@@ -111,6 +111,7 @@ echo "name:$name"
 ```
 
 测试输出:
+
 ---  
 \[admin@localhost shell\]$ ./var02.sh   
 name:java  
