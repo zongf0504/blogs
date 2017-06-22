@@ -3,6 +3,7 @@
 > 在平时的工作中, 重部署应用服务器是经常的事情.部署步骤虽然不麻烦, 但是也是有很多步骤的. 如果每天进行几次重部署, 那么是相当繁琐. 关键在于还没有太大的技术含量. 笔者拿tomcat服务器来举例.
 
 ## 1. tomcat 重部署逻辑
+
 笔者认为tomcat重部署应该执行的步骤:  
 1. 通过wincp 工具, 将项目war包上传到tomcat 临时目录 temp  
 2. 查看当前tomcat 是否在运行, 如果正则运行, 则关闭tomcat  
@@ -13,7 +14,6 @@
 7. 将项目新包从临时目录移动到tomcat部署目录  
 8. 重新启动服务器  
 9. 监控tomcat 启动日志
-
 
 ## 2. 自动化脚本
 
@@ -59,6 +59,7 @@ shutdown(){
       if [ -n "$pid" ] ; then 
         echo "[info ] try to shutdown the server ..."
         $serverBin/shutdown.sh &
+        # 睡眠3秒,再往下执行
         sleep 3
         get_pid
       fi
@@ -72,6 +73,7 @@ force_shutdown(){
       if [ -n "$pid" ] ; then 
         echo "[info ] force shutdown the server ..."
         ps -ef | grep -v grep | grep "$serverHome"| awk '{print $2}' | xargs kill -9
+        # 睡眠3秒,再往下执行
         sleep 3
         get_pid
       fi
@@ -126,12 +128,12 @@ $serverBin/startup.sh &
 
 # 8. 监控tomcat 启动日志
 tail -f $serverLog/catalina.out
-
 ```
 
 ## 3. 测试输出
-写了自动化部署脚本之后, 部署流程就变成了:
-1. 通过wincp 将LoadBalance.war 上传到/opt/wapp/tomcat/tomcat-8-8080/temp 目录下
+
+写了自动化部署脚本之后, 部署流程就变成了:  
+1. 通过wincp 将LoadBalance.war 上传到/opt/wapp/tomcat/tomcat-8-8080/temp 目录下  
 2. 登录linux, 执行此脚本
 
 ```bash
@@ -150,12 +152,11 @@ Tomcat started.
 ```
 
 ## 4. 总结
+
 * 这个脚本写的比较麻烦, 但是逻辑相对来说是比较好的
 * 对于服务器器关闭写的比较复杂,因为能使用自带shutdown 脚本关闭的话, 就尽量不要使用kill 强制关闭
 * 此脚本还可以优化, 可以将重试次数和重试间隔时间做成变量, 记录每次重部署的部署日志等..
-* 使用此脚本的时候, 只需要修改 serverHome , warName, JAVA_HOME 这三个变量就可以了
-
-
+* 使用此脚本的时候, 只需要修改 serverHome , warName, JAVA\_HOME 这三个变量就可以了
 
 
 
