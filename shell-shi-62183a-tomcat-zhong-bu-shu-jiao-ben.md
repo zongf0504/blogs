@@ -129,7 +129,22 @@ tail -f $serverLog/catalina.out
 
 ```
 
+## 3. 测试输出
 
+```bash
+[admin@localhost tomcat-8-8080]$ ./restart-tomcat.sh 
+[info ] Find file: /opt/app/tomcat/tomcat-8-8080/temp/LoadBalance.war
+[info ] try to shutdown the server ...
+[info ] delete the old project: /opt/app/tomcat/tomcat-8-8080/webapps/LoadBalance
+[info ] clean the project work directory: /opt/app/tomcat/tomcat-8-8080/work/Catalina/localhost/LoadBalance
+[info ] clean the server log: /opt/app/tomcat/tomcat-8-8080/logs/catalina.out
+[info ] deploy the project: /opt/app/tomcat/tomcat-8-8080/temp/LoadBalance.war
+[info ] start the server: /opt/app/tomcat/tomcat-8-8080/bin/startup.sh &
+
+Tomcat started.
+...
+...
+```
 
 
 
