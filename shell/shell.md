@@ -189,6 +189,7 @@ arg: 10
 ### 1. 变量定义:
 
 * 格式: name=value
+* 格式: name=`命令`
 * 注意: =号两边不能有空格
 
 ### 2. 变量引用:
@@ -202,7 +203,15 @@ arg: 10
 
 * 格式: unset name
 
-### 4. 测试脚本:
+### 4. 变量特殊处理
+
+#### 4.1 数字变量运算
+* 由于shell 中所有变量都是字符串, 当需要对变量进行数字进行运算时, 使用普通的方式是不能行的, 需要用到$(( a + b))
+
+#### 4.2 字符串拼接
+shell 中字符串的拼接符为 .
+
+### 5. 测试脚本:
 
 ```bash
 #!/bin/bash
@@ -217,6 +226,21 @@ echo "book:${name}Script"
 #删除变量
 unset name
 echo "name:$name"
+
+#数值运算
+a=10
+b=5
+echo "$a+$b=$(( $a + $b ))"
+echo "$a*$b=$(( $a * $b ))"
+echo "$a/$b=$(( $a / $b ))"
+
+#获取当前服务器时间
+date=`date`
+echo "date:$date"
+
+#只读变量
+readonly sum=0
+sum=1
 ```
 
 ** 测试输出: **
@@ -225,5 +249,10 @@ echo "name:$name"
 name:java  
 book:javaScript  
 name:  
+10+5=15
+10*5=50
+10/5=2
+date:Thu Jun 22 16:40:29 CST 2017
+./var02.sh: line 27: sum: readonly variable
 \[admin@localhost shell\]$
 ```
