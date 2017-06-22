@@ -43,10 +43,11 @@
   * [Shell  变量](shell/shell.md)
   * [Shell 输入输出](shell/shell-shu-ru-shu-chu.md)
   * [Shell 数组变量](shu-zu.md)
+  * [Shell 判断表达式](shell/shell-pan-duan-biao-da-shi.md)
   * [Shell 流程控制-选择分支](shell/shell-liu-cheng-kong-5236-pan-duan-fen-zhi.md)
   * [Shell 流程控制-循环](shell/shell-liu-cheng-kong-5236-xun-huan.md)
   * [Shell 函数](shell/shell-han-shu.md)
   * [Shell  输出重定向](shell/shell-shu-ru-shu-chu-zhong-ding-xiang.md)
   * [Shell 实战: tomcat 重部署脚本](shell-shi-62183a-tomcat-zhong-bu-shu-jiao-ben.md)
-  * [Shell 其它](shell/shell-qi-ta.md)
+  * Shell 判断表达式
 
