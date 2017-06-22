@@ -51,6 +51,52 @@ crw-rw-rw-. 1 root root 1, 3 Jun 19 13:46 /dev/null
 
 ## 3.示例程序
 
+```bash
+#!/bin/bash
+
+#定义正确输出, 错误输出文件
+f_std=info.txt
+f_err=error.txt
+f_all=all.txt
+
+# 测试正确输出
+echo "测试正确输出:" > $f_std
+ls -d /s* >> $f_std
+
+# 测试错误输出
+echo "测试错误输出,清空文件:" > $f_err
+ls /hh 2>> $f_err
+
+# 测试正确错误输出
+echo "测试全部输出, 清空文件" &> $f_all
+ls -d /s* &>> $f_all
+ls /hh &>> $f_all
+                         
+```
+
+
+** 测试输出: **
+
+```bash
+[admin@localhost shell]$ ./redirect.sh 
+[admin@localhost shell]$ cat info.txt 
+测试正确输出:
+/sbin
+/selinux
+/srv
+/sys
+[admin@localhost shell]$ cat error.txt 
+测试错误输出,清空文件:
+ls: cannot access /hh: No such file or directory
+[admin@localhost shell]$ cat all.txt 
+测试全部输出, 清空文件
+/sbin
+/selinux
+/srv
+/sys
+ls: cannot access /hh: No such file or directory
+[admin@localhost shell]$ 
+```
 
 
 
