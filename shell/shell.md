@@ -188,9 +188,10 @@ arg: 10
 
 ### 1. 变量定义:
 
-* 格式: name=value
-* 格式: name=`命令`
+* 格式:[readonly] name=value
+* 格式:[readonly] name=`命令`
 * 注意: =号两边不能有空格
+* readonly 表示为只读变量, 如果修改会报错
 
 ### 2. 变量引用:
 
