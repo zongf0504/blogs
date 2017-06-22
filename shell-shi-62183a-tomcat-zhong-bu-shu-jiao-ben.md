@@ -130,6 +130,9 @@ tail -f $serverLog/catalina.out
 ```
 
 ## 3. 测试输出
+写了自动化部署脚本之后, 部署流程就变成了:
+1. 通过wincp 将LoadBalance.war 上传到/opt/wapp/tomcat/tomcat-8-8080/temp 目录下
+2. 登录linux, 执行此脚本
 
 ```bash
 [admin@localhost tomcat-8-8080]$ ./restart-tomcat.sh 
@@ -149,7 +152,8 @@ Tomcat started.
 ## 4. 总结
 * 这个脚本写的比较麻烦, 但是逻辑相对来说是比较好的
 * 对于服务器器关闭写的比较复杂,因为能使用自带shutdown 脚本关闭的话, 就尽量不要使用kill 强制关闭
-* 此脚本还可以优化, 可以将重试次数和重试间隔时间做成变量
+* 此脚本还可以优化, 可以将重试次数和重试间隔时间做成变量, 记录每次重部署的部署日志等..
+* 使用此脚本的时候, 只需要修改 serverHome , warName, JAVA_HOME 这三个变量就可以了
 
 
 
