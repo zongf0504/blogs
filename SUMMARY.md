@@ -47,4 +47,5 @@
   * [Shell 流程控制-循环](shell/shell-liu-cheng-kong-5236-xun-huan.md)
   * [Shell 函数](shell/shell-han-shu.md)
   * [Shell  输出重定向](shell/shell-shu-ru-shu-chu-zhong-ding-xiang.md)
+* [Shell 实战: tomcat 重部署脚本](shell-shi-62183a-tomcat-zhong-bu-shu-jiao-ben.md)
 
