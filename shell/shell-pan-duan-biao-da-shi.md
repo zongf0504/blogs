@@ -60,3 +60,59 @@ shell 中有两种逻辑与和逻辑或表达式, 一种是符号表示 && 和 |
 | [ -w file ] | 判读当前用户对文件是否有写权限,若拥有,则返回true, 否则返回false |
 | [ -x file ] | 判断当前用户对文件是否有执行权限,若拥有,则返回true, 否则返回false |
 
+## 5. 测试程序
+
+```bash
+#!/bin/bash
+
+echo "数值判断:"
+a=10
+b=5
+
+if [ a -eq b ] ; then 
+  echo "$a > $b = true"
+else
+  echo "$a < $b"
+fi
+
+echo "字符串判断:"
+str=1234
+
+if [ -n "$str" ] ; then
+  echo "$str is null"
+else
+  echo "$str is not null"
+fi
+
+echo "文件判断:"
+if [ -d /root ] ; then
+  echo "directory /root exists"
+else
+  echo "directory /root not exists"
+fi
+
+echo "逻辑判断:"
+if [ -d /tmp -o -x /tmp ] ; then
+  echo "directory exists and hava x "
+fi
+
+if [[ a -ge 10 && a -le 10 ]] ; then
+  echo "a=10"
+fi
+```
+
+** 测试结果:*
+```bash
+[admin@localhost shell]$ ./test.sh 
+数值判断
+./test.sh: line 7: [: a: integer expression expected
+10 < 5
+字符串判断
+1234 is null
+文件判断:
+directory /root exists
+联合判断:
+directory exists and hava x 
+a=10
+[admin@localhost shell]$ 
+```
