@@ -37,20 +37,13 @@ serverTemp=$serverHome/temp
 serverDeploy=$serverHome/webapps
 serverWork=$serverHome/work/Catalina/localhost
 
-##################### 执行脚本 #####################
-# 0. 检测文件是否存在
-if [ ! -f "$serverTemp/$warName.war" ]; then
-  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
-  exit 1
-else
-  echo "[info ] Find file: $serverTemp/$warName.war";
-fi
+################### 子函数 ###################
 
+#Desc 获取服务器进程id
 get_pid(){
   pid=`ps -ef | grep -v grep | grep "$serverHome" | awk "{print $2}" `
 }
 
-################### 子函数 ###################
 #Desc 使用tomcat自带脚本关闭, 1秒关闭一次
 shutdown(){
   #执行三次, 每隔1秒执行一次, 尝试正常关闭Tomcat
@@ -79,6 +72,15 @@ force_shutdown(){
       fi
     done
 }
+
+##################### 执行脚本 #####################
+# 0. 检测文件是否存在
+if [ ! -f "$serverTemp/$warName.war" ]; then
+  echo "[error] The file $serverTemp/$warName.war is not exsits !!!"
+  exit 1
+else
+  echo "[info ] Find file: $serverTemp/$warName.war";
+fi
 
 # 1. 关闭服务器
 #获取当前服务器的进程id
