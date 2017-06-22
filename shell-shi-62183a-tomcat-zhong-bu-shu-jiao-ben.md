@@ -28,14 +28,14 @@
 serverHome=/opt/app/tomcat/tomcat-8-8080
 warName=LoadBalance
 
+#设定运行java环境: jdk
+export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
+
 serverBin=$serverHome/bin
 serverLog=$serverHome/logs
 serverTemp=$serverHome/temp
 serverDeploy=$serverHome/webapps
 serverWork=$serverHome/work/Catalina/localhost
-
-#设定运行java环境: jdk
-export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
 
 ##################### 执行脚本 #####################
 # 0. 检测文件是否存在
