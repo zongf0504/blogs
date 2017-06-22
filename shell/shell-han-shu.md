@@ -79,5 +79,14 @@ echo "result:$result, \$?:$?"
 echo "hello:$hello"
 ```
 
-
+** 测试输出 **
+```bash
+[admin@localhost shell]$ ./function.sh 
+Hello,zhangsan
+Hello,lisi
+Hello,wangwu
+result:1, $?:0
+hello:Hello
+[admin@localhost shell]$ 
+```
 
