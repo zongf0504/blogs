@@ -45,4 +45,5 @@
   * [Shell 数组变量](shu-zu.md)
   * [Shell 流程控制-选择分支](shell/shell-liu-cheng-kong-5236-pan-duan-fen-zhi.md)
   * [Shell 流程控制-循环](shell/shell-liu-cheng-kong-5236-xun-huan.md)
+  * [Shell 函数](shell/shell-han-shu.md)
 
