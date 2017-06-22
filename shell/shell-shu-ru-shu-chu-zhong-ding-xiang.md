@@ -19,6 +19,8 @@ lrwxrwxrwx. 1 root root 15 Jun 19 13:46 /dev/stdout -> /proc/self/fd/1
 ```
 
 ## 2.输出重定向
+
+### 2.1 文件重定向
 在进行shell 脚本编程的时候, 我们可能会将一些命令输出或者结果输出到指定文件中, 那么就可以使用输出重定向了.
 
 ** 常用重定向: **
@@ -32,6 +34,22 @@ lrwxrwxrwx. 1 root root 15 Jun 19 13:46 /dev/stdout -> /proc/self/fd/1
 | 命令 &> 文件 | 已追加方式, 将命令正确&错误输出写入文件中 |
 | 命令 &>> 文件 | 已追加方式，将命令正确＆错误输出写入文件中 |
 | 命令 >> 文件1 >> 文件2 | 以追加方式，将命令正确输出写入文件１，将错误输出写入文件２ |
+
+* >  表示以覆盖方式写入, 会先将原来的文件内容情况后写入
+* >> 表示以追加方式写入, 不会修改原来的文件内容, 直接在原来文件末尾追加
+
+### 2.2 特殊重定向
+LInux 中很多命令都是有输出结果的, 有时我们希望不显示命令的输出结果, 但又不想将文件写入其它文件, 那么我们只需要将输出结果重定向到 /dev/null 文件即可. /dev/null 是一个特殊文件, 类似于linux 的黑洞一样.
+
+```bash
+[admin@localhost shell]$ ll /dev/null 
+crw-rw-rw-. 1 root root 1, 3 Jun 19 13:46 /dev/null
+[admin@localhost shell]$ [admin@localhost shell]$ ll /dev/null 
+crw-rw-rw-. 1 root root 1, 3 Jun 19 13:46 /dev/null
+[admin@localhost shell]$ 
+```
+
+## 3.示例程序
 
 
 
