@@ -12,8 +12,8 @@ ElasticSearch 依赖于java 环境, 所以需要实现安装java 环境. 笔者�
 ### 2.1 安装jdk & ElasticSearch
 jdk 和 elasticsearch 安装都比较简单, 直接使用 tar -zxvf xxx.tar.gz 命令解压即可, 此处就不详细描述了. 
 安装路径:
-* jdk: /opt/app/jdk/jdk/jdk1.8.0_131/
-* els: /opt/app/elk/elsearch
+* jdk: /opt/app/jdk/jdk/jdk1.8.0_131
+* els: /opt/app/elk/elsearch/elasticsearch-5.4.2
 
 ### 2.2 修改配置
 #### 2.2.1 修改jdk 位置
