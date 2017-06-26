@@ -39,18 +39,9 @@ jdk1.8.0_131
 
 # 3. 配置
 
+## 3.1 配置ElasticSearch
 
-### 2.1 安装jdk & ElasticSearch
-
-jdk 和 elasticsearch 安装都比较简单, 直接使用 tar -zxvf xxx.tar.gz 命令解压即可, 此处就不详细描述了.   
-安装路径:
-
-* jdk: /opt/app/jdk/jdk/jdk1.8.0\_131
-* els: /opt/app/elk/elsearch/elasticsearch-5.4.2
-
-### 2.2 修改配置
-
-#### 2.2.1 修改jdk 位置
+### 2.2.1 修改jdk 位置
 
 默认启动ElasticSearch 会使用系统变量JAVA\_HOME 配置的JDK, 建议修改为指定的jdk, 即我们安装的jdk 8.   
 编辑bin 目录下的elasticsearch 命令, 第一行添加:
@@ -59,7 +50,7 @@ jdk 和 elasticsearch 安装都比较简单, 直接使用 tar -zxvf xxx.tar.gz �
 export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
 ```
 
-#### 2.2.2 修改配置
+### 2.2.2 修改ip 端口号
 
 ElasticSearch 的核心配置文件为 config/elasticsearch.yml, 启动之前需要修改一下ip 和端口等基本信息.  
 编辑配置文件, 文件末尾追加:
@@ -71,15 +62,25 @@ network.host: 192.168.145.100
 http.port: 9200
 ```
 
-## 3. 启动&关闭
+## 3.2 配置Kibana
+修改kibana 的配置文件: config/kibana.yml, 文件末尾添加配置:
 
-### 3.1 启动
+```bash
+server.port: 5601
+server.host: 172.22.12.225
+elasticsearch.url: http://192.168.145.100:9200
+```
 
-直接执行bin/elasticsearch 命令即可启动服务, 可以先测试一下启动, 如果没有问题的话, 采用后台启动. 后台启动直接添加-d 参数即可
-
+# 4. 启动服务
+## 4.1 启动Elastic
+后台启动Elastic:
 ```bash
 /opt/app/elk/elsearch/elasticsearch-5.4.2/bin/elasticsearch -d
 ```
 
-
+## 4.2 启动Kibana
+后台启动Kibana:
+```bash
+/opt/app/elk/kibana/kibana-5.4.2-linux-x86_64/bin/kibana &
+```
 
