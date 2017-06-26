@@ -9,8 +9,8 @@
 | 版本 | 安装位置 | 安装目录 |
 | :--- | :--- | :--- |
 | jdk-8u131-linux-x64.tar.gz | /opt/app/jdk | /opt/app/jdk/jdk1.8.0_131 |
-| elasticsearch-5.4.2.tar.gz | /opt/app/elk/elastic/elasticsearch-5.4.2 |
-| kibana-5.4.2-linux-x86_64.tar.gz | /opt/app/elk/kibana/kibana-5.4.2-linux-x86_64 |
+| elasticsearch-5.4.2.tar.gz | /opt/app/elk/elastic | /opt/app/elk/elastic/elasticsearch-5.4.2|
+| kibana-5.4.2-linux-x86_64.tar.gz | /opt/app/elk/kibana | /opt/app/elk/kibana/kibana-5.4.2-linux-x86_64 |
 
 
 # 2. 安装
