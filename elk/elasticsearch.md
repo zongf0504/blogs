@@ -23,3 +23,14 @@ jdk 和 elasticsearch 安装都比较简单, 直接使用 tar -zxvf xxx.tar.gz �
 ```bash
 export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
 ```
+
+#### 2.2.2 修改配置
+ElasticSearch 的核心配置文件为 config/elasticsearch.yml, 启动之前需要修改一下ip 和端口等基本信息.
+编辑配置文件, 文件末尾追加:
+
+```bash
+bootstrap.memory_lock: false
+bootstrap.system_call_filter: false       
+network.host: 172.22.12.225
+http.port: 9200
+```
