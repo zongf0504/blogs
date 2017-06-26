@@ -37,9 +37,7 @@ jdk1.8.0_131
 [admin@localhost ~]$
 ```
 
-
-
-## 2.1 安装 jdk
+# 3. 配置
 
 
 ### 2.1 安装jdk & ElasticSearch
