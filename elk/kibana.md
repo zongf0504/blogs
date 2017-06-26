@@ -6,11 +6,11 @@
 
 仅仅安装kibana 是没有太大意义的, 需要配合elastic 才行, 所以需要先安装elastic, 而elastic 依赖于jvm 环境, 所以需要先安装jdk. 对于Elastic 和 kibana 笔者选择当前最新的5.4.2 版本, 此版本需要jdk 1.8+. 安装清单:
 
-| 版本 | 安装位置 |
-| :--- | :--- |
-| jdk-8u131-linux-x64.tar.gz | /opt/app/jdk |
-| elasticsearch-5.4.2.tar.gz | /opt/app/elk/elastic |
-| kibana-5.4.2-linux-x86_64.tar.gz | /opt/app/elk/kibana |
+| 版本 | 安装位置 | 安装目录 |
+| :--- | :--- | :--- |
+| jdk-8u131-linux-x64.tar.gz | /opt/app/jdk | /opt/app/jdk/jdk1.8.0_131 |
+| elasticsearch-5.4.2.tar.gz | /opt/app/elk/elastic/elasticsearch-5.4.2 |
+| kibana-5.4.2-linux-x86_64.tar.gz | /opt/app/elk/kibana/kibana-5.4.2-linux-x86_64 |
 
 
 # 2. 安装
@@ -33,7 +33,7 @@ elasticsearch-5.4.2
 kibana-5.4.2-linux-x86_64
 
 ./jdk/:
-jdk1.8.0_131  jdk-8u131-linux-x64.tar.gz
+jdk1.8.0_131 
 [admin@localhost ~]$
 ```
 
