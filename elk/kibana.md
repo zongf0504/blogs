@@ -1,23 +1,36 @@
 # Kibana
-> 
 
-## 1. 简介
+> Kibana 是一个专门为ElasticSearch 提供的日志分析和监控的Web 接口.通过kibana 可对elastic 日志进行高效的搜索, 可视化分析, 可视化监控等操作.
+
+## 1. 安装说明
+
+仅仅安装kibana 是没有太大意义的, 需要配合elastic 才行, 所以需要先安装elastic, 而elastic 依赖于jvm 环境, 所以需要先安装jdk. 对于Elastic 和 kibana 笔者选择当前最新的5.4.2 版本, 此版本需要jdk 1.8+. 安装清单:
+
+| 版本 | 安装位置 |
+| :--- | :--- |
+| jdk-8u131-linux-x64.tar.gz | /opt/app/jdk |
+| elasticsearch-5.4.2.tar.gz | /opt/app/elk/elastic |
+| kibana-5.4.2-linux-x86\_64.tar.gz | /opt/app/elk/kibana |
+
+
+
 
 
 ## 2. 安装
-ElasticSearch 依赖于java 环境, 所以需要实现安装java 环境. 笔者安装的ElasticSearch版本是5.4.2, jdk 版本为1.8 .
-* jdk-8u131-linux-x64.tar.gz
-* elasticsearch-5.4.2.tar
 
 ### 2.1 安装jdk & ElasticSearch
-jdk 和 elasticsearch 安装都比较简单, 直接使用 tar -zxvf xxx.tar.gz 命令解压即可, 此处就不详细描述了. 
+
+jdk 和 elasticsearch 安装都比较简单, 直接使用 tar -zxvf xxx.tar.gz 命令解压即可, 此处就不详细描述了.   
 安装路径:
-* jdk: /opt/app/jdk/jdk/jdk1.8.0_131
+
+* jdk: /opt/app/jdk/jdk/jdk1.8.0\_131
 * els: /opt/app/elk/elsearch/elasticsearch-5.4.2
 
 ### 2.2 修改配置
+
 #### 2.2.1 修改jdk 位置
-默认启动ElasticSearch 会使用系统变量JAVA_HOME 配置的JDK, 建议修改为指定的jdk, 即我们安装的jdk 8. 
+
+默认启动ElasticSearch 会使用系统变量JAVA\_HOME 配置的JDK, 建议修改为指定的jdk, 即我们安装的jdk 8.   
 编辑bin 目录下的elasticsearch 命令, 第一行添加:
 
 ```bash
@@ -25,7 +38,8 @@ export JAVA_HOME=/opt/app/jdk/jdk1.8.0_131
 ```
 
 #### 2.2.2 修改配置
-ElasticSearch 的核心配置文件为 config/elasticsearch.yml, 启动之前需要修改一下ip 和端口等基本信息.
+
+ElasticSearch 的核心配置文件为 config/elasticsearch.yml, 启动之前需要修改一下ip 和端口等基本信息.  
 编辑配置文件, 文件末尾追加:
 
 ```bash
@@ -36,9 +50,14 @@ http.port: 9200
 ```
 
 ## 3. 启动&关闭
+
 ### 3.1 启动
+
 直接执行bin/elasticsearch 命令即可启动服务, 可以先测试一下启动, 如果没有问题的话, 采用后台启动. 后台启动直接添加-d 参数即可
 
 ```bash
 /opt/app/elk/elsearch/elasticsearch-5.4.2/bin/elasticsearch -d
 ```
+
+
+
