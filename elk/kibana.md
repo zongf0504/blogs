@@ -84,3 +84,9 @@ elasticsearch.url: http://192.168.145.100:9200
 /opt/app/elk/kibana/kibana-5.4.2-linux-x86_64/bin/kibana &
 ```
 
+# 5.测试
+释放防火墙端口: 9200 和  5601, 浏览器输入: http:/192.168.145.100:5601
+![](/assets/kibana_2017-06-26_164619.png)
+
+
+
