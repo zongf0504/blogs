@@ -2,7 +2,7 @@
 
 > Kibana 是一个专门为ElasticSearch 提供的日志分析和监控的Web 接口.通过kibana 可对elastic 日志进行高效的搜索, 可视化分析, 可视化监控等操作.
 
-## 1. 安装说明
+# 1. 安装说明
 
 仅仅安装kibana 是没有太大意义的, 需要配合elastic 才行, 所以需要先安装elastic, 而elastic 依赖于jvm 环境, 所以需要先安装jdk. 对于Elastic 和 kibana 笔者选择当前最新的5.4.2 版本, 此版本需要jdk 1.8+. 安装清单:
 
@@ -10,13 +10,37 @@
 | :--- | :--- |
 | jdk-8u131-linux-x64.tar.gz | /opt/app/jdk |
 | elasticsearch-5.4.2.tar.gz | /opt/app/elk/elastic |
-| kibana-5.4.2-linux-x86\_64.tar.gz | /opt/app/elk/kibana |
+| kibana-5.4.2-linux-x86_64.tar.gz | /opt/app/elk/kibana |
+
+
+# 2. 安装
+由于jdk, elastic, kibana 提供的tar 包都是解压即可使用的, 所以直接解压就行了:
+
+安装命令:
+```bash
+[admin@localhost elk]$ tar -zxf jdk-8u131-linux-x64.tar.gz -C /opt/app/jdk
+[admin@localhost elk]$ tar -zxf elasticsearch-5.4.2.tar.gz -C /opt/app/elk/elastic
+[admin@localhost elk]$ tar -zxf kibana-5.4.2-linux-x86_64.tar.gz -C /opt/app/elk/kibana
+```
+
+安装后:
+```bash
+[admin@localhost ~]$ ls ./jdk/ ./elk/elsearch/ ./elk/kibana/
+./elk/elsearch/:
+elasticsearch-5.4.2
+
+./elk/kibana/:
+kibana-5.4.2-linux-x86_64
+
+./jdk/:
+jdk1.8.0_131  jdk-8u131-linux-x64.tar.gz
+[admin@localhost ~]$
+```
 
 
 
+## 2.1 安装 jdk
 
-
-## 2. 安装
 
 ### 2.1 安装jdk & ElasticSearch
 
