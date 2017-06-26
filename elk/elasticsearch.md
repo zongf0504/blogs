@@ -34,3 +34,11 @@ bootstrap.system_call_filter: false
 network.host: 172.22.12.225
 http.port: 9200
 ```
+
+## 3. 启动&关闭
+### 3.1 启动
+直接执行bin/elasticsearch 命令即可启动服务, 可以先测试一下启动, 如果没有问题的话, 采用后台启动. 后台启动直接添加-d 参数即可
+
+```bash
+/opt/app/elk/elsearch/elasticsearch-5.4.2/bin/elasticsearch -d
+```
