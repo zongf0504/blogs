@@ -52,7 +52,7 @@
   * Shell 判断表达式
 * [ELK](elk.md)
   * [ElasticSearch](elk/elasticsearch.md)
-  * Kibana
+  * [Kibana](elk/kibana.md)
   * Logstash
   * Beats
   * ELK 整合
