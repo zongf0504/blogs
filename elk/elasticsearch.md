@@ -31,7 +31,7 @@ ElasticSearch 的核心配置文件为 config/elasticsearch.yml, 启动之前需
 ```bash
 bootstrap.memory_lock: false
 bootstrap.system_call_filter: false       
-network.host: 172.22.12.225
+network.host: 192.168.145.100
 http.port: 9200
 ```
 
