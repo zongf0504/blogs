@@ -1,4 +1,5 @@
 # 初始化官方测试数据
+
 > Kibana 官方提供了测试数据, 用于学习和使用kibana.
 
 ## 初始化脚本
@@ -8,10 +9,10 @@
 #Desc 初始化kibana 官方测试数据
 
 # elastic web访问地址
-elastic="http://172.22.12.225:9200"
+elastic="http://192.168.145.100:9200"
 
 # json 文件所在目录
-json_dir=/home/admin/elk/kibana/demo
+json_dir=/opt/app/elk/kibana/demo
 
 # 1.创建索引
 echo "[1/3] 开始创建索引:"
@@ -112,11 +113,11 @@ curl -XPOST "$elastic/172.22.12.225:9200/_bulk?pretty" --data-binary @$json_dir/
 echo -e "\n[3/3] 查看索引:"
 curl "$elastic/_cat/indices?v"
 
-[admin@localhost demo]$ 
-
+[admin@localhost demo]$
 ```
 
 ## 脚本执行结果
+
 ```bash
 [admin@localhost demo]$ ./init_data.sh 
 [1/3] 开始创建索引:
@@ -149,6 +150,8 @@ yellow open   .kibana             03-_N6n9Qi24T4x_WOs3YA   1   1          9     
 yellow open   logstash-2015.05.18 8cFWN6eaQrmt3G4KAOOSBw   5   1       4631            0     31.6mb         31.6mb
 yellow open   shakespeare         hm82loVRQl-cvJf6mlbxFQ   5   1     111396            0     27.9mb         27.9mb
 yellow open   logstash-2015.05.20 JLG4XkBuQUSOP_iiDKwC8A   5   1       4750            0     33.9mb         33.9mb
-[admin@localhost demo]$ 
-
+[admin@localhost demo]$
 ```
+
+
+
