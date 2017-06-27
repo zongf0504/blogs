@@ -2,6 +2,10 @@
 
 > Kibana 官方提供了测试数据, 用于学习和使用kibana.
 
+
+## 官网测试数据下载
+[官网测试数据下载](http://download.csdn.net/detail/zgf19930504/9881821)
+
 ## 初始化脚本
 
 ```bash
