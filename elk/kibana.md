@@ -88,5 +88,23 @@ elasticsearch.url: http://192.168.145.100:9200
 释放防火墙端口: 9200 和  5601, 浏览器输入: http:/192.168.145.100:5601
 ![](/assets/kibana_2017-06-26_164619.png)
 
+# 附: Nginx 反向代理配置
+## 1. kibana 配置
+kibana 需要配置server.basePath 路径
+```bash 
+server.basePath: /kibana5
+```
+
+## 2. nginx 配置:
+```bash
+location ~ ^/kibana5/.* {
+    proxy_pass http://172.22.12.225:5601;
+    rewrite ^/kibana5/(.*) /$1 break;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+}        
+```
+
+
 
 
