@@ -105,6 +105,8 @@ location ~ ^/kibana5/.* {
 }        
 ```
 
+## 3. kibana 访问地址
+kibana 访问地址就变成了http://192.168.145.100/kibana5
 
 
 
