@@ -20,7 +20,7 @@
 | anon_other_write_enable=YES/NO | 设置匿名用户是否拥有除了上传文件新建目录的权限(删除,更名..) NO 不允许, YES 条件允许 | NO |
 | no_anon_password=YES/NO | 控制匿名用户登入时是否需要密码，YES不需要，NO需要。 | NO |
 | ftp_username=ftp | 设置匿名用户所使用系统用户名, 默认为不出现在配置中,不建议修改 | ftp |
-| chown_uploads=YES|NO | 是否修改匿名用户上传文件的所有者,不会影响所属组, 默认所有者和所属组均为ftp: NO 否  YES 修改 | NO |
+| chown_uploads=YES/NO | 是否修改匿名用户上传文件的所有者,不会影响所属组, 默认所有者和所属组均为ftp: NO 否  YES 修改 | NO |
 | chown_username=user_name | 指定匿名用户上传文件的所有者,用户名必须为存在的系统用户名 | 无 |
 
 
