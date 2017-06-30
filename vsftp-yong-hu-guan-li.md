@@ -4,11 +4,14 @@
 
 
 
-# 匿名用户
+# 1. 匿名用户
 
+## 1.1 默认配置
 * 默认情况下, 匿名用户是可以访问的, 具有只读权限
 * 默认情况下, 虚拟用户的根目录为 /var/ftp
+* 笔者所写条件允许是指还依赖于两个条件: a) write_enable=YES b) ftp_username 对该目录写权限
 
+## 1.2 常用配置项
 常用配置项:
 
 | 配置项 | 含义 | 默认 |
@@ -23,9 +26,27 @@
 | chown_uploads=YES/NO | 是否修改匿名用户上传文件的所有者,不会影响所属组, 默认所有者和所属组均为ftp: NO 否  YES 修改 | NO |
 | chown_username=user_name | 指定匿名用户上传文件的所有者,用户名必须为存在的系统用户名 | 无 |
 
+## 1.3 推荐配置
+通常对于匿名用户, 分配以下权限即可
+* 允许匿名用户访问
+* 匿名用户访问特殊文件夹
+* 匿名用于允许上传文件
+* 匿名用户不允许新建文件夹
+* 匿名用户不允许删除或修改文件名
 
+```bash
+#允许匿名用户访问
+anonymous_enable=YES
+#指定匿名用户访问根目录
+anon_root=/var/data/ftp
+#匿名用户允许上传文件
+anon_upload_enable=YES
+#匿名用户不允许创建文件夹
+anon_mkdir_write_enable=NO
+#匿名用户不允许删除/更名文件/文件夹
+anon_other_write_enable=NO
+```
 
-* 条件允许是指还依赖于两个条件: a) write_enable=YES b) ftp_username 对该目录写权限
 
 
 
