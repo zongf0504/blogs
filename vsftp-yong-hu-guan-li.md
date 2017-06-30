@@ -46,7 +46,7 @@ anon_mkdir_write_enable=NO
 #匿名用户不允许删除/更名文件/文件夹
 anon_other_write_enable=NO
 ```
-
+* 需要注意, 匿名用户ftp 需要对文件夹/var/data/ftp 具有写权限, 才能进行上传文件
 
 
 
