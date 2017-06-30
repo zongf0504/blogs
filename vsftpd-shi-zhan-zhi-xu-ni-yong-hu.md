@@ -4,10 +4,16 @@
 # 1. 配置要求
 
 匿名用户:
-* 对文件夹具有只读权限 
-*
+* 允许匿名用户访问
+* 匿名用户访问特殊文件夹
+* 匿名用于允许上传文件
+* 匿名用户不允许新建文件夹
+* 匿名用户不允许删除或修改文件名
 
 虚拟用户:
+* 三个用户: develop, product, test
+* 不同用户进入不同的文件夹, 且不可跳出当前文件夹
+
 
 
 # 1. 创建虚拟用户数据源 
@@ -16,12 +22,12 @@
 * 文件格式: 一行用户名, 一行密码.笔者创建文件: vim /etc/vsftpd/vusers.txt
 
 ```bash
-vftp
-vftp@123456
-zong
-zong@123345
-mirror
-mirror@123456
+develop
+develop@123456
+product
+product@123345
+test
+test@123456
 ```
 
 ## 1.2 生成用户名列表db文件
@@ -59,8 +65,7 @@ account required pam_userdb.so db=/etc/vsftpd/vusers
 * vusers 为虚拟用户名数据库文件, 但是不能写后缀名
 
 
-
-#### 2.1.2.4 修改vsftpd 配置
+## 1.3 修改vsftpd 配置
 
 修改配置文件/etc/vsftpd/vsftpd.conf , 文件末尾添加以下内容. 需要注意的是,guest\_username 为虚拟用户代表的系统用户名, 笔者设置为admin用户, 也就是说所有的虚拟用户都相当于admin 用户.
 
@@ -70,9 +75,11 @@ pam_service_name=vsftpd
 guest_enable=YES
 # 设置虚拟用户用户名
 guest_username=admin
+# 设置默认登录路径
+local_root=/var/data/ftp
 ```
 
-#### 2.1.2.4 创建虚拟用户配置目录
+## 1.4 创建虚拟用户配置目录
 
 为了给不同的虚拟用户设置不同的权限, 目录, 所以为每个用户创建配置文件. 笔者将虚拟用户配置文件存放在 /etc/vsftpd/vusers\_conf 目录中.
 
