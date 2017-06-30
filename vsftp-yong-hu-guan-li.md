@@ -1,27 +1,32 @@
 # Vsftp 用户管理
+
 > vsftpd 服务提供了三种用户类型: 匿名用户, 系统用户, 虚拟用户. 其中系统用户和虚拟用户只能开启一个.
 
 # 匿名用户
+
 * 默认情况下, 匿名用户是可以访问的, 具有只读权限
 * 默认情况下, 虚拟用户的根目录为 /var/ftp
 
-
+| 配置项 | 含义 |
+| :--- | :--- |
+|  |  |
 
 ## 1. 修改虚拟用户的访问根目录
-配置文件: /etc/vsftp/vsftpd.conf 添加配置, 这样匿名用户登录之后, 就会进入/var/data/ftp 目录. 
+
+配置文件: /etc/vsftp/vsftpd.conf 添加配置, 这样匿名用户登录之后, 就会进入/var/data/ftp 目录.
+
 ```bash
 anon_root=/var/data/ftp
 ```
 
-## 2. 
-
-
+## 2.
 
 # 系统用户
 
-
 # 虚拟用户
+
 ## 1. 创建虚拟用户列表文件
+
 * 文件格式: 一行用户名, 一行密码.笔者创建文件: vim /etc/vsftpd/vusers.txt
 
 ```bash
@@ -33,22 +38,24 @@ zong@123345
 
 ## 2. 生成用户名列表db文件
 
-使用db_load 工具生成用户名列表数据库文件, 文件名必须以.db 结尾
+使用db\_load 工具生成用户名列表数据库文件, 文件名必须以.db 结尾
+
 ```bash
 [root@localhost vsftpd]# db_load -T -t hash -f vusers.list vusers.db 
 [root@localhost vsftpd]# ll vusers.db 
 -rw-r--r--. 1 root root 12288 Jun 30 15:44 vusers.db
-[root@localhost vsftpd]# 
+[root@localhost vsftpd]#
 ```
 
 ## 3. 修改vsftpd 配置
-1. 查看/etc/vsftpd/vsftpd.conf, 中的pam_service_name的值, 笔者的为 vsftpd
+
+1. 查看/etc/vsftpd/vsftpd.conf, 中的pam\_service\_name的值, 笔者的为 vsftpd
 2. 编辑/etc/pam.d 目录下的vsftpd 文件, 将原来内容全部注释掉, 然后添加新的auth和account 配置.
 
+注意:
 
- 注意:
- * 笔者为64 位centos 系统, 所以是这样配置, 32位系统配置required 和64位不同
- * vusers 为虚拟用户名数据库文件, 但是不能写后缀名
+* 笔者为64 位centos 系统, 所以是这样配置, 32位系统配置required 和64位不同
+* vusers 为虚拟用户名数据库文件, 但是不能写后缀名
 
 ```bash
 [root@localhost vsftpd]# vim /etc/pam.d/vsftpd
@@ -64,16 +71,21 @@ zong@123345
 auth required pam_userdb.so db=/etc/vsftpd/vusers
 account required pam_userdb.so db=/etc/vsftpd/vusers
 ```
+
 ## 4. 创建虚拟用户配置目录
-为了给不同的虚拟用户设置不同的权限, 目录, 所以为每个用户创建配置文件. 笔者将虚拟用户配置文件存放在 /etc/vsftpd/vusers_conf 目录中.
+
+为了给不同的虚拟用户设置不同的权限, 目录, 所以为每个用户创建配置文件. 笔者将虚拟用户配置文件存放在 /etc/vsftpd/vusers\_conf 目录中.
+
 ```bash
 mkdir /etc/vsftpd/vusers_conf
 ```
 
 ## 5. 创建虚拟用户配置文件
+
 虚拟用户配置文件需要放在虚拟用户配置目录中, 且文件名为用户名.
 
 zong 用户:
+
 ```bash
 [root@localhost vsftpd]# vim /etc/vsftpd/vusers_conf/zong 
 #设置用户根目录  
@@ -83,9 +95,10 @@ virtual_use_local_privs=YES
 ```
 
 ftp 用户:
+
 ```bash
 [root@localhost vsftpd]# vim /etc/vsftpd/vusers_conf/ftp
-  
+
 #设置用户根目录  
 local_root=/var/data/ftp/soft
 #设置虚拟用户具有读写权限
@@ -93,7 +106,8 @@ virtual_use_local_privs=YES
 ```
 
 # 6. 修改vsftpd 配置
-修改配置文件/etc/vsftpd/vsftpd.conf , 文件末尾添加以下内容. 需要注意的是,guest_username 为虚拟用户代表的系统用户名, 笔者设置为admin用户, 也就是说所有的虚拟用户都相当于admin 用户.
+
+修改配置文件/etc/vsftpd/vsftpd.conf , 文件末尾添加以下内容. 需要注意的是,guest\_username 为虚拟用户代表的系统用户名, 笔者设置为admin用户, 也就是说所有的虚拟用户都相当于admin 用户.
 
 ```bash
 pam_service_name=vsftpd
@@ -106,16 +120,13 @@ user_config_dir=/etc/vsftpd/vusers_conf
 ```
 
 # 7. 重启服务器
+
 ```bash
 [root@localhost vsftpd]# service vsftpd restart
 Shutting down vsftpd:                                      [  OK  ]
 Starting vsftpd for vsftpd:                                [  OK  ]
-[root@localhost vsftpd]# 
+[root@localhost vsftpd]#
 ```
-
-
-
-
 
 
 
