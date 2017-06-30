@@ -39,6 +39,7 @@
   * [安装ftp服务](vm/an-zhuang-ftp-fu-wu.md)
 * [Linux](linux.md)
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
+  * [vsftp 用户管理](vsftp-yong-hu-guan-li.md)
 * [Shell](shell.md)
   * [Shell  变量](shell/shell.md)
   * [Shell 输入输出](shell/shell-shu-ru-shu-chu.md)
@@ -52,7 +53,7 @@
 * [ELK](elk.md)
   * [ElasticSearch](elk/elasticsearch.md)
   * [Kibana](elk/kibana.md)
-    * 初始化官方测试数据
+    * [初始化官方测试数据](elk/kibana/chu-shi-hua-guan-fang-ce-shi-shu-ju.md)
   * Logstash
   * Beats
   * ELK 整合
