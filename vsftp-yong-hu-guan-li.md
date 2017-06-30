@@ -2,24 +2,28 @@
 
 > vsftpd 服务提供了三种用户类型: 匿名用户, 系统用户, 虚拟用户. 其中系统用户和虚拟用户只能开启一个.
 
+
+
 # 匿名用户
 
 * 默认情况下, 匿名用户是可以访问的, 具有只读权限
 * 默认情况下, 虚拟用户的根目录为 /var/ftp
 
-| 配置项 | 含义 |
-| :--- | :--- |
-| anonymous_enable=YES/NO | 设置是否允许匿名用户登录, YES 允许, NO 不允许 |
-| ftp_username=ftp | 设置匿名用户所使用系统用户名, 默认为ftp, ftp 为安装时创建的不可登录用户 |
-| no_anon_password=YES/NO | 控制匿名用户登入时是否需要密码，YES不需要，NO需要。默认值为NO |
-| anon_root | 设置匿名用户的根目录，即匿名用户登入后，被定位到此目录下。默认为/var/ftp/ |
-| anon_world_readable_only=YES/NO | 控制是否只允许匿名用户下载可阅读文档 |
-| anon_upload_enable=YES/NO | 设置是否允许匿名用户上传文件: YES 允许 NO 不允许. 在设置为YES 时, 还需要两个条件: a) write_enable=YES b) ftp_username 对该目录写权限 |
-| anon_mkdir_write_enable=YES/NO |设置是否允许匿名用户创建新目录: NO 不允许 YES 允许, 但有条件|
-| anon_other_write_enable=YES/NO | 设置匿名用户是否拥有除了上传文件新建目录的权限(删除,更名..) NO 不允许, YES 允许 依赖条件 |
-|  |  |
+| 配置项 | 含义 | 默认 |
+| :--- | :--- | :--- |
+| anonymous_enable=YES/NO | 设置是否允许匿名用户登录, YES 允许, NO 不允许 | YES |
+| anon_root | 设置匿名用户的根目录，即匿名用户登入后，被定位到此目录下. 此目录所属者和所属主必须为root, 可通过chown root:root 修改 | /var/ftp/ |
+| anon_upload_enable=YES/NO | 设置是否允许匿名用户上传文件: NO 不允许 YES 条件允许| NO |
+| anon_mkdir_write_enable=YES/NO |设置是否允许匿名用户创建新目录: NO 不允许 YES 条件允许| NO |
+| anon_other_write_enable=YES/NO | 设置匿名用户是否拥有除了上传文件新建目录的权限(删除,更名..) NO 不允许, YES 条件允许 | NO |
 
 
+| no_anon_password=YES/NO | 控制匿名用户登入时是否需要密码，YES不需要，NO需要。 | NO |
+| anon_world_readable_only=YES/NO | 控制是否只允许匿名用户下载可阅读文档 | NO |
+
+| ftp_username=ftp | 设置匿名用户所使用系统用户名, 默认为不出现在配置中,不建议修改 | ftp |
+
+* 条件允许是指还依赖于两个条件: a) write_enable=YES b) ftp_username 对该目录写权限
 
 
 
