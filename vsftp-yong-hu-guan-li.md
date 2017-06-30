@@ -61,9 +61,9 @@ vsftd 的用户数据源只能启用系统用户或虚拟用户中的一种, 不
 | 配置项 | 含义 | 默认 |
 | :--- | :--- | :--- |
 | local_enable=YES/NO | 设置是否允许系统用户登录, YES 允许, NO 不允许 | YES |
-| chroot_local_user=YES/NO | 设置禁止用户离开主目录, 只能在主目录及子目录活动 | 默认为NO|
-| chroot_list_enable=YES/NO | 指定特殊用户可以离开主目录 | 配合使用 |
-| chroot_list_file=/etc/vsftpd/chroot_list | 指定允许离开主目录的特殊用户列表文件 | 配合使用 |
+| chroot_local_user=YES/NO | 设置禁止用户离开主目录(默认为用户家目录), 只能在主目录及子目录活动 | 默认为NO|
+| chroot_list_enable=YES/NO | 指定特殊用户可以离开主目录 | 需要chroot_local_user为YES |
+| chroot_list_file=/etc/vsftpd/chroot_list | 指定允许离开主目录的特殊用户列表文件 | 需要chroot_local_user为YES |
 | local_root=dir_name | 设置系统用户登录之后默认目录, 当设置禁止离开主目录之后有效| 默认为用户家目录 |
 
 
