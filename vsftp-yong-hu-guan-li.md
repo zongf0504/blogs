@@ -16,11 +16,8 @@
 | anon_upload_enable=YES/NO | 设置是否允许匿名用户上传文件: NO 不允许 YES 条件允许| NO |
 | anon_mkdir_write_enable=YES/NO |设置是否允许匿名用户创建新目录: NO 不允许 YES 条件允许| NO |
 | anon_other_write_enable=YES/NO | 设置匿名用户是否拥有除了上传文件新建目录的权限(删除,更名..) NO 不允许, YES 条件允许 | NO |
-
-
 | no_anon_password=YES/NO | 控制匿名用户登入时是否需要密码，YES不需要，NO需要。 | NO |
 | anon_world_readable_only=YES/NO | 控制是否只允许匿名用户下载可阅读文档 | NO |
-
 | ftp_username=ftp | 设置匿名用户所使用系统用户名, 默认为不出现在配置中,不建议修改 | ftp |
 
 * 条件允许是指还依赖于两个条件: a) write_enable=YES b) ftp_username 对该目录写权限
