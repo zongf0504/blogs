@@ -88,7 +88,7 @@ total 28
 ```
 
 ### 2.4.2 默认根目录
-vsftp 服务默认根目录为/var/ftp 
+vsftp 服务默认根目录为/var/ftp, 此目录所属者和所属组都是root.
 ```bash
 [root@localhost ~]# ll -d /var/ftp/
 drwxr-xr-x. 3 root root 4096 Jul  1 16:58 /var/ftp/
