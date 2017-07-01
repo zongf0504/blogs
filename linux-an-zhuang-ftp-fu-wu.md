@@ -127,6 +127,7 @@ vsftpd          0:off   1:off   2:off   3:off   4:off   5:off   6:off
 ```
 
 ### 4.4.2 修改vsftpd 开机启动
+* 我们只设置开机级别为35 的时候,自动启动vsftpd 服务即可.
 ```bash
 [root@localhost ~]# chkconfig --level 35 vsftpd on
 [root@localhost ~]# chkconfig | grep vsftpd
