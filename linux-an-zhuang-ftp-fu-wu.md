@@ -73,6 +73,41 @@ Complete!
 vsftpd: version 2.2.2
 ```
 
+## 2.4 默认配置
+### 2.4.1 配置文件
+vsftpd 服务配置文件默认在/etc/vsftp 目录下
+```bash
+[root@localhost ~]# ll /etc/vsftpd/
+total 28
+-rw-------. 1 root root  125 May 11  2016 ftpusers
+-rw-------. 1 root root  361 May 11  2016 user_list
+-rw-------. 1 root root 4599 May 11  2016 vsftpd.conf
+-rwxr--r--. 1 root root  338 May 11  2016 vsftpd_conf_migrate.sh
+-rw-------. 1 root root 4647 Jun 20 20:07 vsftpd.conf.rpmsave
+[root@localhost ~]# 
+```
+
+### 2.4.2 默认根目录
+vsftp 服务默认根目录为/var/ftp 
+```bash
+[root@localhost ~]# ll -d /var/ftp/
+drwxr-xr-x. 3 root root 4096 Jul  1 16:58 /var/ftp/
+[root@localhost ~]# ll /var/ftp/
+total 4
+drwxr-xr-x. 2 root root 4096 May 11  2016 pub
+[root@localhost ~]# 
+```
+
+### 2.4.3 默认匿名用户
+vsftpd 安装过程中会创建ftp 用户作为匿名用户的代理用户,ftp 用户不能登录系统.
+```bash
+[root@localhost ~]# id ftp
+uid=14(ftp) gid=50(ftp) groups=50(ftp)
+[root@localhost ~]# cat /etc/passwd | grep ftp
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+[root@localhost ~]# 
+```
+
 # 3. 系统配置
 安装vsftpd 之后, 需要对系统做一些修改配置
 * ftp_home_dir: 解决非root 用户登录报错: OOPS: child died
