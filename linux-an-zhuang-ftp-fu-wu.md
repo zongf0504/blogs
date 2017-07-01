@@ -175,6 +175,41 @@ vsftpd          0:off   1:off   2:off   3:on    4:off   5:on    6:off
 [root@localhost ~]# 
 ```
 
+# 5. vsftpd 防火墙设置
+* vsftpd服务默认监听20和21端口, 其它电脑要想访问,那么需要释放防火墙端口或关闭防火墙.不推荐关闭防火墙方式.
+* vsftpd 传输数据默认使用PASV安全模式,所以需要设置PASV端口上下限,并释放端口
+
+## 5.1 设定PASV 端口上下限
+编辑配置文件: /etc/vsftpd/vsftpd.conf, 文件末尾追加两行:
+```bash
+#设定PASV 端口下限
+pasv_min_port=61000
+#设定PASV 端口上限
+pasv_max_port=62000
+```
+## 5.2 释放防火墙端口
+编辑配置文件: /etc/sysconfig/iptables, 文件中添加以下配置:
+```bash
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 20 -j ACCEPT
+-A OUTPUT -m state --state NEW -m tcp -p tcp --dport 20 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT
+-A OUTPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 61000:62000 -j ACCEPT
+-A OUTPUT -m state --state NEW -m tcp -p tcp --dport 61000:62000 -j ACCEPT
+```
+## 5.3 重启服务
+重启vsftpd服务和防火墙
+```bash
+[root@localhost ~]# service vsftpd restart
+Shutting down vsftpd:                                      [  OK  ]
+Starting vsftpd for vsftpd:                                [  OK  ]
+[root@localhost ~]# service iptables restart
+iptables: Setting chains to policy ACCEPT: filter          [  OK  ]
+iptables: Flushing firewall rules:                         [  OK  ]
+iptables: Unloading modules:                               [  OK  ]
+iptables: Applying firewall rules:                         [  OK  ]
+[root@localhost ~]# 
+```
 
 ### 3. linux本地未安装ftp命令
 安装ftp命令:
