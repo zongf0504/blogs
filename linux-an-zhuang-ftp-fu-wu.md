@@ -135,46 +135,6 @@ vsftpd          0:off   1:off   2:off   3:on    4:off   5:on    6:off
 ```
 
 
-
-# 5. 默认配置
-
-
-
-
-
-
-
-
-
-3. 重启ftp 服务
-```
-[root@localhost vsftpd]# service vsftpd restart
-Shutting down vsftpd:                                      [  OK  ]
-Starting vsftpd for vsftpd:                                [  OK  ]
-[root@localhost vsftpd]# 
-```
-
-### 2. 不能上传文件:vsftpd Could not create file.
-1. 确认目录权限是否可写:默认目录为 /var/ftp
-
-2. 查看seLinuxStatus: allow_ftpd_full_access 
-```
-[root@localhost var]# getsebool -a | grep ftp
-allow_ftpd_anon_write --> off
-allow_ftpd_full_access --> off
-allow_ftpd_use_cifs --> off
-allow_ftpd_use_nfs --> off
-ftp_home_dir --> on
-ftpd_connect_db --> off
-ftpd_use_fusefs --> off
-ftpd_use_passive_mode --> off
-httpd_enable_ftp_server --> off
-tftp_anon_write --> off
-tftp_use_cifs --> off
-tftp_use_nfs --> off
-[root@localhost var]# setsebool allow_ftpd_full_access on
-```
-
 ### 3. linux本地未安装ftp命令
 安装ftp命令:
 yum -y install ftp
