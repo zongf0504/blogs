@@ -242,7 +242,11 @@ chroot_list_file=/etc/vsftpd/chroot_list
 
 ```
 
-# 5. 
+# 5. 启动服务器
+```bash
+[root@localhost vsftpd]# service vsftpd start
+Starting vsftpd for vsftpd:                                [  OK  ]
+```
 
 
 
