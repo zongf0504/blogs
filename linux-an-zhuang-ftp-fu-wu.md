@@ -168,6 +168,7 @@ vsftpd          0:off   1:off   2:off   3:off   4:off   5:off   6:off
 
 ### 4.4.2 修改vsftpd 开机启动
 * 我们只设置开机级别为35 的时候,自动启动vsftpd 服务即可.
+
 ```bash
 [root@localhost ~]# chkconfig --level 35 vsftpd on
 [root@localhost ~]# chkconfig | grep vsftpd
@@ -211,9 +212,43 @@ iptables: Applying firewall rules:                         [  OK  ]
 [root@localhost ~]# 
 ```
 
-### 3. linux本地未安装ftp命令
-安装ftp命令:
-yum -y install ftp
+# 6. 测试
+
+## 6.1 浏览器访问
+直接输入地址ftp://192.168.145.100/ 即可
+![](/assets/ftp_2017-07-01_102426.png)
+
+## 6.2 windows 文件系统访问
+文件路径中输入地址: ftp://192.168.145.100/
+![](/assets/ftp_2017-07-01_102339.png)
+
+## 6.3 FTP 客户端工具wincp 访问
+新建站点,选择ftp类型, 输入地址, 勾选匿名登录
+![](/assets/ftp_2017-07-01_102506.png)
+
+## 6.4 ftp 命令访问
+需要本地安装ftp 命令, windows自带ftp 命令, 有些linux 服务器也自带ftp 命令, 如果没有的话,则需要安装ftp 命令.安装方式: yum -y install ftp
+
+```bash
+[root@localhost ~]# ftp 192.168.145.100
+Connected to 192.168.145.100 (192.168.145.100).
+220 (vsFTPd 2.2.2)
+Name (192.168.145.100:root): anonymous
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> dir
+227 Entering Passive Mode (192,168,145,100,238,253).
+150 Here comes the directory listing.
+drwxr-xr-x    2 0        0            4096 May 11  2016 pub
+226 Directory send OK.
+ftp> quit
+221 Goodbye.
+[root@localhost ~]# 
+```
+
 
 
 
