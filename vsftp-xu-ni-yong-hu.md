@@ -175,9 +175,74 @@ local_root=/var/data/ftp
 virtual_use_local_privs=YES
 ```
 
+# 3. 配置允许用户跳出主目录的用户列表
+* 文件位置: /etc/vsftpd/chroot_list
+* 文件格式: 一个用户名一行,此处我们只配置superAdmin 用户.
 
+```bash
+[root@localhost vsftpd]# vim chroot_list 
+superAdmin       
+```
 
+# 4. 配置vsftpd 核心配置文件
+前面做的都是准备工作, 由/etc/vsftpd/vsftpd.conf 配置文件将前面的操作关联起来
 
+```bash
+# Example config file /etc/vsftpd/vsftpd.conf
+
+##########  全局配置  ##########
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=YES
+listen=YES
+
+userlist_enable=YES
+tcp_wrappers=YES
+
+#pasv 传输方式端口上下限
+pasv_min_port=61000
+pasv_max_port=62000
+
+##########  匿名用户配置  ##########
+#开启匿名用户访问
+anonymous_enable=YES
+#指定匿名用户访问根目录
+anon_root=/var/data/ftp/anon
+#匿名用户允许上传文件
+anon_upload_enable=YES
+#匿名用户不允许创建文件夹
+anon_mkdir_write_enable=NO
+#匿名用户不允许删除/更名文件/文件夹
+anon_other_write_enable=NO
+
+##########  虚拟用户配置  ##########
+#指定pam 服务名称, 和/etc/pam.d 目录下的文件vsftpd 保持一致
+pam_service_name=vsftpd
+# 开启虚拟用户登录
+guest_enable=YES
+# 设置虚拟代理系统用户名
+guest_username=admin
+# 设置默认登录路径
+local_root=/var/data/ftp/anon
+# 设置运行本地用户登录,不设置的话, 虚拟用户不能登录
+local_enable=YES
+# 设置具体用户配置文件目录
+user_config_dir=/etc/vsftpd/vusers_conf
+
+##########  设置跳出目录   ##########
+#设置禁止用户跳出主目录
+chroot_local_user=YES
+#设置允许特殊用户跳出主目录
+chroot_list_enable=YES
+#设置特殊用户配置文件
+chroot_list_file=/etc/vsftpd/chroot_list
+
+```
+
+# 5. 
 
 
 
