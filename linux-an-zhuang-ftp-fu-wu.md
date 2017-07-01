@@ -74,8 +74,8 @@ vsftpd: version 2.2.2
 ```
 
 ## 2.4 默认配置
-### 2.4.1 配置文件
-vsftpd 服务配置文件默认在/etc/vsftp 目录下
+### 2.4.1 配置文件位置
+vsftpd 服务配置文件默认在/etc/vsftp 目录下, 核心配置文件为vsftpd.conf.
 ```bash
 [root@localhost ~]# ll /etc/vsftpd/
 total 28
@@ -107,6 +107,11 @@ uid=14(ftp) gid=50(ftp) groups=50(ftp)
 ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
 [root@localhost ~]# 
 ```
+
+### 2.4.5 默认权限
+默认配置下, vsftpd 服务允许匿名用户访问, 使用Linux 系统用户作为用户源, 允许系统用户登录.
+* 匿名用户权限: 根目录/var/ftp, 可读, 可下载, 不可上传文件, 不可新建文件夹, 不可删除/更名文件
+* 系统用户权限: 根目录为用户家目录,可跳出用户家目录, 对文件的权限由linux用户权限控制.
 
 # 3. 系统配置
 安装vsftpd 之后, 需要对系统做一些修改配置
