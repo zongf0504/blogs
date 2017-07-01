@@ -222,13 +222,15 @@ anon_upload_enable=YES
 anon_mkdir_write_enable=NO
 #匿名用户不允许删除/更名文件/文件夹
 anon_other_write_enable=NO
+#匿名用户代理系统用户
+ftp_username=ftp
 
 ##########  虚拟用户配置  ##########
 #指定pam 服务名称, 和/etc/pam.d 目录下的文件vsftpd 保持一致
 pam_service_name=vsftpd
 # 开启虚拟用户登录
 guest_enable=YES
-# 设置虚拟代理系统用户名
+# 设置虚拟用户代理系统用户名
 guest_username=admin
 # 设置默认登录路径
 local_root=/var/data/ftp/anon
@@ -253,7 +255,10 @@ chroot_list_file=/etc/vsftpd/chroot_list
 Starting vsftpd for vsftpd:                                [  OK  ]
 ```
 
-#
+#附: 搭建问题
+1. 确保防火墙关闭或释放了ftp 相关端口
+2. 确保ftp_home_dir, allow_ftpd_full_access, selinux 配置正确
+3. 确保
 
 
 
