@@ -134,10 +134,24 @@ ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
 
 * ftp\_home\_dir: 解决非root 用户登录报错: OOPS: child died
 * allow\_ftpd\_full\_access: 解决不能上传文件问题
+* selinux: 解决不能登录OOPS: priv_sock_get_cmd
 
 ```bash
 [root@localhost vsftpd] setsebool -P ftp_home_dir on
 [root@localhost vsftpd] setsebool allow_ftpd_full_access on
+[root@localhost vsftpd]# vim /etc/selinux/config 
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=permissive
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+
 ```
 
 # 4. 服务器启动
