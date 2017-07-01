@@ -1,7 +1,25 @@
 # Linux 安装FTP 服务
+> Linux 下的ftp 服务软件有很多, 笔者选择的是vsftpd , 被誉为最安全的FTP 服务. 笔者使用Centos 6.8 系统, 采用yum 方式安装.
+
+# 1. 检测是否安装了vsftpd
+如果有输出vsftpd 的相关信息, 则表示已经安装了vsftpd ,否则表示未安装
+```
+[admin@localhost ~]# rpm -qa | grep vsftpd
+vsftpd-2.2.2-24.el6.x86_64
+```
+
+# 2. 安装vsftpd
+由于vsftpd 软件依赖一些其他的软件和软件库, 所以采用yum 方式安装比较容易.
+
+## 2.1 配置yum 源
+* 联网: 联网情况下,不需要其它配置
+* 不能联网: 可以配置本地yum源, 可将Centos 系统盘,配置为u pan yum 源
+
+## 2.2 安装vsftpd
+对于root 用户之间使用yum -y install vsftpd 安装即可, 对于非root 用户, 如果具有sudo 权限,那么需要使用sudo 命令来安装. sudo yum -y install vsftpd. 使用sudo之后, 你的用户就相当于root 用户了.
 
 ```
-[root@localhost ~]# yum -y install vsftpd
+[admin@localhost ~]# sudo yum -y install vsftpd
 Loaded plugins: fastestmirror, security
 Setting up Install Process
 Determining fastest mirrors
