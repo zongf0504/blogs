@@ -41,7 +41,6 @@
   * [Linux 安装FTP 服务](linux-an-zhuang-ftp-fu-wu.md)
     * [vsftp 安装](vsftp-an-zhuang.md)
     * [vsftp 实战之虚拟用户](vsftp-xu-ni-yong-hu.md)
-    * [vsftpd 实战之系统用户](vsftpd-shi-zhan-zhi-xi-tong-yong-hu.md)
     * [vsftp 用户管理](vsftp-yong-hu-guan-li.md)
     * [vsftpd 常用配置](vsftpd-chang-yong-pei-zhi.md)
 * [Shell](shell.md)
