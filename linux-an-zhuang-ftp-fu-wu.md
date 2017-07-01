@@ -227,7 +227,8 @@ iptables: Applying firewall rules:                         [  OK  ]
 ![](/assets/ftp_2017-07-01_102506.png)
 
 ## 6.4 ftp 命令访问
-需要本地安装ftp 命令, windows自带ftp 命令, 有些linux 服务器也自带ftp 命令, 如果没有的话,则需要安装ftp 命令.安装方式: yum -y install ftp
+* 需要本地安装ftp 命令, windows自带ftp 命令, 有些linux 服务器也自带ftp 命令, 如果没有的话,则需要安装ftp 命令.安装方式: yum -y install ftp
+* 匿名用户访问,需要手工输入用户名为 anonymous
 
 ```bash
 [root@localhost ~]# ftp 192.168.145.100
