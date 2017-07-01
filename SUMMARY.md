@@ -43,6 +43,7 @@
     * [vsftp 实战之虚拟用户](vsftp-xu-ni-yong-hu.md)
     * [vsftpd 实战之系统用户](vsftpd-shi-zhan-zhi-xi-tong-yong-hu.md)
     * [vsftp 用户管理](vsftp-yong-hu-guan-li.md)
+    * [vsftpd 常用配置](vsftpd-chang-yong-pei-zhi.md)
 * [Shell](shell.md)
   * [Shell  变量](shell/shell.md)
   * [Shell 输入输出](shell/shell-shu-ru-shu-chu.md)
