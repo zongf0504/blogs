@@ -28,31 +28,6 @@
 | chown\_uploads=YES/NO | 是否修改匿名用户上传文件的所有者,不会影响所属组, 默认所有者和所属组均为ftp: NO 否  YES 修改 | NO |
 | chown\_username=user\_name | 指定匿名用户上传文件的所有者,用户名必须为存在的系统用户名 | 无 |
 
-## 1.3 推荐配置
-
-通常对于匿名用户, 分配以下权限即可
-
-* 允许匿名用户访问
-* 匿名用户访问特殊文件夹
-* 匿名用于允许上传文件
-* 匿名用户不允许新建文件夹
-* 匿名用户不允许删除或修改文件名
-
-```bash
-#允许匿名用户访问
-anonymous_enable=YES
-#指定匿名用户访问根目录
-anon_root=/var/data/ftp
-#匿名用户允许上传文件
-anon_upload_enable=YES
-#匿名用户不允许创建文件夹
-anon_mkdir_write_enable=NO
-#匿名用户不允许删除/更名文件/文件夹
-anon_other_write_enable=NO
-```
-
-* 需要注意, 匿名用户ftp 需要对文件夹/var/data/ftp 具有写权限, 才能进行上传文件
-
 # 2. 具体用户
 
 ## 2.1 用户源管理
