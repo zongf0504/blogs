@@ -4,7 +4,7 @@
 # 1. 检测是否安装了vsftpd
 如果有输出vsftpd 的相关信息, 则表示已经安装了vsftpd ,否则表示未安装
 ```
-[admin@localhost ~]# rpm -qa | grep vsftpd
+[root@localhost ~]# rpm -qa | grep vsftpd
 vsftpd-2.2.2-24.el6.x86_64
 ```
 
@@ -16,10 +16,10 @@ vsftpd-2.2.2-24.el6.x86_64
 * 不能联网: 可以配置本地yum源, 可将Centos 系统盘,配置为u pan yum 源
 
 ## 2.2 安装vsftpd
-对于root 用户之间使用yum -y install vsftpd 安装即可, 对于非root 用户, 如果具有sudo 权限,那么需要使用sudo 命令来安装. sudo yum -y install vsftpd. 使用sudo之后, 你的用户就相当于root 用户了.
+对于使用yum 方式安装软件,通常需要使用root 用户才能安装.安装命令: yum -y install vsftpd
 
 ```
-[admin@localhost ~]# sudo yum -y install vsftpd
+[root@localhost ~]#  yum -y install vsftpd
 Loaded plugins: fastestmirror, security
 Setting up Install Process
 Determining fastest mirrors
@@ -69,35 +69,82 @@ Complete!
 ## 2.3 查看安装版本
 
 ```
-[admin@localhost ~]# vsftpd -v
+[root @localhost ~]# vsftpd -v
 vsftpd: version 2.2.2
 ```
 
+# 3. 系统配置
+安装vsftpd 之后, 需要对系统做一些修改配置
+* ftp_home_dir: 解决非root 用户登录报错: OOPS: child died
+* allow_ftpd_full_access: 解决不能上传文件问题
 
-## 错误
-#### 1. Linux 系统非root 用户登录报错: OOPS: child died
-解决方案:
-1. 查看SELinux 状态:
+```bash
+[root@localhost vsftpd] setsebool -P ftp_home_dir on
+[root@localhost vsftpd] setsebool allow_ftpd_full_access on
 ```
-[root@localhost vsftpd]# sestatus -b | grep ftp
-allow_ftpd_anon_write                       off
-allow_ftpd_full_access                      off
-allow_ftpd_use_cifs                         off
-allow_ftpd_use_nfs                          off
-ftp_home_dir                                off
-ftpd_connect_db                             off
-ftpd_use_fusefs                             off
-ftpd_use_passive_mode                       off
-httpd_enable_ftp_server                     off
-tftp_anon_write                             off
-tftp_use_cifs                               off
-tftp_use_nfs                                off
+
+# 4. 服务器启动
+Centos 系列可通过service 命令进行服务器的启动, 停止, 重启
+
+## 4.1 启动服务器
+```bash
+[root@localhost ~]# service vsftpd start
+Starting vsftpd for vsftpd:                                [  OK  ]
+[root@localhost ~]# 
 ```
-2. 将ftp_home_dir 状态设置为on
+
+## 4.2 重启服务器
+```bash
+[root@localhost ~]# service vsftpd restart
+Shutting down vsftpd:                                      [  OK  ]
+Starting vsftpd for vsftpd:                                [  OK  ]
+[root@localhost ~]#
 ```
-[root@localhost vsftpd]# setsebool -P ftp_home_dir on
-[root@localhost vsftpd]#
+
+## 4.3 停止服务器
+```bash
+[root@localhost ~]# service vsftpd stop
+Shutting down vsftpd:                                      [  OK  ]
+[root@localhost ~]# 
 ```
+
+## 4.4 设置开机自启
+可以选择将vsftpd服务设置为开机自启, 设置方式可以使用chkconfig 命令, 也可以自定义启动脚本.笔者使用chkconfig 命令. chkconfig 可以对linux 的其中运行级别分别设置开机启动.
+
+* 0：表示关机
+* 1：单用户模式
+* 2：无网络连接的多用户命令行模式
+* 3：有网络连接的多用户命令行模式
+* 4：不可用
+* 5：带图形界面的多用户模式
+* 6：重新启动
+
+### 4.4.1 查看vsftpd 服务开机启动状态
+```bash
+[root@localhost ~]# chkconfig | grep vsftpd
+vsftpd          0:off   1:off   2:off   3:off   4:off   5:off   6:off
+[root@localhost ~]# 
+```
+
+### 4.4.2 修改vsftpd 开机启动
+```bash
+[root@localhost ~]# chkconfig --level 35 vsftpd on
+[root@localhost ~]# chkconfig | grep vsftpd
+vsftpd          0:off   1:off   2:off   3:on    4:off   5:on    6:off
+[root@localhost ~]# 
+```
+
+
+
+# 5. 默认配置
+
+
+
+
+
+
+
+
 
 3. 重启ftp 服务
 ```
