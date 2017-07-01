@@ -258,7 +258,7 @@ Starting vsftpd for vsftpd:                                [  OK  ]
 #附: 搭建问题
 1. 确保防火墙关闭或释放了ftp 相关端口
 2. 确保ftp_home_dir, allow_ftpd_full_access, selinux 配置正确
-3. 确保
+3. 确保虚拟用户代理用户admin 对根目录的权限是否正确.
 
 
 
