@@ -101,6 +101,7 @@ develop  developAdmin  superAdmin  test  testAdmin
 ```
 
 ### 2.5.2 编辑配置文件
+* virtual_use_local_privs 如果设置为YES 则表示此用户拥有和代理的系统用户admin 完全一样的权限.因为笔者设置的用户根目录的所有者和所属组均为admin, 所以如果设置了YES 就代表拥有了对这个目录操作的所有权限.
 
 ** develop **
 ```bash
