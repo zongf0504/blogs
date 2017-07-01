@@ -16,13 +16,18 @@
 * 虚拟用户需要一个系统用户作为代理用户,笔者使用admin 用户. 也就是说, 虚拟用户在对文件进行增删改操作时, 相当于admin 用户
 
 # 1 创建用户目录
-使用root 用户创建文件夹, 并将文件夹的所有者和所属组修改为admin,因为我设定的虚拟用户代理系统用户为admin , 所以需要admin 用户对这几个根目录有完全的访问权限.但是需要注意的是, ftp 目录所有者和所属组必须为root.
+注意:
+1. 使用root 用户创建文件夹
+2. 将新创建文件所有者和所属组修改为admin, 以保证admin用户对此目录有完全访问权限.因为虚拟用户的代理用户为admin.
+3. 修改anon 目录权限为777,因为虚拟用户相当于其它人, 所以需要将目录其它人权限设置为7, 这样匿名用户才能进行上传下载文件
+
 ```bash
 [root@localhost ~]# mkdir -p /var/data/ftp/anon /var/data/ftp/develop  /var/data/ftp/test
 [root@localhost ~]# chown admin:admin /var/data/ftp/anon /var/data/ftp/develop  /var/data/ftp/test
+[root@localhost ~]# chmod 777 /var/data/ftp/anon
 [root@localhost ~]# ll /var/data/ftp/
 total 16
-drwxr-xr-x. 2 admin admin 4096 Jul  1 19:22 anon
+drwxrwxrwx. 2 admin admin 4096 Jul  1 19:22 anon
 drwxr-xr-x. 2 admin admin 4096 Jul  1 19:22 develop
 drwxr-xr-x. 2 admin admin 4096 Jul  1 19:22 test
 drwxr-xr-x. 2 admin admin 4096 Jun 20 20:09 wars
@@ -248,186 +253,7 @@ chroot_list_file=/etc/vsftpd/chroot_list
 Starting vsftpd for vsftpd:                                [  OK  ]
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#
 
 
 
