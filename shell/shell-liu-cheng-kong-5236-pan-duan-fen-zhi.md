@@ -1,4 +1,4 @@
-# Shell 流程控制-\[判断分支
+# Shell 流程控制-判断分支
 
 > Shell 语言中用于判断的分支的语句有if-else 和 case.
 
