@@ -130,6 +130,9 @@ anon_other_write_enable=NO
 
 #设定权限:可以浏览目录下的文件
 anon_world_readable_only=NO
+
+#设定上传文件权限
+anon_umask=022
 ```
 ** developAdmin **
 ```bash
@@ -138,6 +141,10 @@ local_root=/var/data/ftp/develop
 
 #设置虚拟用户拥有和代理系统用户同样的权限
 virtual_use_local_privs=YES
+
+#设定上传文件权限
+anon_umask=022
+
 ```
 ** test**
 ```bash
@@ -161,6 +168,10 @@ anon_other_write_enable=NO
 
 #设定权限:可以浏览目录下的文件
 anon_world_readable_only=NO
+
+#设定上传文件权限
+anon_umask=022
+
 ```
 ** testAdmin **
 ```bash
@@ -169,6 +180,10 @@ local_root=/var/data/ftp/test
 
 #设置虚拟用户拥有和代理系统用户同样的权限
 virtual_use_local_privs=YES
+
+#设定上传文件权限
+anon_umask=022
+
 ```
 
 ** superAdmin **
@@ -178,6 +193,10 @@ local_root=/var/data/ftp
 
 #设置虚拟用户拥有和代理系统用户同样的权限
 virtual_use_local_privs=YES
+
+#设定上传文件权限
+anon_umask=022
+
 ```
 
 # 3. 配置允许用户跳出主目录的用户列表
