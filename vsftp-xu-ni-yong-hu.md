@@ -278,7 +278,7 @@ Starting vsftpd for vsftpd:                                [  OK  ]
 1. 确保防火墙关闭或释放了ftp 相关端口
 2. 确保ftp_home_dir, allow_ftpd_full_access, selinux 配置正确
 3. 确保虚拟用户代理用户admin 对根目录的权限是否正确.
-4. 虚拟用户名不能使用ftp
+4. 注意虚拟用户名不能使用ftp, 否则会出现意想不到的问题的
 
 
 
