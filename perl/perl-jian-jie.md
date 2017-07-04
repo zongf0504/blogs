@@ -1,12 +1,15 @@
-# Perl 简介
+# 1. Perl 简介
 
-Perl 是Practical Extraction and Report Language 的缩写，可翻译为 "实用报表提取语言"。Perl 是一门语法很灵活, 执行效率很高的语言, 有巨大的第三方代码库CPAN支持, 因此可以做到很多事情. 但是,笔者通常把Perl 当作一种高级的脚本语言, 用来开发一些常用的linux 工具, 编写一些日常服务器维护的脚本.
+> Perl 是Practical Extraction and Report Language 的缩写，可翻译为 "实用报表提取语言"。Perl 是一门语法很灵活, 执行效率很高的语言, 有巨大的第三方代码库CPAN支持, 因此可以做到很多事情. 但是,笔者通常把Perl 当作一种高级的脚本语言, 用来开发一些常用的linux 工具, 编写一些日常服务器维护的脚本.
 
-## perl 的优点
+## 1.1 perl 的优点
 * linux 自带安装环境
+* perl 的执行速度非常快
+* perl 语法很精简, 有很多简便写法
+* perl 集成了C, awdk, shell 等脚本以及其它语言的特效
+* perl 语法很灵活.
 
-
-# perl 脚本规范
+# 1.2 perl 脚本规范
 * perl 脚本文件名建议以.pl 结尾
 * perl 语句以分号; 结尾
 * perl 脚本可以适当添加空格, 空行以缩进美化代码
