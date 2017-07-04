@@ -65,4 +65,5 @@
   * [Perl 数据类型--标量变量](perl/perl-shu-ju-lei-578b-biao-liang.md)
   * [Perl 数据类型--数组变量](perl/perl-shu-ju-lei-578b-shu-zu-bian-liang.md)
   * Perl 数据类型--哈希变量
+  * [Perl 运算符](perl/perl-yun-suan-fu.md)
 
