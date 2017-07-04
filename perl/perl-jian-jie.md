@@ -2,7 +2,7 @@
 
 Perl 是Practical Extraction and Report Language 的缩写，可翻译为 "实用报表提取语言"。Perl 是一门语法很灵活, 执行效率很高的语言, 有巨大的第三方代码库CPAN支持, 因此可以做到很多事情. 但是,笔者通常把Perl 当作一种高级的脚本语言, 用来开发一些常用的linux 工具, 编写一些日常服务器维护的脚本.
 
-# perl 的有点
+# perl 的优点
 * linux 自带安装环境
 
 
