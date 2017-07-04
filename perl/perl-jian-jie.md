@@ -40,10 +40,10 @@ Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 /usr/bin/perl
 ```
 
-# Perl 入门程序
+# 3. Perl 入门程序
 通常一说到入门程序, 肯定是输出一个Hello,world!, 当然了Perl 语言也不例外.
 
-## 创建一个helloworld 脚本
+## 3.1 创建一个helloworld 脚本
 使用文本编辑器, 比如说vim , 创建一个hello.pl 文件. 文件内容如下:
 * 第一行: 指定perl 程序安装位置
 * 第二行: 空白行, 可随意添加, 美化代码格式
@@ -57,7 +57,7 @@ Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 print "Hello,world! Hello,perl!";
 ```
 
-## 赋予脚本可执行权限
+## 3.2 赋予脚本可执行权限
 Linux 下默认创建文件是么有可执行权限的, 而脚本若想运行则必须拥有可执行权限. 通常笔者会为脚本赋予755 权限, 755 权限含义:
 * 用户: 可读, 可写, 可执行
 * 用户组: 可读, 可执行
@@ -73,13 +73,13 @@ total 4
 -rwxr-xr-x. 1 admin admin 72 Jul  4 13:26 1.hello.pl
 ```
 
-## 执行脚本
-### 使用相对路径执行
+## 3.3 执行脚本
+### 3.3.1 使用相对路径执行
 ```bash
 [admin@localhost perl]$ ./hello.pl 
 Hello,world! Hello,perl!
 ```
-### 使用绝对路径执行
+### 3.3.2 使用绝对路径执行
 ```bash
 [admin@localhost perl]$ /home/admin/blog/perl/hello.pl 
 Hello,world! Hello,perl!
