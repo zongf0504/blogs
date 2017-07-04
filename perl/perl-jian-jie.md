@@ -43,7 +43,7 @@ Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 # 3. Perl 入门程序
 通常一说到入门程序, 肯定是输出一个Hello,world!, 当然了Perl 语言也不例外.
 
-## 3.1 创建一个helloworld 脚本
+## 3.1 创建一个脚本
 使用文本编辑器, 比如说vim , 创建一个hello.pl 文件. 文件内容如下:
 * 第一行: 指定perl 程序安装位置
 * 第二行: 空白行, 可随意添加, 美化代码格式
