@@ -2,7 +2,7 @@
 
 Perl 是Practical Extraction and Report Language 的缩写，可翻译为 "实用报表提取语言"。Perl 是一门语法很灵活, 执行效率很高的语言, 有巨大的第三方代码库CPAN支持, 因此可以做到很多事情. 但是,笔者通常把Perl 当作一种高级的脚本语言, 用来开发一些常用的linux 工具, 编写一些日常服务器维护的脚本.
 
-# perl 的优点
+## perl 的优点
 * linux 自带安装环境
 
 
@@ -44,13 +44,16 @@ Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 通常一说到入门程序, 肯定是输出一个Hello,world!, 当然了Perl 语言也不例外.
 
 ## 创建一个helloworld 脚本
-使用文本编辑器, 比如说vim , 创建一个helloworld.pl 文件. 文件内容如下:
-
+使用文本编辑器, 比如说vim , 创建一个hello.pl 文件. 文件内容如下:
+* 第一行: 指定perl 程序安装位置
+* 第二行: 空白行, 可随意添加, 美化代码格式
+* 第三行: 单行注释, 已# 开头. perl 中没有多行注释
+* 第四行: 输出语句, 输出一行字符
 ``` perl
 #!/usr/bin/perl
 
 #输出一行
-print "Hello,world! Hello,perl";
+print "Hello,world! Hello,perl!";
 ```
 
 ## 赋予脚本可执行权限
@@ -70,7 +73,14 @@ total 4
 ```
 
 ## 执行脚本
+### 使用相对路径执行
 ```bash
-[admin@localhost perl]$ ./1.hello.pl 
-hello,wolrd! hello, perl !
+[admin@localhost perl]$ ./hello.pl 
+Hello,world! Hello,perl!
 ```
+### 使用绝对路径执行
+```bash
+[admin@localhost perl]$ /home/admin/blog/perl/hello.pl 
+Hello,world! Hello,perl!
+```
+
