@@ -11,12 +11,12 @@ Perl 是Practical Extraction and Report Language 的缩写，可翻译为 "实�
 * 语句以分号; 结尾
 * 可以适当添加空格, 空行以缩进美化代码
 
-# perl 环境
+# 2. perl 环境
 * windows: 系统默认情况下是不安装perl 环境, 需要手工安装ActivePerl软件. 
 * Linux: 通常情况下Linux 系统默认集成了perl 环境
 笔者通常使用perl 来编写linux 下的脚本以辅助日常工作, 所以示例代码全部在linux 环境编写, 所以对于windows 下安装perl 就不过多介绍了. 下面我们检测一下perl的安装情况
 
-## 查看perl 版本
+## 2.1 查看perl 版本
 笔者系统为Centos 6.8 x64 系统, 默认安装的版本为5.10:
 
 ```bash
@@ -34,7 +34,7 @@ this system using "man perl" or "perldoc perl".  If you have access to the
 Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 ```
 
-## 查看perl 安装位置
+## 2.2 查看perl 安装位置
 ```bash
 [admin@localhost perl]$ which perl
 /usr/bin/perl
