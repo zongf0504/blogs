@@ -7,9 +7,10 @@ Perl 是Practical Extraction and Report Language 的缩写，可翻译为 "实�
 
 
 # perl 脚本规范
-* 文件名以.pl 结尾
-* 语句以分号; 结尾
-* 可以适当添加空格, 空行以缩进美化代码
+* perl 脚本文件名建议以.pl 结尾
+* perl 语句以分号; 结尾
+* perl 脚本可以适当添加空格, 空行以缩进美化代码
+* perl 代码块儿以{} 区分
 
 # 2. perl 环境
 * windows: 系统默认情况下是不安装perl 环境, 需要手工安装ActivePerl软件. 
