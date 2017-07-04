@@ -61,4 +61,8 @@
   * ELK 整合
 * [Perl](perl.md)
   * [perl 简介](perl/perl-jian-jie.md)
+  * [perl 数据类型](perl/perl-shu-ju-lei-xing.md)
+  * perl 数据类型--标量
+  * perl 数据类型--数组
+  * perl 数据类型--哈希
 
