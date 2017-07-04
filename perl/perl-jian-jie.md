@@ -49,6 +49,7 @@ Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 * 第二行: 空白行, 可随意添加, 美化代码格式
 * 第三行: 单行注释, 已# 开头. perl 中没有多行注释
 * 第四行: 输出语句, 输出一行字符
+
 ``` perl
 #!/usr/bin/perl
 
