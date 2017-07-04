@@ -60,7 +60,17 @@ Linux 下默认创建文件是么有可执行权限的, 而脚本若想运行则
 * 其它人: 可读, 可执行
 
 ```bash
-
+[admin@localhost perl]$ ll
+total 4
+-rw-r--r--. 1 admin admin 72 Jul  4 13:26 1.hello.pl
+[admin@localhost perl]$ chmod a+x 1.hello.pl 
+[admin@localhost perl]$ ll
+total 4
+-rwxr-xr-x. 1 admin admin 72 Jul  4 13:26 1.hello.pl
 ```
 
 ## 执行脚本
+```bash
+[admin@localhost perl]$ ./1.hello.pl 
+hello,wolrd! hello, perl !
+```
