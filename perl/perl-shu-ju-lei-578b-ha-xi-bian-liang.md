@@ -61,8 +61,6 @@ $hash_name{key} = value;
 * 提取为数组: @array=@hash_name{key1, key2 ..};
 * 提取为列表: ($value1, $value2...) = @hash_name(key1, key2 ...);
 
-
-
 ## 2.5 字符串内插
 
 * 哈希本身不支持元素内插, 但是哈希元素支持遍历内插, 比如: "$hash\_name{key}"
@@ -120,16 +118,5 @@ for my $idx ( 0..$#keys){
 | values | 获取哈希所有的value, 返回由value组成的数组 | @values = values %hash\_name |
 | exists | 判断key 是否在哈希中存在, 存在返回1,否则返回空 | exists %hash\_name{key} |
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
-
-# 5. 其它用法
-
-## 5.1 哈希切片
-
-* 哈希可以切片为数组: @array = @hash\_name{key1, key2, key3};
-
-## 5.2 批量赋值
-
-* 可以同时为多个标量赋值: \($value1, $value2\) = @hash\_name{key1,key2};
-
 
 
