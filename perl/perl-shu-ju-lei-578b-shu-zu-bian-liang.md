@@ -71,6 +71,7 @@ print "books--maxIdx: $#books, elements:@books\n";
 ## 3.2 foreach 单行遍历
 * 使用foreach 和内置变量$_ 遍历, $_ 表示数组中的一个元素
 * 通常用于遍历输出, 数组元素转字符串等操作.
+
 ``` perl
 print "$_\n" foreach @books;
 ```
@@ -136,6 +137,7 @@ while(my ($idx, $val) = each @bookArray){
 * 引入方式: use List::Util;
 
 常用工具方法:
+
 | 方法 | 描述 | 示例 |
 | :--- | :--- | :--- |
 | min | 对数组元素按数值型直接量计算最小值, 返回最小值 | $min = List::Util::min(@ints); |
