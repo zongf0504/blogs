@@ -39,7 +39,6 @@
 
 #3. 元素定义, 定义的哈希为全局变量
 $hash_name{key} = value;
-
 ```
 
 ## 2.2 哈希赋值
@@ -59,7 +58,6 @@ $hash_name{key} = value;
 | :--- | :--- |
 | 整体引用 | %hash\_name |
 | 单个元素引用 | $hash\_name{key} |
-| 批量元素引用 | @hash\_name{key1, key2...} |
 
 ## 2.4 哈希元素提取
 
