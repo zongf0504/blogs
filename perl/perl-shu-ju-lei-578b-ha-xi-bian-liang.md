@@ -110,6 +110,8 @@ for my $idx ( 0..$#keys){
 # 4. 常用方法
 
 * 单独使用keys 和 vlaues 返回的数组是无序的, 因此返回的元素并不一定是一一对应的. 当使用完keys 之后马上使用values , 那么此时相同索引的key 和 value是一一对应的
+* 使用reverse 的时候需要注意, 需要保证value 也是唯一的, 否则会相同的value作为key时, 会随机覆盖,变成不可控.
+
 
 | 哈希赋值 | 语法格式 | 示例 |
 | :--- | :--- | :--- |
@@ -117,6 +119,7 @@ for my $idx ( 0..$#keys){
 | values | 获取哈希所有的value, 返回由value组成的数组 | @values = values %hash\_name |
 | exists | 判断key 是否在哈希中存在, 存在返回1,否则返回空 | exists %hash\_name{key} |
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
+| reverse | 颠倒哈希的key,value, 变成value-key 组合| %hash_reverse = reverse %hash |
 
 # 5. 内置哈希
 
@@ -205,6 +208,13 @@ $del = delete $char_hs{B};
 @keys = keys %char_hs;
 print "delete: B -> $del, left: @keys \n";
 
+# reverse
+%r_ip_hs = reverse %ip_hs;
+print "reverse: r_ip_hs \n";
+while (my ($key, $val) = each %r_ip_hs) {
+    print "$key -> $val \n";
+}
+
 #哈希数量
 $length = keys %char_hs;
 print "char_hs length: $length \n";
@@ -259,6 +269,9 @@ char_hs keys: A C B
 char_hs keys: A C B 
 exists: c:1, d: 
 delete: B -> b, left: A C 
+reverse: r_ip_hs 
+60.28.242.249 -> www.taobao.com 
+61.135.169.125 -> www.baidu.com 
 char_hs length: 2 
 length after empty: 0 
 
