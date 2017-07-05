@@ -46,12 +46,40 @@ $hash_name{key} = value;
 | 哈希置空 | %hash_name = (); |
 
 ## 2.3 哈希引用
+* 哈希元素也是单一的元素, 所以引用的时候也是使用$, 和数组不同的时, 后面跟{}而不是[] 
+
+| 哈希赋值 | 语法格式 |
+| :--- | :--- |
+| 哈希引用 | %hash_name |
+| 哈希元素引用 | $hash_name{key} |
 
 # 3. 哈希遍历
-
 ## 3.1 while-each 遍历
+* 常用的遍历方式
+* 遍历结果是随机的
+
+```perl
+while(my ($key, $val) = each %ips_hash){
+	print "$key --> $val \n";
+}
+```
+
 
 ## 3.2 数组遍历
+* 通过获取哈希的keys 列表进行遍历,可以进行有序遍历, 由于数组有很多遍历方式, 这样会衍生出很多遍历方式
+
+```perl
+# 获取哈希的keys 数组进行无序遍历
+foreach (keys %ip_hash){
+	print "$_ --> $bookMap{$_}\n";
+}
+
+# 获取哈希的keys 数组进行有序遍历
+foreach (sort keys %ip_hash){
+	print "$_ --> $bookMap{$_}\n";
+}
+
+```
 
 # 4. 常用方法
 
