@@ -119,8 +119,7 @@ for my $idx ( 0..$#keys){
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
 
 # 5. 内置哈希
-* perl 语言内置了哈希%ENV, 此哈希存储了当前系统的环境变量
-* PATH: $ENV{PATH}; JAVA_HOME: $ENV{JAVA_HOME};
+* perl 语言内置了哈希%ENV, 此哈希存储了当前系统的环境变量,可通过ENV 获取当前环境变量设置的key-value信息, 如: PATH: $ENV{PATH}; JAVA_HOME: $ENV{JAVA_HOME};
 
 
 
