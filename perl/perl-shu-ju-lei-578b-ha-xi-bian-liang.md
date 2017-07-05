@@ -53,6 +53,9 @@ $hash_name{key} = value;
 | 哈希引用 | %hash_name |
 | 哈希元素引用 | $hash_name{key} |
 
+## 2.4 字符串内插
+* 哈希本身不支持元素内插, 但是哈希元素支持遍历内插, 比如: "$hash_name{key}"
+
 # 3. 哈希遍历
 ## 3.1 while-each 遍历
 * 遍历结果是随机的, 因为hash 本事就是无序的
@@ -63,26 +66,51 @@ while(my ($key, $val) = each %ips_hash){
 }
 ```
 
-
 ## 3.2 数组遍历
 * 通过获取哈希的keys 列表进行遍历,可以进行有序遍历, 由于数组有很多遍历方式, 这样会衍生出很多遍历方式
 
 ```perl
 # 获取哈希的keys 数组进行无序遍历
 foreach (keys %ip_hash){
-	print "$_ --> $bookMap{$_}\n";
+    print "$_ --> $bookMap{$_}\n";
 }
 
 # 获取哈希的keys 数组进行有序遍历
 foreach (sort keys %ip_hash){
-	print "$_ --> $bookMap{$_}\n";
+    print "$_ --> $bookMap{$_}\n";
 }
 
 ```
 
-# 4. 常用方法
+## 3.3 keys-values 遍历
+* 单独获取哈希的keys 和 values 是无序的 ,且不能保证以一对应
+* 连续获取哈希的keys 和 values 可以保证相同索引的key 和 value 是一一对应的.
 
-# 5.
+```perl
+# 依次获取哈希的keys 和 values
+@keys = keys %hash_name;
+@values = keys %hash_name;
+
+for my $idx ( 0..$#keys){
+    print "$keys[$idx] --> $values{$idx}\n";
+}
+
+```
+
+
+# 4. 常用方法
+* 单独使用keys 和 vlaues 返回的数组是无序的, 因此返回的元素并不一定是一一对应的. 当使用完keys 之后马上使用values , 那么此时相同索引的key 和 value是一一对应的
+
+| 哈希赋值 | 语法格式 | 示例 |
+| :--- | :--- | :--- |
+| keys | 获取哈希所有的key,返回由key组成的数组 | @keys = keys %hash_name; |
+| values | 获取哈希所有的value, 返回由value组成的数组 | @values = values %hash_name |
+| exists | 判断key 是否在哈希中存在, 返回 | exists %hash_name{key} |
+| delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash_name{key}  |
+
+# 5. 其它用法
+
+
 
 
 
