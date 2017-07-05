@@ -112,7 +112,7 @@ for my $idx ( 0..$#keys){
 | :--- | :--- | :--- |
 | keys | 获取哈希所有的key,返回由key组成的数组 | @keys = keys %hash\_name; |
 | values | 获取哈希所有的value, 返回由value组成的数组 | @values = values %hash\_name |
-| exists | 判断key 是否在哈希中存在, 返回 | exists %hash\_name{key} |
+| exists | 判断key 是否在哈希中存在, 存在返回1,否则返回空 | exists %hash\_name{key} |
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
 
 # 5. 其它用法
