@@ -121,6 +121,146 @@ for my $idx ( 0..$#keys){
 # 5. 内置哈希
 * perl 语言内置了哈希%ENV, 此哈希存储了当前系统的环境变量,可通过ENV 获取当前环境变量设置的key-value信息, 如: PATH: $ENV{PATH}; JAVA_HOME: $ENV{JAVA_HOME};
 
+# 6. 测试用例
+## 6.1 测试脚本
+```perl 
+#!/usr/bin/perl
 
+print "\n####################  2.1 创建哈希  ####################i \n";
+# 1.列表创建
+%char_hs = ( A, 'a', B, 'b', C, 'c');
+
+## 2.胖箭头创建
+%ip_hs = (
+  "www.taobao.com" => "60.28.242.249",
+  "www.baidu.com" => "61.135.169.125",
+);
+
+## 3. 使用哈希创建哈希
+%ip_reverse = reverse %ip_hs;
+
+## 4. 创建空的hash
+#%null_hs = ();
+
+## 5. 哈希元素创建
+$book_hash{"java"} = "Think in java ";
+
+print "\n####################  2.2 哈希引用  ####################\n";
+# 1. 整体引用
+%char_hs2 = %char_hs;
+
+# 2. 元素引用
+$char_A = $char_hs{A};
+print "char_A:$char_A \n";
+
+print "\n####################  2.3 哈希元素提取  ####################\n";
+# 提取为数组
+@char_array = @char_hs{A, C};
+print "char_array: @char_array \n";
+
+# 提取为列表, 为多个标量赋值
+($char_B, $char_C) = @char_hs{A, C};
+print "char_B: $char_B, char_C: $char_C \n";
+
+print "\n####################  2.4 哈希元素字符串内插  ####################\n";
+print "char_A:$char_A, char_B: $char_B, char_C: $char_C \n";
+
+print "\n####################  3.1 while-each 遍历  ####################\n";
+print "while-each 无序遍历 ip_hash: \n";
+while (my ($key, $val) = each %ip_hs) {
+    print "$key -> $val \n";
+}
+
+print "\n####################  3.2 foreach 遍历  ####################\n";
+print "foreach 有序遍历 char_hs: \n";
+foreach (sort keys %char_hs){
+   print "$_ -> $char_hs{$_} \n";
+}
+
+print "\n####################  3.3 keys-values 遍历  ####################\n";
+@keys = keys %char_hs;
+@values = values %char_hs;
+
+for my $idx (0..$#keys) {
+   print "$keys[$idx] -> $values[$idx] \n";
+}
+
+print "\n####################  4. 常用方法  ####################\n";
+# keys
+@keys1 = keys %char_hs;
+@keys2 = keys %char_hs;
+print "char_hs keys: @keys1 \n";
+print "char_hs keys: @keys2 \n";
+
+# exists
+$c = exists $char_hs{C};
+$d = exists $char_hs{D};
+print "exists: c:$c, d:$d \n";
+
+# delete 
+$del = delete $char_hs{B};
+@keys = keys %char_hs;
+print "delete: B -> $del, left: @keys \n";
+
+#哈希数量
+$length = keys %char_hs;
+print "char_hs length: $length \n";
+
+# 清空
+%char_hs = ();
+$length = keys %char_hs;
+print "length after empty: $length \n";
+
+
+print "\n####################  5. 内置哈希  ####################\n";
+$JAVA_HOME = $ENV{JAVA_HOME};
+$PATH = $ENV{PATH};
+print "ENV: JAVA_HOME=$JAVA_HOME, PATH=$PATH \n";
+
+```
+
+## 6.2 脚本输出
+```bash
+[admin@localhost perl]$ ./hash.pl 
+
+####################  2.1 创建哈希  ####################i 
+
+####################  2.2 哈希引用  ####################
+char_A:a 
+
+####################  2.3 哈希元素提取  ####################
+char_array: a c 
+char_B: a, char_C: c 
+
+####################  2.4 哈希元素字符串内插  ####################
+char_A:a, char_B: a, char_C: c 
+
+####################  3.1 while-each 遍历  ####################
+while-each 无序遍历 ip_hash: 
+www.taobao.com -> 60.28.242.249 
+www.baidu.com -> 61.135.169.125 
+
+####################  3.2 foreach 遍历  ####################
+foreach 有序遍历 char_hs: 
+A -> a 
+B -> b 
+C -> c 
+
+####################  3.3 keys-values 遍历  ####################
+A -> a 
+C -> c 
+B -> b 
+
+####################  4. 常用方法  ####################
+char_hs keys: A C B 
+char_hs keys: A C B 
+exists: c:1, d: 
+delete: B -> b, left: A C 
+char_hs length: 2 
+length after empty: 0 
+
+####################  5. 内置哈希  ####################
+ENV: JAVA_HOME=/opt/app/jdk/jdk1.6.0_31, PATH=/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/perl/bin:/usr/perl/tools:/opt/app/jdk/jdk1.6.0_31/bin:/opt/app/mongo/mongodb-linux-x86_64-rhel62-3.4.2/bin:/opt/app/maven/apache-maven-2.2.1/bin:/home/admin/bin 
+```
 
 
