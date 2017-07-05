@@ -131,8 +131,6 @@ while(my ($idx, $val) = each @bookArray){
 | @JAArray = grep s/ja/JA/, @books;| 提取books 数组中所有包含ja的元素, 并将ja替换为JA后组成新 数组 |
 | @JAArray = grep { /ja/; print "$_";} @books; | 提取books 中所有包含ja的元素, 遍历过程中输出每一个元素,(笔者目前并没有发现适合此种用法的场景) |
 
-
-
 ## 4.3 工具类方法
 * perl 自带了List::Util 模块, 封装了一些常用的工具类方法, 但是需要引入List::Util 模块儿.
 * 引入方式: use List::Util;
@@ -146,11 +144,6 @@ while(my ($idx, $val) = each @bookArray){
 | minstr | 对数组元素按字符串直接量计算最小值, 返回最小值 | $minstr = List::Util::minstr(@books); |
 | maxstr | 对数组元素按字符串直接量计算最大值, 返回最大值 | $maxstr = List::Util::maxstr(@books); |
 | shuffle | 对数组随机排序, 返回排序后的数组, 不影响原数组 | @ints_random = List::Util::shuffle(@ints); |
-
-
-##
-
-# 5. 
 
 
 
