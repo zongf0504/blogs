@@ -118,5 +118,10 @@ for my $idx ( 0..$#keys){
 | exists | 判断key 是否在哈希中存在, 存在返回1,否则返回空 | exists %hash\_name{key} |
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
 
+# 5. 内置哈希
+* perl 语言内置了哈希%ENV, 此哈希存储了当前系统的环境变量
+* PATH: $ENV{PATH}; JAVA_HOME: $ENV{JAVA_HOME};
+
+
 
 
