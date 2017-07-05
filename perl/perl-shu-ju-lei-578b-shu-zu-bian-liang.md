@@ -145,11 +145,11 @@ while(my ($idx, $val) = each @bookArray){
 * 数组索引: 要删除开始的索引, 包含此索引元素
 * 批量操作时,只能是连续的批量操作, 不能是间隔的批量操作.
 
-| 语法 | 描述 | 影响元素组 |
-| :--- | :--- | :--- |
-| splice(@array, $idx); | 批量连续删除:删除索引idx及以后的元素, 返回删除的所有元素 |  |
-| splice(@array, $idx, n); | 批量连续删除:删除从索引idx开始的n个元素, 返回删除的所有元素 |  |
-| splice(@array, $idx, 1); | 单个删除:删除索引为idx 的元素, 返回删除的一个元素 |  |
+| 语法 | 描述 |
+| :--- | :--- |
+| splice(@array, $idx); | 批量连续删除:删除索引idx及以后的元素, 返回删除的所有元素 | 
+| splice(@array, $idx, n); | 批量连续删除:删除从索引idx开始的n个元素, 返回删除的所有元素 | 
+| splice(@array, $idx, 1); | 单个删除:删除索引为idx 的元素, 返回删除的一个元素 | 
 | splice(@array, $idx, 0, @array); | 插入: 索引idx 后插入数组或列表 |
 | splice(@array, $idx, 1, $el); | 单个替换: 替换索引为idx 的元素为el |
 | splice(@array, $idx, n, @array); |批量连续替换: 依次替换从索引idx开始的n个元素为数组内容|
