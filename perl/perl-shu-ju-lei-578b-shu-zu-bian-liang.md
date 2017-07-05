@@ -146,6 +146,7 @@ while(my ($idx, $val) = each @bookArray){
 * grep 不会修改原数组的内容
 * grep 通常和正则表达式结合 使用
 * grep 可接单行多行操作
+* grep 不会对原数组产生影响
 
 | 用法示例 | 描述 |
 | :--- | :--- |
@@ -158,6 +159,7 @@ while(my ($idx, $val) = each @bookArray){
 * 使用splice 可以进行删除替换数组元素, 语法: splice\(目标数组，开始删除的索引， 删除个数， 替换数组\)
 * 数组索引: 要删除开始的索引, 包含此索引元素
 * 批量操作时,只能是连续的批量操作, 不能是间隔的批量操作.
+* splice 直接对元素组进行操作, 每一个操作都会影响原来的数组.
 
 | 语法 | 描述 |
 | :--- | :--- |
@@ -184,5 +186,310 @@ while(my ($idx, $val) = each @bookArray){
 | maxstr | 对数组元素按字符串直接量计算最大值, 返回最大值 | $maxstr = List::Util::maxstr\(@books\); |
 | shuffle | 对数组随机排序, 返回排序后的数组, 不影响原数组 | @ints\_random = List::Util::shuffle\(@ints\); |
 
+# 5. 测试用例
+## 5.1 测试脚本
+```perl
+#!/usr/bin/perl
+#Desc 数组测试demo
+
+use List::Util;
+
+print "\n####################  2.1 创建数组  ####################\n";
+#创建空数组:
+@null=();
+print "null: @null \n";
+
+#创建数字数组
+@ints = ( 0, 1, 2, 3..8, 9);
+print "ints: @ints \n";
+
+#复制创建数组
+@ints2 = @ints;
+print "ints2: @ints2 \n";
+
+#创建混合数组
+@arrays = ( a, b, @ints, "java");
+print "arrays:@arrays \n";
+
+#自动创建
+$ints[1] = "java";
+print "ints: @ints \n";
+
+print "\n####################  2.2 数组引用  ####################\n";
+#单个元素引用
+$int0 = $ints[0];
+print "int[0]:$ints[0]\n";
+
+#数组整体引用
+@ints3 = @ints;
+print "ints3: @ints \n";
+
+print "\n####################  2.3 数组元素提取  ####################\n";
+@int_3_7 = @ints[3, 7];
+print "ints[3]-ints[7]: @int_3_7 \n";
+
+
+print "\n####################  2.4 字符串内插  ####################\n";
+#数组内插
+print "ints: @ints \n";
+
+#数组元素内插
+print "int[0]: $ints[0] \n";
+
+print "\n####################  2.5 数组上下文  ####################\n";
+#标量上下文
+$length = @ints;
+print "ints length: $length \n";
+
+#数组上下文:
+@ints4 = @ints;
+print "ints4: @ints4 \n";
+
+#哈希上下文:
+@chars = ( A, 'a', B, 'b', C, 'c');
+%char_hs = @chars;
+
+@char_keys = keys %char_hs;
+@char_vals = values %char_hs;
+print "keys: @char_keys, values: @char_vals \n";
+
+@ints = ( 0 ..9 );
+print "\n####################  3.1 字符串内插法遍历  ####################\n";
+print "ints: @ints";
+
+print "\n####################  3.2 foreach 单行遍历  ####################\n";
+print "$_\n" foreach @ints;
+
+print "\n####################  3.3 foreach 默认变量遍历  ####################\n";
+foreach (@ints){
+  print "$_\n";
+}
+
+print "\n####################  3.4 for 循环遍历  ####################\n";
+for my $idx (0..$#ints){
+  print "ints[$idx]=$ints[$idx]\n";
+}
+
+print "\n####################  3.5 while-each 列表遍历  ####################\n";
+# 需要5.12+版本才行
+#while(my ($idx, $val) = each @ints ) {
+#   print "ints[$idx]=$val \n";
+#}
+
+print "\n####################  4.1 数组常用方法  ####################\n";
+print "push: 向ints 尾部添加一个元素a \n";
+@ints = (0 .. 9);
+$length = push(@ints, a);
+print "length:$length, ints: @ints \n";
+
+
+print "pop: 向ints 尾部弹出(删除)一个元素 \n";
+@ints = (0 .. 9);
+$del = pop @ints ;
+print "del:$del, ints: @ints \n";
+
+print "push: 向ints 头部添加一个元素a \n";
+@ints = (0 .. 9);
+$length = unshift(@ints, a);
+print "length:$length, ints: @ints \n";
+
+print "push: 向ints 头部弹出(删除)一个元素 \n";
+@ints = (0 .. 9);
+$del = shift @ints;
+print "del:$del, ints: @ints \n";
+
+print "reverse: 反转数组: \n";
+@ints = (0 ..9);
+@r_ints = reverse @ints;
+print "ints: @ints, r_ints: @r_ints\n";
+
+print "sort: 按字符串排序: \n";
+@ints = (0..9);
+@s_ints = sort @ints;
+print "ints:@ints, s_ints: @s_ints\n";
+
+
+print "\n####################  4.2.1 高级用法:grep 过滤数组  ####################\n";
+@books = ("java", "javaScript" , "spring", "spring-mvc");
+print "books: @books \n";
+
+@javas = grep /java/, @books;
+print "javas: @javas, books: @books \n";
+
+@JAVAs = grep s/java/JAVA/g, @books;
+print "JAVA: @JAVAs, books: @books \n";
+
+@javas = grep { /java/; print "$_"; } @books;
+
+
+print "\n####################  4.2.2 高级用法:splice 删除, 插入,替换元素  ####################\n";
+@ints = ( 0..9);
+print "ints; @ints \n";
+
+print "连续删除: 删除索引为5及之后的索引元素:\n";
+@ints = (0..9);
+@dels = splice(@ints, 5);
+print "ints: @ints, delete:@dels \n";
+
+print "连续删除: 删除从索引5开始的3个元素, 即索引5, 6, 7:\n";
+@ints = (0..9);
+@dels = splice(@ints, 5, 3);
+print "ints: @ints, delete: @dels \n";
+
+print "单个删除: 删除索引5元素:\n";
+@ints = (0..9);
+$del = splice(@ints, 5, 1);
+print "ints: @ints, delete: $del \n";
+
+#插入元素
+print "插入元素: 索引5后面插入3个元素:\n";
+@ints = (0..9);
+splice(@ints, 5, 0, (a, b, c) );
+print "ints: @ints \n";
+
+#替换单个元素
+print "替换单个元素: 将索引5的元素替换为a: \n";
+@ints = (0..9);
+splice(@ints, 5, 1, a);
+print "ints: @ints \n";
+
+#替换连续元素
+print "替换连续元素: 将从索引5开始的2个元素依次替换为a,b: \n";
+@ints = (0..9);
+splice(@ints, 5, 2, (a, b));
+print "ints: @ints \n";
+
+
+print "\n####################  4.2.3 工具类常用方法  ####################\n";
+@ints = (0..10);
+print "按数字直接量计算最大值, 最小值, 求和:@ints \n";
+$min = List::Util::min(@ints);
+$max = List::Util::max(@ints);
+$sum = List::Util::sum(@ints);
+print "min:$min, max:$max, sum:$sum \n";
+
+@books = ("java", "mysql", "linux", "elastic");
+print "按字符串直接量计算最大值, 最小值: @books \n";
+$minstr = List::Util::minstr(@books);
+$maxstr = List::Util::maxstr(@books);
+print "minstr:$minstr, maxstr:$maxstr \n";
+
+print "随机排列数组: @ints \n";
+@s_ints = List::Util::shuffle(@ints);
+print "ints  : @ints \n";
+print "s_ints: @s_ints \n";
+```
+
+## 5.2 脚本输出
+```bash
+[admin@localhost perl]$ ./array.pl 
+
+####################  2.1 创建数组  ####################
+null:  
+ints: 0 1 2 3 4 5 6 7 8 9 
+ints2: 0 1 2 3 4 5 6 7 8 9 
+arrays:a b 0 1 2 3 4 5 6 7 8 9 java 
+ints: 0 java 2 3 4 5 6 7 8 9 
+
+####################  2.2 数组引用  ####################
+int[0]:0
+ints3: 0 java 2 3 4 5 6 7 8 9 
+
+####################  2.3 数组元素提取  ####################
+ints[3]-ints[7]: 3 7 
+
+####################  2.4 字符串内插  ####################
+ints: 0 java 2 3 4 5 6 7 8 9 
+int[0]: 0 
+
+####################  2.5 数组上下文  ####################
+ints length: 10 
+ints4: 0 java 2 3 4 5 6 7 8 9 
+keys: A C B, values: a c b 
+
+####################  3.1 字符串内插法遍历  ####################
+ints: 0 1 2 3 4 5 6 7 8 9
+####################  3.2 foreach 单行遍历  ####################
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+####################  3.3 foreach 默认变量遍历  ####################
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+####################  3.4 for 循环遍历  ####################
+ints[0]=0
+ints[1]=1
+ints[2]=2
+ints[3]=3
+ints[4]=4
+ints[5]=5
+ints[6]=6
+ints[7]=7
+ints[8]=8
+ints[9]=9
+
+####################  3.5 while-each 列表遍历  ####################
+
+####################  4.1 数组常用方法  ####################
+push: 向ints 尾部添加一个元素a 
+length:11, ints: 0 1 2 3 4 5 6 7 8 9 a 
+pop: 向ints 尾部弹出(删除)一个元素 
+del:9, ints: 0 1 2 3 4 5 6 7 8 
+push: 向ints 头部添加一个元素a 
+length:11, ints: a 0 1 2 3 4 5 6 7 8 9 
+push: 向ints 头部弹出(删除)一个元素 
+del:0, ints: 1 2 3 4 5 6 7 8 9 
+reverse: 反转数组: 
+ints: 0 1 2 3 4 5 6 7 8 9, r_ints: 9 8 7 6 5 4 3 2 1 0
+sort: 按字符串排序: 
+ints:0 1 2 3 4 5 6 7 8 9, s_ints: 0 1 2 3 4 5 6 7 8 9
+
+####################  4.2.1 高级用法:grep 过滤数组  ####################
+books: java javaScript spring spring-mvc 
+javas: java javaScript, books: java javaScript spring spring-mvc 
+JAVA: JAVA JAVAScript, books: JAVA JAVAScript spring spring-mvc 
+JAVAJAVAScriptspringspring-mvc
+####################  4.2.2 高级用法:splice 删除, 插入,替换元素  ####################
+ints; 0 1 2 3 4 5 6 7 8 9 
+连续删除: 删除索引为5及之后的索引元素:
+ints: 0 1 2 3 4, delete:5 6 7 8 9 
+连续删除: 删除从索引5开始的3个元素, 即索引5, 6, 7:
+ints: 0 1 2 3 4 8 9, delete: 5 6 7 
+单个删除: 删除索引5元素:
+ints: 0 1 2 3 4 6 7 8 9, delete: 5 
+插入元素: 索引5后面插入3个元素:
+ints: 0 1 2 3 4 a b c 5 6 7 8 9 
+替换单个元素: 将索引5的元素替换为a: 
+ints: 0 1 2 3 4 a 6 7 8 9 
+替换连续元素: 将从索引5开始的2个元素依次替换为a,b: 
+ints: 0 1 2 3 4 a b 7 8 9 
+
+####################  4.2.3 工具类常用方法  ####################
+按数字直接量计算最大值, 最小值, 求和:0 1 2 3 4 5 6 7 8 9 10 
+min:0, max:10, sum:55 
+按字符串直接量计算最大值, 最小值: java mysql linux elastic 
+minstr:elastic, maxstr:mysql 
+随机排列数组: 0 1 2 3 4 5 6 7 8 9 10 
+ints  : 0 1 2 3 4 5 6 7 8 9 10 
+s_ints: 9 3 2 10 6 0 7 4 1 5 8 
+
+```
 
 
