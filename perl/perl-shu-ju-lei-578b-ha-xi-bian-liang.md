@@ -55,8 +55,7 @@ $hash_name{key} = value;
 
 # 3. 哈希遍历
 ## 3.1 while-each 遍历
-* 常用的遍历方式
-* 遍历结果是随机的
+* 遍历结果是随机的, 因为hash 本事就是无序的
 
 ```perl
 while(my ($key, $val) = each %ips_hash){
