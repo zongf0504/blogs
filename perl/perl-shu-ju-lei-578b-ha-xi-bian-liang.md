@@ -24,10 +24,10 @@
 * 通常在创建哈希的时候, 会同时为哈希赋值, 有以下几种种方式:
 
 ```perl
-#1. 数组定义, 必须为偶数个元素, 奇数为key, 偶数为value
+#1. 使用列表创建, 必须为偶数个元素, 奇数为key, 偶数为value
 %hash_name= (key1, value1, key2, value2 ...);
 
-#2. 胖箭头定义
+#2. 胖箭头创建
 %hash_name= (
     key1 => value1, 
     key2 => value2,
