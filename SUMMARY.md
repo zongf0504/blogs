@@ -62,9 +62,9 @@
 * [Perl](perl.md)
   * [Perl 简介](perl/perl-jian-jie.md)
   * [Perl 数据类型-直接量](perl/perl-shu-ju-lei-xing.md)
-  * [Perl 数据类型--标量变量](perl/perl-shu-ju-lei-578b-biao-liang.md)
-  * [Perl 数据类型--数组变量](perl/perl-shu-ju-lei-578b-shu-zu-bian-liang.md)
-  * [Perl 数据类型--哈希变量](perl/perl-shu-ju-lei-578b-ha-xi-bian-liang.md)
+  * [Perl 数据类型--标量](perl/perl-shu-ju-lei-578b-biao-liang.md)
+  * [Perl 数据类型--数组](perl/perl-shu-ju-lei-578b-shu-zu-bian-liang.md)
+  * [Perl 数据类型--哈希](perl/perl-shu-ju-lei-578b-ha-xi-bian-liang.md)
   * [Perl 运算符](perl/perl-yun-suan-fu.md)
 * [framework](framework.md)
 
