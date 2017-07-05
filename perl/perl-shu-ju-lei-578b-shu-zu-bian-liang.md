@@ -79,6 +79,7 @@ print "$_\n" foreach @books;
 ## 3.3 foreach-默认变量遍历
 * 使用foreach + 内置变量方式遍历数组, 每次遍历中可做一些业务处理
 * 只能获取数组元素内容, 不能获取数组元素与索引的对应关系
+
 ```perl
 foreach (@books){
     print "$_\n";
