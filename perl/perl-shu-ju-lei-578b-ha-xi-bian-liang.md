@@ -4,7 +4,9 @@
 
 # 1. 哈希特性
 
-哈希结构存储的是一组 key-value 对的集合. 其中key 为字符串, value 为直接量, 可以通过key 来获取value 的值.和数组比较相似, 只不过数组是通过索引来获取元素的值, 哈希是通过key来获取. 数组的索引只能为数字, 而哈希的索引为字符串.
+哈希结构存储的是一组 key-value 对的集合. 其中key 为字符串, value 为直接量, 可以通过key 来获取value 的值.
+
+哈希和数组比较相似, 只不过数组是通过数字索引来获取元素的值, 哈希是通过字符串key来获取..
 
 * 哈希是无序的
 * 哈希的key不能重复, 适合存储一对一, 多对一的关系
@@ -49,7 +51,6 @@ $hash_name{key} = value;
 
 * 哈希元素也是单一的元素, 所以引用的时候也是使用$, 和数组不同的时, 后面跟{}而不是\[\] 
 
-
 | 哈希赋值 | 语法格式 |
 | :--- | :--- |
 | 整体引用 | %hash\_name |
@@ -57,9 +58,11 @@ $hash_name{key} = value;
 | 批量元素引用 | @hash\_name{key1, key2...} |
 
 ## 2.4 哈希元素提取
+
 可以通过@符号提取哈希中的多个元素为数组, 因为提取的为多个元素,所以用的是@而不是$.
-* 提取为数组: @array=@hash_name{key1, key2 ..};
-* 提取为列表: ($value1, $value2...) = @hash_name(key1, key2 ...);
+
+* 提取为数组: @array=@hash\_name{key1, key2 ..};
+* 提取为列表: \($value1, $value2...\) = @hash\_name\(key1, key2 ...\);
 
 ## 2.5 字符串内插
 
@@ -118,5 +121,6 @@ for my $idx ( 0..$#keys){
 | values | 获取哈希所有的value, 返回由value组成的数组 | @values = values %hash\_name |
 | exists | 判断key 是否在哈希中存在, 存在返回1,否则返回空 | exists %hash\_name{key} |
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
+
 
 
