@@ -21,7 +21,7 @@
 
 * 哈希变量命名:  %+变量名, 如: %ip\_hash
 * 创建哈希时, 在key的不产生歧义的情况下引号可用省略
-* 通常在创建哈希的时候, 会同时为哈希赋值, 有以下几种种方式:
+* 通常在创建哈希的时候, 会同时为哈希赋值, 有以下几种方式:
 
 ```perl
 #1. 使用列表创建, 必须为偶数个元素, 奇数为key, 偶数为value
@@ -119,11 +119,14 @@ for my $idx ( 0..$#keys){
 | delete | 删除哈希中的元素,返回删除key对应的value | $value = delete $hash\_name{key} |
 
 # 5. 内置哈希
-* perl 语言内置了哈希%ENV, 此哈希存储了当前系统的环境变量,可通过ENV 获取当前环境变量设置的key-value信息, 如: PATH: $ENV{PATH}; JAVA_HOME: $ENV{JAVA_HOME};
+
+* perl 语言内置了哈希%ENV, 此哈希存储了当前系统的环境变量,可通过ENV 获取当前环境变量设置的key-value信息, 如: PATH: $ENV{PATH}; JAVA\_HOME: $ENV{JAVA\_HOME};
 
 # 6. 测试用例
+
 ## 6.1 测试脚本
-```perl 
+
+```perl
 #!/usr/bin/perl
 
 print "\n####################  2.1 创建哈希  ####################i \n";
@@ -216,10 +219,10 @@ print "\n####################  5. 内置哈希  ####################\n";
 $JAVA_HOME = $ENV{JAVA_HOME};
 $PATH = $ENV{PATH};
 print "ENV: JAVA_HOME=$JAVA_HOME, PATH=$PATH \n";
-
 ```
 
 ## 6.2 脚本输出
+
 ```bash
 [admin@localhost perl]$ ./hash.pl 
 
@@ -260,7 +263,8 @@ char_hs length: 2
 length after empty: 0 
 
 ####################  5. 内置哈希  ####################
-ENV: JAVA_HOME=/opt/app/jdk/jdk1.6.0_31, PATH=/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/perl/bin:/usr/perl/tools:/opt/app/jdk/jdk1.6.0_31/bin:/opt/app/mongo/mongodb-linux-x86_64-rhel62-3.4.2/bin:/opt/app/maven/apache-maven-2.2.1/bin:/home/admin/bin 
+ENV: JAVA_HOME=/opt/app/jdk/jdk1.6.0_31, PATH=/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/perl/bin:/usr/perl/tools:/opt/app/jdk/jdk1.6.0_31/bin:/opt/app/mongo/mongodb-linux-x86_64-rhel62-3.4.2/bin:/opt/app/maven/apache-maven-2.2.1/bin:/home/admin/bin
 ```
+
 
 
