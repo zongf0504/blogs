@@ -37,7 +37,7 @@
 #3. 用哈希为哈希复制
 %hash_reverse = reverse %hash_name;
 
-#3. 元素定义, 定义的哈希为全局变量
+#3. 元素赋值, 如果hash_name不存在, 则会创建一个新的全局哈希变量
 $hash_name{key} = value;
 ```
 
