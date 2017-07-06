@@ -57,7 +57,14 @@ kill 9, 5161 6161;
 * 信号方法的注册必须在脚本程序最前面,因为随时都可能执行.
 
 ```perl
+#必须在程序最开始设置, 设置接收到ctrl + C 信号时执行的方法
+$SIG{'INT'} = 'clean';
 
+#接收到ctrl+C 信号时处理方法
+sub clean{
+     print 'excute clean operation...';
+     exit;  #接收到信号时，需要手工调用exit 函数，否则程序不会退出
+}
 ```
 
 
