@@ -180,6 +180,9 @@ sub hello(){
 ```perl
 #!/usr/bin/perl
 
+#开启警告提示
+use strict;
+
 print "\n#################### 函数参数  ####################\n";
 #标量
 sub param_1(){
