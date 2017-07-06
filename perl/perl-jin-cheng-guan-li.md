@@ -23,7 +23,14 @@ perl 语言中调用执行系统命令或其它程序时会创建一个新的子
 * 命令格式2: system ' xxx '; 单引号中的$ 引用的是shell 中的环境变量, \$ 无实用意义
 
 ```perl
-
+#输出当前系统时间
+system "echo date";
+#输出perl标量
+system "echo $JAVA_HOME";
+#输出环境变量
+system "echo \$JAVA_HOME";
+#输出环境变量
+system 'echo $JAVA_HOME';
 ```
 
 ## 1.2 qx
@@ -35,7 +42,14 @@ perl 语言中调用执行系统命令或其它程序时会创建一个新的子
 * 命令格式4: @lines = qx ( xxx ); qx 双引号中$引用的是perl 变量, \$ 无实用意义
 
 ```perl
+$JAVA_HOME = qx' echo $JAVA_HOME ';
+print "shell:JAVA_HOME=$JAVA_HOME ";
 
+$JAVA_HOME = qx ( echo \$JAVA_HOME );
+print "shell:JAVA_HOME=$JAVA_HOME ";
+
+$JAVA_HOME = `echo \$JAVA_HOME`;
+print "shell:JAVA_HOME:$JAVA_HOME ";
 ```
 
 ## 1.3 exec
@@ -43,8 +57,11 @@ perl 语言中调用执行系统命令或其它程序时会创建一个新的子
 * exec 常用于为子程序设置运行环境, 可通过直接修改%ENV 哈希中的环境变量直接修改运行环境, 修改的系统环境变量会影响其启动的子进程,修改的环境变量只在当前脚本中有效, 不会对真正的系统环境变量有所影响.
 
 ```perl
+# 为子程序设置环境变量, 指定jdk 环境
+$ENV{JAVA_HOME} = '/opt/app/tomcat/jdk/jdk1.8_0131';
 
-
+# 启动tomcat
+exec '/opt/app/tomcat/tomcat-8-8080/bin/startup.sh &';
 ```
 
 
