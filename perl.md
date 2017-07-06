@@ -19,11 +19,33 @@ perl 语言中调用执行系统命令或其它程序时会创建一个新的子
 | exec | 主进程结束, 启动子进程执行其它程序, 不捕获输出| 无返回值 |
 
 ## 1.1 system
+* 命令格式1: system " xxx "; 双引号中的$ 引用的是perl标量, \$ 引用的是shell 的系统环境变量
+* 命令格式2: system ' xxx '; 单引号中的$ 引用的是shell 中的环境变量, \$ 表示转义字符$
 
+常用调用方式:
+|示例 | 描述 |
+| :--- | :--- |
+| system "echo $JAVA_HOME"; | 输出perl变量 JAVA_HOME的值 |
+| system "echo \$JAVA_HOME"; | 输出shell 系统变量 JAVA_HOME的值 |
+| system 'echo $JAVA_HOME'; | 输出shell 系统变量 JAVA_HOME的值 |
+
+
+## 1.2 qx
+反引号`` 是qx 的简写形式, qx 可以用(), "", '' 等作为限定符, 返回值可由标量或数组进行捕获.在标量上下文中表示
+* 命令格式1:  $line = `xxx`; 反引号中$ 引用的是perl 标量, \$ 引用的是shell 系统环境变量
+* 命令格式2: $line = qx ' xxx '; qx 单引号中$引用的是shell 系统环境变量, \$ 无实用意义 
+* 命令格式3: @lines = qx " xxx "; qx 双引号中$引用的是perl 变量, \$ 无实用意义
+* 命令格式4: @lines = qx ( xxx ); qx 双引号中$引用的是perl 变量, \$ 无实用意义
+
+
+
+ 
 
 
 
 # 2. 向其它进程发送信号
+* 命令格式: kill single, pid1 pid2 ...;
+
 
 
 # 3. 接收其它进程发送的信号
