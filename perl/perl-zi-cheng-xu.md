@@ -147,8 +147,129 @@ sub hello2(){
 
 ``
 # 5. 函数返回值
-* perl 中每一个函数都有一个返回值, 返回值内部都是一个列
-## 标量
-## 列表
-## 哈希
+* perl 中每一个函数都有一个返回值, 返回值底层都是列表, 可使用标量, 数组, 哈希接收.
+
+## 5.1 标量
+```perl
+sub hello(){
+  return "mirrror";
+}
+$name = &hello();
+```
+
+## 5.2 列表
+```perl
+sub hello(){
+   my @books = ("java", "mysql", "linux");
+   return @books;
+}
+@books = &hello();
+```
+
+## 5.3 哈希
+```perl
+sub hello(){
+   %char_hs = (A, 'a', B, 'b', C, 'c');
+   return %char_hs;
+}
+%char_hs = &hello();
+```
+
+# 6. 测试用例
+## 6.1 测试脚本
+```perl
+#!/usr/bin/perl
+
+print "\n#################### 函数参数  ####################\n";
+#标量
+sub param_1(){
+  # 从@_中弹出第一个参数,@_中会删除这个参数
+  my $param = shift @_;
+  print "param: $param\n";
+}
+
+#数组
+sub param_2(){
+  # 复制参数列表@_为@params,对@params 修改不会影响@_数组
+  my @params = @_;
+  print "params: @params\n";
+}
+
+#哈希
+sub param_3(){
+  # 复制参数数组为哈希数组
+  my %hash = @_;
+  my @keys = keys %hash;
+  my @values = values %hash;
+  print "keys: @keys, values: @values \n";
+}
+
+#返回-标量
+sub return_1(){
+  return "mirror";
+}
+
+#返回数组
+sub return_2(){
+  my @arrays = ("mirror", "ghost");
+  return @arrays;
+}
+
+#返回哈希
+sub return_3(){
+  %hash = (A, 'a', B, 'b', C, 'c');
+  return %hash;
+}
+
+
+############################ 主程序  ####################################
+
+print "\n#################### 测试函数参数:  ####################\n";
+$name = "mirror";
+@names = ("mirror", "ghost", "zong");
+%char_hs = (A, 'a', B, 'b', C, 'c');
+
+#传参:标量
+&param_1($name);
+#传参:数组
+&param_2(@names);
+#传参:哈希
+&param_3(%char_hs);
+
+print "\n#################### 测试函数返回  ####################\n";
+#返回标量
+$return_name = &return_1();
+print "return_name:$return_name \n";
+
+#返回数组
+@return_names = &return_2();
+print "return_names:@return_names\n";
+
+#返回哈希
+%return_hs = &return_3();
+while (my ($key, $val) = each %return_hs){
+  print "$key -> $val \n";
+}
+
+```
+
+## 6.2 脚本输出
+```bash
+
+#################### 函数参数  ####################
+
+#################### 测试函数参数:  ####################
+param: mirror
+params: mirror ghost zong
+keys: A C B, values: a c b 
+
+#################### 测试函数返回  ####################
+return_name:mirror 
+return_names:mirror ghost
+A -> a 
+C -> c 
+B -> b 
+```
+
+
 
