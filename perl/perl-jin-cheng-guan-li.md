@@ -38,6 +38,15 @@ perl 语言中调用执行系统命令或其它程序时会创建一个新的子
 
 ```
 
+## 1.3 exec
+* exec 启动子进程后, 主进程会结束, 所以exec 通常是脚本中的最后一行代码
+* exec 常用于为子程序设置运行环境, 可通过直接修改%ENV 哈希中的环境变量直接修改运行环境, 修改的系统环境变量会影响其启动的子进程,修改的环境变量只在当前脚本中有效, 不会对真正的系统环境变量有所影响.
+
+```perl
+
+
+```
+
 
 # 2. 向其它进程发送信号
 * 命令格式: kill sigInt, pid1 pid2 ...;
@@ -70,14 +79,112 @@ sub clean{
 # 4. 测试用例
 ## 4.1 测试脚本
 ```perl
+#!/usr/bin/perl
+
+#指定程序接收到Ctrl+C 信号时最后执行的方法clean,必须放在程序最前面
+#INT 信号代表从键盘输入Ctrl+C结束程序
+$SIG{'INT'} = 'clean';
+
+#定义clean方法
+sub clean {
+   print "程序异常结束, 执行清理操作...\n";
+   
+   #显示调用退出函数, 否则会从接收到Ctrl+C信号的地方继续执行行
+   #exit;
+}
+
+
+print "\n#################### 1.1 system 调用其它程序  ####################\n";
+$JAVA_HOME = "java home";
+
+print "perl  JAVA_HOME:"; system "echo $JAVA_HOME";
+print "shell JAVA_HOME:"; system "echo \$JAVA_HOME";
+print "shell JAVA_HOME:"; system 'echo $JAVA_HOME';
+
+print "\n#################### system 返回结果  ####################\n";
+$code = system "date";
+print "正确执行返回值: $code \n";
+
+$code = system "hello";
+print "错误执行返回值: $code\n";
+
+print "\n############# 1.2 qx()/`` 捕获系统输出 ##################\n";
+
+$JAVA_HOME = qx' echo $JAVA_HOME ';
+print "shell:JAVA_HOME=$JAVA_HOME ";
+
+$JAVA_HOME = qx ( echo \$JAVA_HOME );
+print "shell:JAVA_HOME=$JAVA_HOME ";
+
+$JAVA_HOME = `echo \$JAVA_HOME`;
+print "shell:JAVA_HOME:$JAVA_HOME ";
+
+print "\n####################  1.3 修改子程序的环境变量 ################\n";
+#通过修改ENV哈希中的值, 直接影响子程序的系统环境变量
+$ENV{JAVA_HOME}="JAVA_HOME";
+
+print "子程序:JAVA_HOME:"; system 'echo $JAVA_HOME';
+
+print "程序即将休眠30秒,请在另外窗口中执行命令查看进程, 查看后使用Ctrl+C 发送中断信号\n";
+print "查看命令:ps -ef | grep -v grep | grep -E \"process.pl|sleep\"\n";
+system "sleep 30000";
+print "\n####################  接收Ctrl + C 信号 ################\n";
+
+print "\n####################  exec  ################\n";
+print "程序即将终止主进程, 并进入exec 进程,请在另外窗口中执行命令查看剩余进程, 查看后使用Ctrl+C 发送中断信号\n";
+print "查看命令:ps -ef | grep -v grep | grep -E \"process.pl|sleep\"\n";
+exec "sleep 100000 \n";
 
 ```
 
 ## 4.2 脚本输出
 ```bash
+[admin@localhost perl]$ ./process.pl 
 
+#################### 1.1 system 调用其它程序  ####################
+perl  JAVA_HOME:java home
+shell JAVA_HOME:/opt/app/jdk/jdk1.6.0_31
+shell JAVA_HOME:/opt/app/jdk/jdk1.6.0_31
+
+#################### system 返回结果  ####################
+Thu Jul  6 13:21:54 CST 2017
+正确执行返回值: 0 
+错误执行返回值: -1
+
+############# 1.2 qx()/`` 捕获系统输出 ##################
+shell:JAVA_HOME=/opt/app/jdk/jdk1.6.0_31
+ shell:JAVA_HOME=/opt/app/jdk/jdk1.6.0_31
+ shell:JAVA_HOME:/opt/app/jdk/jdk1.6.0_31
+ 
+####################  1.3 修改子程序的环境变量 ################
+子程序:JAVA_HOME:JAVA_HOME
+程序即将休眠30秒,请在另外窗口中执行命令查看进程, 查看后使用Ctrl+C 发送中断信号
+查看命令:ps -ef | grep -v grep | grep -E "process.pl|sleep"
+^C
+####################  接收Ctrl + C 信号 ################
+
+####################  exec  ################
+程序即将终止主进程, 并进入exec 进程,请在另外窗口中执行命令查看剩余进程, 查看后使用Ctrl+C 发送中断信号
+查看命令:ps -ef | grep -v grep | grep -E "process.pl|sleep"
+^C
 ```
 
+## 4.3 第一次暂停时查看系统进程
+* 有两个进程, 一个是主进程, 一个是system 启动的休眠子进程 
+
+```bash
+[admin@localhost ~]$ ps -ef | grep -v grep | grep -E "process.pl|sleep"
+admin     4201 32469  0 13:20 pts/1    00:00:00 /usr/bin/perl ./process.pl
+admin     4218  4201  0 13:20 pts/1    00:00:00 sleep 30000
+```
+
+## 4.2 第二次暂停时, 查看系统进程
+* 只有一个进程, 主进程结束, 只剩下由exec 启动的休眠子进程.
+
+```bash
+[admin@localhost ~]$ ps -ef | grep -v grep | grep -E "process.pl|sleep"
+admin     4201 32469  0 13:20 pts/1    00:00:00 sleep 100000
+```
 
 
 
