@@ -49,17 +49,26 @@ print "name1:$name1, name2:$name2\n";
 
 ```
 
-# 函数定义
+# 3. 函数定义和调用
+* 函数定义: sub funName () {}
+* 函数调用: &funName (param...);
 
-# 函数调用
+```perl
+#函数定义
+sub sayHello(){
+    print "hello,world";
+}
+#函数调用
+&sayHello;
+```
 
-# 函数传参
+# 4. 函数传参
 ## 标量
 ## 数组
 ## 哈希
 
 
-# 函数返回值
+# 5. 函数返回值
 ## 标量
 ## 列表
 ## 哈希
