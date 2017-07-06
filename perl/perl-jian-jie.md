@@ -52,10 +52,15 @@ Internet, point your browser at http://www.perl.org/, the Perl Home Page.
 * 第一行: 指定perl 程序安装位置
 * 第二行: 空白行, 可随意添加, 美化代码格式
 * 第三行: 单行注释, 已# 开头. perl 中没有多行注释
-* 第四行: 输出语句, 输出一行字符
+* 第四行: 开启警告提示
+* 第五行: 空白行, 可随意添加, 美化代码格式
+* 第六行: 输出一行字符串
 
 ``` perl
 #!/usr/bin/perl
+
+#开启警告提示
+use strict;
 
 #输出一行
 print "Hello,world! Hello,perl!";
