@@ -40,7 +40,7 @@ perl 语言中调用执行系统命令或其它程序时会创建一个新的子
 
 
 # 2. 向其它进程发送信号
-* 命令格式: kill single, pid1 pid2 ...;
+* 命令格式: kill sigInt, pid1 pid2 ...;
 
 
 
