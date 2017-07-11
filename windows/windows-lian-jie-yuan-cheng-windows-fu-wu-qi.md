@@ -50,7 +50,12 @@
 
 ## 2.1 新建脚本:mstsc@100.vbx
 * 脚本文件名后缀必须为.vbs
-* 脚本名称建议按规律写, 笔者命名规范为: mstsc@ip.vbx  或  mstsc@ip@username.vbx
+* 脚本名称建议按规律写, 笔者命名规范为: mstsc@ip.vbs  或  mstsc@ip@username.vbs
+* 注意文件图标, 如果文件图标不对的话, 有可能是系统设置了隐藏文件后缀名, 也就是说你看到的是mstsc@100.vbs, 而实际却是 mstsc@100.vbs.txt
+![](/assets/win_2017-07-11_134925.png)
+
+## 2.2 使用文本工具编辑
+* 笔者使用notepad++编辑文件: 点击文件, 鼠标右键, 选择 Edit with notepad++
 
 mstsc@100 文件内容:
 ```vb
