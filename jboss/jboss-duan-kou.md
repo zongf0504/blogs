@@ -1,21 +1,24 @@
 # Jboss 端口配置
 
+jboss 版本6.0 以下
 
 ## jboss 启动命令
 
 ```bash
 $JBOSS_HOME/bin/run.sh -c $server_instance_Name -Djboss.service.binding.set=$port_name -b $ip_address &
 ```
-* $JBOSS_HOME: jboss 安装目录
-* $server_instance_name: jboss 实例名称, 不同版本所在位置应该有所不同
-* $port_name: 端口号配置名称
-* $ip_address: 服务器访问地址
 
+* $JBOSS\_HOME: jboss 安装目录
+* $server\_instance\_name: jboss 实例名称, 不同版本所在位置应该有所不同
+* $port\_name: 端口号配置名称
+* $ip\_address: 服务器访问地址
 
 ## 默认端口
+
 * jboss 默认配置了ports-default, ports-01, ports-02, ports-03 四个端口绑定策略,  分别对应于8080, 8180, 8280, 8380 端口, 我们可以新增端口绑定策略.
 
 修改实例目录下配置文件夹:conf/bindingservice.beans/META-INF/bindings-jboss-beans.xml
+
 ```xml
 <!--  The binding sets -->
 <parameter>
@@ -73,7 +76,7 @@ $JBOSS_HOME/bin/run.sh -c $server_instance_Name -Djboss.service.binding.set=$por
       <parameter><null/></parameter>
    </constructor>
 </bean>
-   
+
 <!-- The ports-03 bindings are obtained by taking ports-default and adding 300 to each port value -->
 <bean name="Ports03Bindings" class="org.jboss.services.binding.impl.ServiceBindingSet">
    <constructor>
@@ -102,3 +105,6 @@ $JBOSS_HOME/bin/run.sh -c $server_instance_Name -Djboss.service.binding.set=$por
    </constructor>
 </bean>
 ```
+
+
+
