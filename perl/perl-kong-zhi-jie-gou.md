@@ -2,7 +2,7 @@
 > 每种编程语言需要有流程控制语法, 无非是判断结构, 循环结构, 这些基本上都大同小异.Perl 也不例外, Perl 也提供了if-else, if-elsif, unless判断结构, while, until, for, foreach 循环结构. 但是,由于perl 有很多简写方式, 所以perl 的控制结构语法写起来更灵活, 用起来更简单.
 
 #1. 控制结构
-perl 的判断结构有if 和 unless, 这两种结构都是单匹配结构, 没有类似switch case 这种结构, 需要使用if-elsif-elsif-else 来模拟.
+perl 的判断结构有if 和 unless, 这两种结构都是单匹配结构, 没有类似switch case 这种结构, 需要使用if-elsif-elsif-else 来模拟. 其实unless 等价于 if (! testExp) .
 
 ## 1.1 if判断结构
 
@@ -63,11 +63,14 @@ if ( testExp1 ) {
 
 ### 1.2.1 unless 结构
 * 如果testExp 不为真则执行codes
-
+* 简写形式只能执行一条语句, 但是却很常用.
 ```perl
+## 标准写法
 unless ( testExp ){
    codes
 }
+## 简写
+code unless testExp;
 ```
 
 ### 1.2.2 unless-else 结构
