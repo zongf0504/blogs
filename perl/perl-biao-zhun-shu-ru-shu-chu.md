@@ -161,9 +161,78 @@ sub print_color(){
 }
 ```
 
+# 4. 输入输出重定向 
+* 输入输出重定向, 需要用到文件句柄等相关知识, 请先了解perl 文件读取, 文件输出, 文件句柄的知识
 
+## 4.1 输出重定向
+* perl 默认输出为终端显示器, 文件句柄为STDOUT, 因此只需要修改STDOUT 指向的文件即可重定向输出
 
+重定向输出到具体文件:
+```perl
+#以追加地方式重新打开标准输出文件句柄, 使标准输出重定向到文件hello.txt 
+open STDOUT, ">>", "hello.txt" or die "cannot opern hello.txt";
+print "hello,world\n";
+```
 
+重定向输出为不输出:
+```perl
+#以追加地方式重新打开标准输出文件句柄, 使标准输出重定向到文件hello.txt 
+open STDOUT, ">>", "/dev/null" or die "cannot redirect standard output";
+print "hello,world\n";
+```
+
+## 4.2 输入重定向
+* perl 标准输入为从键盘中读入, 文件句柄为STDIN, 因此只需要修改STDIN句柄指向的文件即可
+* 这样使用STDIN时, 就不会再等待用户输入了, 而是直接从文件中读取一行
+
+输入重定向脚本:
+```
+#!/usr/bin/perl
+#重定向标准输入
+open STDIN, "<", "io.pl" or die "can not open file: io.pl\n";
+
+#重文件中读取一行
+$line = <STDIN>;
+printf "%2d %s", 1, $line;
+
+#读取文件第二行
+$line = <STDIN>;
+printf "%2d %s", 2, $line;
+
+#读取文件第三行
+$line = <STDIN>;
+printf "%2d %s", 3, $line;
+
+@lines = <STDIN>;
+for (0..$#lines){
+   printf "%2d %s", $_+3, $lines[$_];
+```
+
+测试输出:
+```bash
+[admin@gds perl]$ ./io.pl 
+ 1 #!/usr/bin/perl
+ 2 #重定向标准输入
+ 3 open STDIN, "<", "io.pl" or die "can not open file: io.pl\n";
+ 3 
+ 4 #重文件中读取一行
+ 5 $line = <STDIN>;
+ 6 printf "%2d %s", 1, $line;
+ 7 
+ 8 #读取文件第二行
+ 9 $line = <STDIN>;
+10 printf "%2d %s", 2, $line;
+11 
+12 #读取文件第三行
+13 $line = <STDIN>;
+14 printf "%2d %s", 3, $line;
+15 
+16 @lines = <STDIN>;
+17 for (0..$#lines){
+18    printf "%2d %s", $_+3, $lines[$_]; 
+19 }
+
+```
 
 
 
