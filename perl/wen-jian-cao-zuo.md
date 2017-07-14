@@ -58,15 +58,93 @@ if( -f -x $file){
 }
 ```
 
-## 2.3 
-
-
 # 3. 文件夹操作
+* perl语言中对文件夹和文件操作是很简单的, 通常只要拿到文件绝对路径名称即可, 然后使用系统命令对文件进行增删改查即可.
 
 ## 3.1 获取目录下所有文件
-* 语法: <目录名/*>, 如:@plfiles = <$dirname/*.pl>;  @allFiles = <$dirname/*>;
-* 
+* perl 获取目录下所有文件操作是极其简单的,简直不能再简单了
+* 通过砖石操作符获取的只是文件名, 返回文件名为局对路径文件名
+* 支持shell的通配符, 如*, ?, []等
+
+```perl
+# 语法: <目录名/*>, 支持shell的通配符, 如: @plfiles=<$dir/*.pl>; 或 @files=<$dir/*>K;
+
+#输出home目录下所有文件
+$dir="/home";
+@files=<$dir/*>;
+print "$_\n" foreach @files;
+
+```
 
 ## 3.2 递归文件夹
+### 3.2.1 普通方式
+
+```perl
+#!/usr/bin/perl
+
+#递归函数
+sub recure{
+  #获取传入参数:文件名
+  my $file = shift @_;
+
+  #判断文件是否是目录
+  if( -d $file ){
+     #文件是目录, 则文件夹数量+1
+     $cnt_dir++;
+
+     #获取文件夹下所有文件
+     my @sub_files = <$file/*>;
+     
+     #遍历所有文件, 递归方法 
+     foreach my $sub_file (@sub_files ){
+        &recure($sub_file);
+     }
+   }else {
+     #如果文件是普通文件,则文件数量+1
+     $cnt_file++;
+   }
+}
+
+$dir = "/home/admin/blog";
+&recure($dir);
+print "files:$cnt_file, dirs:$cnt_dir\n";
+
+```
+
+### 3.2.2 极简方式
+* 从简化模式可以看出, perl是非常灵活的
+
+```perl
+#!/usr/bin/perl
+
+#递归函数
+sub recure{
+  #获取传入参数:文件名
+  my $file = shift @_;
+
+  #判断文件是否是目录
+  if( -d $file ){
+     #文件是目录, 则文件夹数量+1
+     $cnt_dir++;
+
+     #遍历所有文件, 递归方法 
+     &recure($_) foreach <$file/*>;
+   }else {
+     #如果文件是普通文件,则文件数量+1
+     $cnt_file++;
+   }
+}
+
+$dir = "/home/admin/blog";
+&recure($dir);
+print "files:$cnt_file, dirs:$cnt_dir\n";
+```
+
+
+
+
+
+
+
 
 
