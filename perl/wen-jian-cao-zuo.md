@@ -2,11 +2,113 @@
 > Perl 对文件和目录操作提供了相关的增删改查API, 如rename, rmdir, unlink 等函数, 但是笔者认为并没有太大必要去花时间掌握这些函数, 因为perl 通过system 函数可以直接执行系统命令, 所以直接使用system+原生linux文件操作命令即可, 这样可以少学一套API. 因此, 笔者更常用于此种方式.
 
 
-#1. 文件内容-文件读写
+#1. 文件内容读写
 
-## 1.1 读文件
+## 1.1 文件句柄
+* perl 程序通过文件句柄和文件进行文件读写
+* 文件句柄: 文件句柄相当于一个指针, 指向这个文件; 句柄必须是全部大写或者为标量, 笔者建议句柄会用标量, 因为perl默认的文件句柄为全部大写.
+* perl 内置句柄有: STDIN, STDOUT, STDERROR 等
+* perl 文件打开后未关闭的话, 在程序借宿时会自动关闭
 
-## 1.2 写文件
+### 1.1.1 打开文件句柄
+* 语法: open 句柄名称, 打开方式, 文件名;
+
+常用打开方式:
+
+| 打开方式 | 含义 |
+| :--- | :--- |
+| < | 以输入方式打开文件, 用于读取文件内容  |
+| > | 以输出方式打开文件, 用于写文件, 打开的同时会清空文件内容 |\
+| >> | 以输出方式打开文件, 用于写文件, 打开时不清空文件, 直接在文件末尾追加内容 |
+| >:encoding(UTF-8) | 以指定编码打开文件, 可用于以上三种方式 |
+
+### 1.1.2 关闭文件句柄
+* 语法: close 文件句柄名称;
+* 当文件不使用的时候建议关闭文件句柄, 减少资源占用.若不手动关闭的话, 当程序结束时, 会自动关闭.
+
+## 1.2 读文件
+* 当文件比较小的时候, 一次性读取文件所有内容效率更高; 当文件较大时, 可以一行一行读.
+
+### 1.2.1 读取文件全部内容
+```perl
+#!/usr/bin/perl
+
+$filename = "/etc/passwd";
+
+#打开文件
+open $file, "<", $filename or "cannot open file:$filename\n";
+
+#读取文件全部内容
+@lines = <$file>;
+
+#关闭文件
+close $file;
+
+#输出文件
+print "$_" foreach @lines;
+```
+
+### 1.2.2 逐行读取
+* 逐行读取适合读取大文件
+
+```perl
+#!/usr/bin/perl
+
+$filename = "/etc/passwd";
+
+#打开文件
+open $file, "<", $filename or "cannot open file:$filename\n";
+
+#逐行读取文件内容
+while(<$file>){
+   print "$_";
+}
+
+#关闭文件
+close $file
+```
+
+## 1.3 写文件
+* 将程序处理结果写入文件是非常常用的一个操作.
+* 写入文件可以使用print, printf输出语句, 只需要在print/printf后面指定文件句柄即可. 默认句柄为STDOUT, 即标准输出.
+
+### 1.3.1 清空方式写入文件
+* 重复执行两次此脚本, 会发现tmp.txt 文件中始终都是一行内容
+
+```perl
+#!/usr/bin/perl
+
+$filename = "tmp.txt";
+
+#打开文件:清空方式, 打开的同时会清空文件
+open $file, ">", $filename or "cannot open file:$filename\n";
+
+#输出字符串到文件中
+print $file "hello,world\n";
+
+#关闭文件句柄
+close $file;
+
+```
+
+### 1.3.1 追加方式写入文件
+* 重复执行脚本多次, 没执行一次, tmp.txt 文件中新增一行hello,world
+
+```perl
+#!/usr/bin/perl
+
+$filename = "tmp.txt";
+
+#打开文件:清空方式, 打开的同时会清空文件
+open $file, ">>", $filename or "cannot open file:$filename\n";
+
+#输出字符串到文件中
+print $file "hello,world\n";
+
+#关闭文件句柄
+close $file;
+
+```
 
 
 # 2. 文件检测
