@@ -109,6 +109,7 @@ foreach 变量定义 (数组/列表){
 
 ## 2.2 while 循环
 * 当表达式为真时, 会执行循环体, 直到表达式为假或遇到last 语句后终止循环
+
 ```
 while (testExp){
     codes;
@@ -117,6 +118,7 @@ while (testExp){
 
 ## 2.3 until 循环
 * 当表达式为假时, 会执行循环体, 直到表达式为真或遇到last 语句后终止循环
+
 ```
 until (testExp){
     codes;
