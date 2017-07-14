@@ -132,7 +132,145 @@ perl 控制循环的语句有: next, last, redo:
 * redo: 重新执行本次循环
 
 
+# 4. 测试示例
+## 4.1 测试脚本
+```perl
+#!/usr/bin/perl
+#Desc 流程控制demo
+use warnings;
 
+print "\n####################  1. 控制结构  ####################\n";
+#获取从键盘的输入, 并移除换行符
+print "please input your match score: ";
+chomp($score=<STDIN>);
+
+print "\n####################  1.1 if-else  ####################\n";
+
+#标准形式
+if($score > 90){
+   print "[if-elsif-else] your score is A \n";
+}elsif($score >80){
+   print "[if-elsif-else] your score is B \n";
+}elsif($score >70){
+   print "[if-elsif-else] your score is C \n";
+}else{
+   print "[if-elsif-else] your score is D \n";
+}
+
+# 简写形式
+print "[if] your are very great !!! \n" if $score == 95;
+
+
+print "\n####################  1.2 unless-else  ####################\n";
+#标准形式
+unless($score <50){
+   print "[unless-else] your score is good ! \n";
+}else{
+   print "[unless-else] your score is bad ! \n";
+}
+
+#简写形式: 如果score不大于50,则输出
+print "[unless] your score is very bad !!! \n" unless $score > 50;
+
+print "\n####################  2. 循环结构  ####################\n";
+print "\n####################  2.1 for  ####################\n";
+$sum=0;
+for(my $j=1; $j<=100; $j++){
+   $sum += $j;
+}
+print "[for] 1+2+3+...+100=$sum\n";
+
+print "\n####################  2.2 foreach  ####################\n";
+#简写形式
+$sum=0;
+foreach (1..100){
+   $sum += $_;
+}
+print "[foreach] 1+2+3+...+100=$sum\n";
+
+#标准形式
+$sum=0;
+foreach my $idx ( 1..100) {
+   $sum += $idx;
+}
+print "[foreach] 1+2+3+...+100=$sum\n";
+  
+print "\n####################  2.3 while  ####################\n";
+$sum=0;
+$i=1;
+while($i<=100){
+   $sum += $i;
+   $i++;
+}
+print "[while] 1+2+3+...+100=$sum\n";
+
+print "\n####################  2.4 until  ####################\n";
+$sum=0;
+$i=1;
+until($i>100){
+   $sum += $i;
+   $i++;
+}
+print "[until] 1+2+3+...+100=$sum\n";
+
+print "\n#################### 3. 控制循环 ####################\n";
+
+for my $k(1..100){
+   print "[$k] please input your match score: 1-redo 2-next 3-last 4-other: ";
+   chomp($flag=<STDIN>);
+   if($flag==1){ # redo
+      redo;
+   }elsif($flag==2){ #next 
+      next;
+   }elsif($flag==3){ #last
+      last;
+   }else {
+   }
+   print "[$k] your choese is $flag\n";
+}
+print "finishe ...\n";
+
+
+```
+
+## 4.2 测试输出
+```bash
+[admin@gds perl]$ ./control.pl 
+
+####################  1. 控制结构  ####################
+please input your match score: 10
+
+####################  1.1 if-else  ####################
+[if-elsif-else] your score is D 
+
+####################  1.2 unless-else  ####################
+[unless-else] your score is bad ! 
+[unless] your score is very bad !!! 
+
+####################  2. 循环结构  ####################
+
+####################  2.1 for  ####################
+[for] 1+2+3+...+100=5050
+
+####################  2.2 foreach  ####################
+[foreach] 1+2+3+...+100=5050
+[foreach] 1+2+3+...+100=5050
+
+####################  2.3 while  ####################
+[while] 1+2+3+...+100=5050
+
+####################  2.4 until  ####################
+[until] 1+2+3+...+100=5050
+
+#################### 3. 控制循环 ####################
+[1] please input your match score: 1-redo 2-next 3-last 4-other: 2
+[2] please input your match score: 1-redo 2-next 3-last 4-other: 2
+[3] please input your match score: 1-redo 2-next 3-last 4-other: 1
+[3] please input your match score: 1-redo 2-next 3-last 4-other: 4
+[3] your choese is 4
+[4] please input your match score: 1-redo 2-next 3-last 4-other: 3
+finishe ...
+```
 
 
 
