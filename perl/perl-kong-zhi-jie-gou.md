@@ -86,11 +86,48 @@ unless ( testExp ){
 ```
 
 # 2. 循环结构
+perl 的循环结构有, for, foreach, while, until 四种, 控制循环语句有last, next, redo三种方式.其中for 和 foreach 底层结构一样, 它俩是等价的. while 和 until 是相反的逻辑,类似于if 和 unless 的关系.
+
 ## 2.1 for 循环
+* perl 中的for 循环和其它语言for循环用法相同
+
+```perl
+for( 变量初始化; 测试表达式 ; 变量变化) {
+   codes;
+}
+```
+
+## 2.2 foreach 循环
+* perl 语言支持其它语言未必不支持的foreach循环, 主要用于遍历数组或列表, 非常好用
+* 和for等价, 用for关键字也行
+
+```perl
+foreach 变量定义 (数组/列表){
+   codes
+}
+```
 
 ## 2.2 while 循环
+* 当表达式为真时, 会执行循环体, 直到表达式为假或遇到last 语句后终止循环
+```
+while (testExp){
+    codes;
+}
+```
 
 ## 2.3 until 循环
+* 当表达式为假时, 会执行循环体, 直到表达式为真或遇到last 语句后终止循环
+```
+until (testExp){
+    codes;
+}
+```
+
+# 3. 循环控制
+perl 控制循环的语句有: next, last, redo:
+* next: 类似于java 中的continue, 跳过本次循环, 进行下一次循环
+* last: 类似于java 中的break, 直接结束最近的一层循环结构,执行循环结构后的语句
+* redo: 重新执行本次循环
 
 
 
