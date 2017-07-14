@@ -69,6 +69,7 @@
   * [Perl 运算符](perl/perl-yun-suan-fu.md)
   * [Perl 进程管理](perl/perl-jin-cheng-guan-li.md)
   * [Perl  自定义函数\(子程序\)](perl/perl-zi-cheng-xu.md)
+  * [Perl 文件操作](perl/wen-jian-cao-zuo.md)
 * [framework](framework.md)
 * [jboss](jboss.md)
   * [jboss 端口](jboss/jboss-duan-kou.md)
