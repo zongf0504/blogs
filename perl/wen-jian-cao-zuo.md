@@ -64,6 +64,8 @@ if( -f -x $file){
 # 3. 文件夹操作
 
 ## 3.1 获取目录下所有文件
+* 语法: <目录名/*>, 如:@plfiles = <$dirname/*.pl>;  @allFiles = <$dirname/*>;
+* 
 
 ## 3.2 递归文件夹
 
