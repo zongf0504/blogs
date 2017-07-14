@@ -61,6 +61,7 @@
   * ELK 整合
 * [Perl](perl.md)
   * [Perl 简介](perl/perl-jian-jie.md)
+  * [Perl 标准输入输出](perl/perl-biao-zhun-shu-ru-shu-chu.md)
   * [Perl 数据类型-直接量](perl/perl-shu-ju-lei-xing.md)
   * [Perl 数据类型--标量](perl/perl-shu-ju-lei-578b-biao-liang.md)
   * [Perl 数据类型--数组](perl/perl-shu-ju-lei-578b-shu-zu-bian-liang.md)
@@ -68,7 +69,6 @@
   * [Perl 运算符](perl/perl-yun-suan-fu.md)
   * [Perl 进程管理](perl/perl-jin-cheng-guan-li.md)
   * [Perl  自定义函数\(子程序\)](perl/perl-zi-cheng-xu.md)
-  * [Perl 控制结构](perl/perl-kong-zhi-jie-gou.md)
   * [Perl 标准输入输出](perl/perl-biao-zhun-shu-ru-shu-chu.md)
 * [framework](framework.md)
 * [jboss](jboss.md)
