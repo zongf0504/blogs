@@ -61,7 +61,17 @@ printf "%4s, %2d, %4.1f\n", "张小三", "20", "540.25";
 printf "%4s, %2d, %4.1f\n", "李四", "18", "606.55";
 ```
 
+## 2.3 say
+* say 和print 比较类似, 也是输出一行字符串, 不同的是末尾会自动添加换行符, 无须手动添加\n
+* 双引号内科进行变量内插和转义字符转换, 单引号内不支持, 输出的是原字符串
+* say 语句不是自带的, 需要引入模块: use feature qw(say);
 
+```perl
+#!/usr/bin/perl
+use feature qw(say);
+say "hello,world";
+
+```
 
 
 
