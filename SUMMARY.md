@@ -71,6 +71,7 @@
   * [Perl  自定义函数\(子程序\)](perl/perl-zi-cheng-xu.md)
   * [Perl 文件操作](perl/wen-jian-cao-zuo.md)
   * [Perl 实战](perl/perl-shi-zhan.md)
+    * [Linux 工具之perl2bin](perl/perl-shi-zhan/linux-gong-ju-zhi-perl2bin.md)
 * [framework](framework.md)
 * [jboss](jboss.md)
   * [jboss 端口](jboss/jboss-duan-kou.md)
