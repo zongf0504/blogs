@@ -38,6 +38,7 @@ print "name:$name, books:@books\n"; #输出:name:zong, books:java mysql
 * printf 是格式化输出字符串,类似于shell 脚本, c语言的printf, 只不过perl语言支持变量内插, 所以printf 就显得没有那么重要了
 * printf 通常用于格式化串宽度, 对齐方式, 浮点型数字四舍五入等
 * 如果输出%号, 需要使用%%
+* 语法: printf "包含占位符的字符串表达式", 占位符参数...;
 
 常用占位符:
 | 占位符 | 含义 |
