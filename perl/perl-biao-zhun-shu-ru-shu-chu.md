@@ -23,5 +23,9 @@ print "your input is : $line\n";
 * print 输出一行字符串, 末尾不添加换行符
 * print 后跟双引号, 可以实现变量内插, 转义字符, 跟单引号则不会进行转换
 
+```perl
+print "hello\nworld\n";#输出两行,一行hello, 一行world
+print 'hello\nworld\n';#输出一行: hello\nworld\n
+```
 
 
