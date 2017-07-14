@@ -91,7 +91,7 @@ close $file;
 
 ```
 
-### 1.3.1 追加方式写入文件
+### 1.3.2 追加方式写入文件
 * 重复执行脚本多次, 没执行一次, tmp.txt 文件中新增一行hello,world
 
 ```perl
@@ -110,6 +110,21 @@ close $file;
 
 ```
 
+### 1.3.3 重新向标准输出
+* 当文件只需要向一个文件输出内容时,可以直接将标准输出重定向,这样就不用每次在print语句后面添加文件句柄了
+
+```perl
+#!/usr/bin/perl
+
+$filename = "tmp.txt";
+
+#打开文件:清空方式, 打开的同时会清空文件
+open STDOUT, ">", $filename or "cannot open file:$filename\n";
+
+#输出字符串到文件中
+print "hello,world\n";
+
+```
 
 # 2. 文件检测
 
