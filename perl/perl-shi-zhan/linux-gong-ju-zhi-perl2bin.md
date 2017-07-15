@@ -225,7 +225,7 @@ hello  hello.pl  perl2bin  perl2bin.pl  world.pl
 hello,world
 ```
 
-##附:shc安装
+## 附:shc安装
 1. 下载shc源文件: [shc-3.8.9.tgz](http://download.csdn.net/detail/zgf19930504/9724681)
 2. 解压文件: tar -zxvf shc-3.8.9.tgz
 3. 编译安装: make && make install
