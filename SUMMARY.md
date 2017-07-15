@@ -75,6 +75,7 @@
     * [linux 工具 -- psgrep](perl/perl-shi-zhan/linux-tools-psgrep.md)
     * [linux 工具 -- pskill](perl/perl-shi-zhan/linux-gong-ju-pskill.md)
     * [linux 工具 -- psnetstat](perl/perl-shi-zhan/linux-gong-ju-psnetstat.md)
+    * [linux 工具 -- confview](perl/perl-shi-zhan/linux-gong-ju-confview.md)
 * [framework](framework.md)
 * [jboss](jboss.md)
   * [jboss 端口](jboss/jboss-duan-kou.md)
