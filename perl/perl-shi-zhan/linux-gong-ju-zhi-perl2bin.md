@@ -1,6 +1,5 @@
 #Linux 工具--perl2bin
-> 在工作中，通常会写一些shell 脚本， perl 脚本工具，用于简化服务器使用。有时，脚本中会涉及一些用户名，密码等敏感信息，通常这些信息是不应该直接明文放到服务器脚本之中的，这样会有安全性问题。或者，我们要防止其他人有意无意的修改脚本。鉴于此类的需求，将脚本加密成二进制文件，是比较好的选择。虽然说也可以通过某种方法解密脚本，但是，想实现还是比较困难的。 脚本加密的方式有很多，笔者推荐使用shc 加密。 shc 并非是服务器自带的工具，需要自己下载安装。perl2bin 就是对shc的一个封装.
-
+> 通常写的脚本都是文本文件, 如果脚本中有一些用户名密码等敏感信息,那么明文是很不安全的.因此,笔者通常会将包含敏感信息或不希望其他人修改的脚本加密为二进制文件,这样就加强了脚本的安全性.脚本加密地方式有很多,笔者推荐使用shc 加密. shc并非是服务器自带的工具, 需要自己安装. perl2bin 就是在shc的基础上进行的封装,目的是使加密脚本更简单.
 
 ## 1. 源程序
 
@@ -186,7 +185,7 @@ hello,world
 hello  perl2bin.pl  world
 ```
 
-### .3 设置过期时间
+### 3.3 设置过期时间
 * 日期之前格式为: yyyy.MM.dd , 日期必须放置在脚本名称前
 * 如果使用-d参数的话,那么日期必须在-d之后
 
@@ -208,7 +207,29 @@ The usage period of this command is 2017.01.01 !
 The usage period of this command is 2017.01.01 !
 ```
 
+### 3.4 加密本身
+* perl2bin.pl 脚本不仅可以加密其它脚本,还可以加密本身.加密之后然后放到环境变量目录中, 那么它就从一个普通脚本升级为一个linux工具了,可以使用perl2bin加密其它脚本.
 
+```perl
+[admin@localhost perl]$ ls
+hello.pl  perl2bin.pl  world.pl
+[admin@localhost perl]$ ./perl2bin.pl perl2bin.pl 
+开始转换脚本:perl2bin.pl
+[admin@localhost perl]$ ls
+hello.pl  perl2bin  perl2bin.pl  world.pl
+[admin@localhost perl]$ ./perl2bin hello.pl 
+开始转换脚本:hello.pl
+[admin@localhost perl]$ ls
+hello  hello.pl  perl2bin  perl2bin.pl  world.pl
+[admin@localhost perl]$ ./hello 
+hello,world
+```
+
+##附:shc安装
+1. 下载shc源文件: [shc-3.8.9.tgz](http://download.csdn.net/detail/zgf19930504/9724681)
+2. 解压文件: tar -zxvf shc-3.8.9.tgz
+3. 编译安装: make && make install
+4. 遇到: Do you want continue? 时输入y即可完成安装
 
 
 
