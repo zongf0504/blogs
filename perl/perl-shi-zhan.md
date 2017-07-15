@@ -24,11 +24,12 @@
 * 设置环境变量后, 环境变量目录下的程序在执行的时候就不用输入全路径名称了.
 
 1. 编辑文件:/etc/profile, 文件末尾添加:
-```bath
+```bash
 #设置自定义环境变量目录
 export PATH=$PATH:/usr/local/bin/perl
 ```
 
-2. 使设置立即生效: source /etc/profile
-
-
+2. 使设置立即生效: 
+```bash
+source /etc/profile
+```
