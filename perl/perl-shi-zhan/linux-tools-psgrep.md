@@ -145,11 +145,13 @@ psgrep
 ### 3.1 查看当前正在运行的nginx 进程
 * 查看当前运行的nginx 进程
 * 查看当前运行的tomcat 进程
+
 ![](/assets/perl_2017-07-15_100047.png)
 
 
 ### 3.2 查看当前正在运行的tomcat 和 nginx 进程
 * 查看当前运行的tomcat 或 nginx 进程
+
 ![](/assets/perl_2017-07-15_100113.png)
 
 
