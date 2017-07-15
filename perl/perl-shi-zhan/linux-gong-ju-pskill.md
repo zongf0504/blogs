@@ -13,10 +13,9 @@
 ```perl
 #!/usr/bin/perl
 #Desc  强制杀死正在运行的进程,可同时杀死多个进程
-#Auth  zonggf
+#Auth  zongf
 #Date  2017-07-15
 
-use warnings;
 use Term::ANSIColor qw(:constants);
 $Term::ANSIColor::AUTORESET = 1;
 
@@ -40,14 +39,13 @@ sub print_help{
 sub check_help{
   my $param = $ARGV[0];
   if("-h" eq $param || "--help" eq $param){
-  
-	&print_help("Desc","强制杀死当前正在运行的进程, 存在一次用户交互");
+    &print_help("Desc","强制杀死当前正在运行的进程, 存在一次用户交互");
     &print_help("Args","关键字列表");
     &print_help("Exam","pskill tomcat: 选择杀死包含tomcat 关键字的进程",
                 "pskill tomcat nginx: 选择杀死包含tomcat 或 nginx 关键字的进程");
     &print_help("Auth","zongf");
     &print_help("Date","2017-07-15");
-	
+
     exit;
   }
 }
@@ -155,7 +153,7 @@ sub get_user_choose{
 
 #如果用户不传过滤参数，则直接退出程序
 if(@ARGV <1){
-  print "此命令需要至少一个参数作为筛选条件!\n";
+  print BOLD RED "[error] "; print "此命令需要至少一个参数作为筛选条件!\n";
   exit;
 }
 
@@ -201,6 +199,7 @@ if($length < 1){
   #按用户选择进行杀死进程
   &kill_ps_line($lines[$_-1]) foreach @ids;
 }
+
 
 ```
 
