@@ -15,7 +15,6 @@
 #Auth  zonggf
 #Date  2017-07-15
 
-use warnings;
 use Term::ANSIColor qw(:constants);
 $Term::ANSIColor::AUTORESET = 1;
 
