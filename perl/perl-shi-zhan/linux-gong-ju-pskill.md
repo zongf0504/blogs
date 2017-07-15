@@ -204,8 +204,8 @@ if($length < 1){
 ```
 
 ### 2.2 加密为二级制程序
-*使用笔者自己开发的perl2bin 工具将源文件加密为二进制程序, 并删除源程序
-*将二进制程序pskill 移动到某个环境变量目录, 笔者设置的环境变量目录为: /usr/local/bin/perl/
+* 使用笔者自己开发的perl2bin 工具将源文件加密为二进制程序, 并删除源程序
+* 将二进制程序pskill 移动到某个环境变量目录, 笔者设置的环境变量目录为: /usr/local/bin/perl/
 
 ```perl
 [admin@localhost perl]$ ls
