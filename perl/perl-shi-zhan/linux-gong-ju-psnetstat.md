@@ -140,6 +140,8 @@ Date: 2017-07-15
 ```
 
 ## 3.2 非root 用户使用命令
+* 使用非root 用户(笔者使用admin用户) 执行命令, 会弹出错误提示
+
 ```bash
 [admin@localhost perl]$ psnetstat 81
 [error] 只有root 用户才能执行
