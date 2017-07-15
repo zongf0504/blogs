@@ -3,8 +3,9 @@
 
 
 ## 1. pskill 特色
-
-
+* 使用方便, 结合了ps 和 kill 命令, 一步即可
+* 提供用户交互, 让用户选择要删除的进程
+* 防止误操作, 有最大进程限制
 
 ## 2. pskill 开发
 
@@ -40,7 +41,7 @@ sub check_help{
   my $param = $ARGV[0];
   if("-h" eq $param || "--help" eq $param){
     &print_help("Desc","强制杀死当前正在运行的进程, 存在一次用户交互");
-    &print_help("Args","关键字列表");
+    &print_help("Args","关键字列表,至少需要传一个参数");
     &print_help("Exam","pskill tomcat: 选择杀死包含tomcat 关键字的进程",
                 "pskill tomcat nginx: 选择杀死包含tomcat 或 nginx 关键字的进程");
     &print_help("Auth","zongf");
@@ -220,6 +221,8 @@ pskill  pskill.pl
 ## 3. 测试
 * pskill 工具会有一次用户交互过程, 需要用户选择要删除的索引号, 0 代表删除列出的所有进程
 * pskill 为防止误操作, 所以限制每次最多删除10个进程
+
+###
 
 
 
