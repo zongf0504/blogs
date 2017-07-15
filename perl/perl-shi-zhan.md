@@ -28,3 +28,7 @@
 #设置自定义环境变量目录
 export PATH=$PATH:/usr/local/bin/perl
 ```
+
+2. 使设置立即生效: source /etc/profile
+
+
