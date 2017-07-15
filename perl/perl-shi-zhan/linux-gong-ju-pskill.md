@@ -41,7 +41,7 @@ sub check_help{
   my $param = $ARGV[0];
   if("-h" eq $param || "--help" eq $param){
     &print_help("Desc","强制杀死当前正在运行的进程, 存在一次用户交互");
-    &print_help("Args","关键字列表,至少需要传一个参数");
+    &print_help("Args","关键字列表");
     &print_help("Exam","pskill tomcat: 选择杀死包含tomcat 关键字的进程",
                 "pskill tomcat nginx: 选择杀死包含tomcat 或 nginx 关键字的进程");
     &print_help("Auth","zongf");
@@ -107,7 +107,7 @@ sub kill_ps_line{
   my $pid = (split/\s+/,$ps_line)[1];
   $cnt = kill 9, $pid;
   if($cnt == 1){
-    print BOLD GREEN "[成功] "; print "进程pid: %6d 强制杀死成功!\n",$pid;
+    print BOLD GREEN "[成功] "; printf "进程pid: %6d 强制杀死成功!\n",$pid;
   } else {
     print BOLD RED "[失败] "; printf "进程pid:%6d 强制杀失败!\n",$pid;
   }
@@ -201,7 +201,6 @@ if($length < 1){
   &kill_ps_line($lines[$_-1]) foreach @ids;
 }
 
-
 ```
 
 ### 2.2 加密为二级制程序
@@ -222,7 +221,59 @@ pskill  pskill.pl
 * pskill 工具会有一次用户交互过程, 需要用户选择要删除的索引号, 0 代表删除列出的所有进程
 * pskill 为防止误操作, 所以限制每次最多删除10个进程
 
-###
+### 3.1 查看命令帮助
+```bash
+
+```
+
+### 3.2. 删除单个进程
+* 查询并选择杀死tomcat 进程
+* 用户交互: 输入列表索引
+
+```bash
+[admin@localhost perl]$ pskill tomcat
+[1] admin      3383      1 49 01:27 pts/1    00:00:06 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-7-7080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Xms516m -Xmx1024m -Xss1024K -XX:PermSize=512m -XX:MaxPermSize=512m -Djdk.tls.ephemeralDHKeySize=2048 -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-7-7080/endorsed -classpath /opt/app/tomcat/tomcat-7-7080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-7-7080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-7-7080 -Dcatalina.home=/opt/app/tomcat/tomcat-7-7080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-7-7080/temp org.apache.catalina.startup.Bootstrap start
+[2] admin      3429      1 84 01:27 pts/1    00:00:05 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-8-8080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-8-8080/endorsed -classpath /opt/app/tomcat/tomcat-8-8080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-8-8080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-8-8080 -Dcatalina.home=/opt/app/tomcat/tomcat-8-8080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-8-8080/temp org.apache.catalina.startup.Bootstrap start
+
+[输入] 请输入您要杀死的进程序号，0表示所有:  1          
+[成功] 进程pid: %6d 强制杀死成功!
+```
+
+### 4.2 批量删除进程
+```bash
+[admin@localhost perl]$ pskill tomcat
+[1] admin      3521      1 49 01:29 pts/1    00:00:04 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-7-7080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Xms516m -Xmx1024m -Xss1024K -XX:PermSize=512m -XX:MaxPermSize=512m -Djdk.tls.ephemeralDHKeySize=2048 -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-7-7080/endorsed -classpath /opt/app/tomcat/tomcat-7-7080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-7-7080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-7-7080 -Dcatalina.home=/opt/app/tomcat/tomcat-7-7080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-7-7080/temp org.apache.catalina.startup.Bootstrap start
+[2] admin      3542      1 52 01:29 pts/1    00:00:03 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-8-8080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-8-8080/endorsed -classpath /opt/app/tomcat/tomcat-8-8080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-8-8080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-8-8080 -Dcatalina.home=/opt/app/tomcat/tomcat-8-8080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-8-8080/temp org.apache.catalina.startup.Bootstrap start
+[3] admin      3564   1656  0 01:30 pts/1    00:00:00 /usr/bin/perl ./pskill tomcat
+
+[输入] 请输入您要杀死的进程序号，0表示所有:  1 2
+[成功] 进程pid:   3521 强制杀死成功!
+[成功] 进程pid:   3542 强制杀死成功!
+```
+
+### 4.3 杀死全部进程
+* 用户交互时输入0, 表示删除查询到的所有进程
+* 示例中nginx 进程由root 用户启动, 所以admin 用户无权杀死进程, 所以杀死进程失败
+
+``` bash
+[admin@localhost perl]$ pskill tomcat nginx
+[1] root       2974      1  0 00:27 ?        00:00:00 nginx: master process nginx
+[2] nginx      2975   2974  0 00:27 ?        00:00:00 nginx: worker process
+[3] admin      3629      1 59 01:31 pts/1    00:00:07 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-7-7080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Xms516m -Xmx1024m -Xss1024K -XX:PermSize=512m -XX:MaxPermSize=512m -Djdk.tls.ephemeralDHKeySize=2048 -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-7-7080/endorsed -classpath /opt/app/tomcat/tomcat-7-7080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-7-7080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-7-7080 -Dcatalina.home=/opt/app/tomcat/tomcat-7-7080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-7-7080/temp org.apache.catalina.startup.Bootstrap start
+[4] admin      3647      1 47 01:31 pts/1    00:00:04 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-8-8080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-8-8080/endorsed -classpath /opt/app/tomcat/tomcat-8-8080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-8-8080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-8-8080 -Dcatalina.home=/opt/app/tomcat/tomcat-8-8080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-8-8080/temp org.apache.catalina.startup.Bootstrap start
+[5] admin      3658   1656  0 01:31 pts/1    00:00:00 /usr/bin/perl ./pskill tomcat nginx
+
+[输入] 请输入您要杀死的进程序号，0表示所有:  0
+[失败] 进程pid:  2974 强制杀失败!
+[失败] 进程pid:  2975 强制杀失败!
+[成功] 进程pid:   3629 强制杀死成功!
+[成功] 进程pid:   3647 强制杀死成功!
+Killed
+[admin@localhost perl]$ psgrep nginx
+[1] root       2974      1  0 00:27 ?        00:00:00 nginx: master process nginx
+[2] nginx      2975   2974  0 00:27 ?        00:00:00 nginx: worker process
+[admin@localhost perl]$ 
+```
 
 
 
