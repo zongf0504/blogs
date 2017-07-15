@@ -107,22 +107,48 @@ if(@ARGV <=0){
 }
 ```
 
-## 2. 测试
+## 2 查看脚本帮助
+* 可以通过选项-h,--help 查看帮助信息
 
-### 2.1 准备测试脚本
-编写一个最简单的perl 脚本hello.pl 和 world.pl:
+```bash
+[admin@localhost perl]$ ./perl2bin.pl -h
+Desc: 加密脚本程序为二进制程序，默认生成不包含后缀名的二进制文件,保留源文件但收回源文件可执行权限,无过期时间
+      注意:此脚本运行依赖于shc程序, 请确保已经安装了shc环境
+Args: -d 选项可选，表示不保留源文件; 如果设置,则必须为第一个参数
+      2017.01.12 选项可选，设置脚本有效期; 如果设置,则必须在脚本名称之前
+      脚本列表, 可进行批量转换, 多个脚本直接用空格隔开, 脚本名称必须包含后缀名
+Exam: per2bin perl2bin.pl,生成perl2bin二进制文件, 有效期:永远,保留源文件
+      perl2bin -d perl2bin.pl, 生成perl2bin二进制文件, 不限制有效期, 删除源文件perl2bin.pl
+      perl2bin 2019.01.01 perl2bin.pl, 生成perl2bin 二进制文件, 使用期限截止为2019年1月1号, 保留源文件perl2bin.pl
+      perl2bin -d 2019.01.01 perl2bin.pl, 生成perl2bin 二进制文件, 使用期限截止为2019年1月1号, 删除源文件perl2bin.pl
+      perl2bin perl2bin.pl pskill.pl; 批量加密脚本, 生成perl2bin, pskill 二进制文件
+Auth: zongf
+Date: 2017-07-15
+[admin@localhost perl]$ ./perl2bin.pl --help
+Desc: 加密脚本程序为二进制程序，默认生成不包含后缀名的二进制文件,保留源文件但收回源文件可执行权限,无过期时间
+      注意:此脚本运行依赖于shc程序, 请确保已经安装了shc环境
+Args: -d 选项可选，表示不保留源文件; 如果设置,则必须为第一个参数
+      2017.01.12 选项可选，设置脚本有效期; 如果设置,则必须在脚本名称之前
+      脚本列表, 可进行批量转换, 多个脚本直接用空格隔开, 脚本名称必须包含后缀名
+Exam: per2bin perl2bin.pl,生成perl2bin二进制文件, 有效期:永远,保留源文件
+      perl2bin -d perl2bin.pl, 生成perl2bin二进制文件, 不限制有效期, 删除源文件perl2bin.pl
+      perl2bin 2019.01.01 perl2bin.pl, 生成perl2bin 二进制文件, 使用期限截止为2019年1月1号, 保留源文件perl2bin.pl
+      perl2bin -d 2019.01.01 perl2bin.pl, 生成perl2bin 二进制文件, 使用期限截止为2019年1月1号, 删除源文件perl2bin.pl
+      perl2bin perl2bin.pl pskill.pl; 批量加密脚本, 生成perl2bin, pskill 二进制文件
+Auth: zongf
+Date: 2017-07-15
+```
+
+## 3. 测试
+
+编写两个最简单的perl 脚本hello.pl 和 world.pl:
 
 ```perl
 #!/usr/bin/perl
-
-print "hello,world";
+print "hello,world\n";
 ```
 
-```bash
-[admin@localhost perl]$ ls
-hello.pl  perl2bin.pl  world.pl
-```
-### 2.1 默认批量转换
+### 3.1 默认批量转换
 * 批量转换, 全部使用默认设置
 * 转换前:源文件hello.pl, world.pl 都拥有可执行权限
 * 转换后:保留源文件, 但收回源文件的可执行权限
@@ -149,7 +175,7 @@ hello,world
 hello,world
 ```
 
-### 2.2 不保留源文件
+### 3.2 不保留源文件
 * 转换时,使用-d 参数, 将不会保留源文件
 * 除了删除了源文件, 转换效果是一样的
 ```perl
@@ -160,7 +186,7 @@ hello,world
 hello  perl2bin.pl  world
 ```
 
-### 2.2 设置过期时间
+### .3 设置过期时间
 * 日期之前格式为: yyyy.MM.dd , 日期必须放置在脚本名称前
 * 如果使用-d参数的话,那么日期必须在-d之后
 
