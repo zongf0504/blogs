@@ -7,7 +7,7 @@
 #!/usr/bin/perl
 #Desc 将脚本加密为二进制程序, 可进行批量转换
 #Auth zongf
-#Date 2016-12-22
+#Date 2017-07-15
 
 use warnings;
 use Term::ANSIColor qw(:constants);
