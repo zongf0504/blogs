@@ -8,7 +8,7 @@
 
 ## 2. pskill 开发
 
-### 2.1 源码:
+### 2.1 pskill.pl 源码:
 
 ```perl
 #!/usr/bin/perl
@@ -204,4 +204,24 @@ if($length < 1){
 
 ```
 
-### 1.2 殡仪
+### 2.2 加密为二级制程序
+*使用笔者自己开发的perl2bin 工具将源文件加密为二进制程序, 并删除源程序
+*将二进制程序pskill 移动到某个环境变量目录, 笔者设置的环境变量目录为: /usr/local/bin/perl/
+
+```perl
+[admin@localhost perl]$ ls
+pskill.pl
+[admin@localhost perl]$ perl2bin pskill.pl 
+开始转换脚本:pskill.pl
+[admin@localhost perl]$ ls
+pskill  pskill.pl
+[admin@localhost perl]$ mv pskill /usr/local/bin/perl/
+```
+
+## 3. 测试
+* pskill 工具会有一次用户交互过程, 需要用户选择要删除的索引号, 0 代表删除列出的所有进程
+* pskill 为防止误操作, 所以限制每次最多删除10个进程
+
+
+
+
