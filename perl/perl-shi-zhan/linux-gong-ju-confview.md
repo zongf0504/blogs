@@ -1,8 +1,10 @@
 # linux 工具 -- confview
-> 通常情况下, linux 下的配置文件会有很多注释, 注释通常是由#开头的. 当我们去查看配置文件内容时, 会被大量的注释干扰到, 不能对所有配置有一个整体的把控.因此我们需要一个能自动过滤空行和注释行, 并能对关键字高亮显示的工具. 因此, 笔者就写了一个专门看配置文件内容的工具.此工具虽然局限性有点儿大, 但确实非常好用的一个小工具.
+
+> 通常情况下, linux 下的配置文件会有很多注释, 注释通常是由\#开头的. 当我们去查看配置文件内容时, 会被大量的注释干扰到, 不能对所有配置有一个整体的把控.因此我们需要一个能自动过滤空行和注释行, 并能对关键字高亮显示的工具. 因此, 笔者就写了一个专门看配置文件内容的工具.此工具虽然局限性有点儿大, 但确实非常好用的一个小工具.
 
 ## 1. 工具特色
-* 自动过滤空行和以#开头的注释行
+
+* 自动过滤空行和以\#开头的注释行
 * 高亮显示多个关键字
 * 显示真实行号
 
@@ -12,7 +14,7 @@
 
 ```perl
 #!/usr/bin/perl
-#Desc  查看配置文件, 默认过滤#开头的注释行和空行, 可添加选项-a 不过滤
+#Desc  查看配置文件, 默认过滤#开头的注释行和空行, 可添加选项-a 不过滤或添加 -n 不显示行号
 #Auth  zonggf
 #Date  2017-07-15
 
@@ -91,7 +93,7 @@ sub print_color(){
   for my $item(@arrays){
       #直接使用@patterns 数组反向匹配，数组内插时，每个字符串直接会有空格
       my $pattern = "@patterns";
-      
+
       #字符串中查找元素，如果有的话则高亮显示，否则正常显示
       my $idx = index($pattern, $item);
       if($idx > -1){
@@ -130,7 +132,7 @@ $lines_length = @lines;
 #遍历文件内容
 for $idx (1 .. @lines){
    $line = $lines[$idx];
-    
+
    #如果是空行或者注释行
    if($line =~ /^$|^\s*#/){
       if(defined $show_all){
@@ -151,10 +153,10 @@ print BOLD CYAN "\nEffective Lines: $rs_cnt; Total Lines: $lines_length\n";
 
 #关闭文件流
 close $f_cfg;
-
 ```
 
 ### 2.2 加密为二进制程序
+
 * 使用笔者自己开发的perl2bin 工具将源文件加密为二进制程序, 并删除源程序 
 * 将二进制程序pskill 移动到某个环境变量目录, 笔者设置的环境变量目录为: /usr/local/bin/perl/
 
@@ -169,6 +171,7 @@ confview.pl
 ## 3. 测试
 
 ### 3.1 获取帮助信息
+
 * 使用-h 或 --help 选项获取命令的帮助信息
 
 ```bash
@@ -197,6 +200,7 @@ Date: 2017-07-15
 ```
 
 ### 3.2 显示配置文件全部内容, 并高亮显示
+
 * 查看配置文件全部内容, 并显示行号, 高亮eth0 和 add 关键字 
 
 ```bash
@@ -213,7 +217,8 @@ Effective Lines: 1; Total Lines: 8
 ```
 
 ### 3.3 显示配置文件内容, 过滤空行和注释
-* 查看配置文件, 过滤空行和以#开头的注释行,高亮关键字add 和 eth0, 显示行号
+
+* 查看配置文件, 过滤空行和以\#开头的注释行,高亮关键字add 和 eth0, 显示行号
 
 ```bash
 [admin@localhost perl]$ confview /etc/udev/rules.d/70-persistent-net.rules eth0 add   
@@ -223,7 +228,8 @@ Effective Lines: 1; Total Lines: 8
 ```
 
 ### 3.4 显示配置文件内容, 过滤空行和注释, 但不显示行号
-* 查看配置文件,过滤空行和以#开头的注释行, 高亮关键字add 和 eth0, 不显示行号
+
+* 查看配置文件,过滤空行和以\#开头的注释行, 高亮关键字add 和 eth0, 不显示行号
 
 ```bash
 [admin@localhost perl]$ confview -n /etc/udev/rules.d/70-persistent-net.rules eth0 add
@@ -231,10 +237,6 @@ SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:0c:29:5c:71:3
 
 Effective Lines: 1; Total Lines: 8
 ```
-
-
-
-
 
 
 
