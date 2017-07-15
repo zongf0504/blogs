@@ -106,3 +106,92 @@ if(@ARGV <=0){
   }
 }
 ```
+
+## 2. 测试
+
+### 2.1 准备测试脚本
+编写一个最简单的perl 脚本hello.pl 和 world.pl:
+
+```perl
+#!/usr/bin/perl
+
+print "hello,world";
+```
+
+```bash
+[admin@localhost perl]$ ls
+hello.pl  perl2bin.pl  world.pl
+```
+### 2.1 默认批量转换
+* 批量转换, 全部使用默认设置
+* 转换前:源文件hello.pl, world.pl 都拥有可执行权限
+* 转换后:保留源文件, 但收回源文件的可执行权限
+* 转换后:生成新的二进制文件,hello和world, 移除了后缀名, 拥有可执行权限
+
+```bash
+[admin@localhost perl]$ ll ./*
+-rwxrwxr-x. 1 admin admin   40 Jan  2 00:03 ./hello.pl
+-rwxr-xr-x. 1 admin admin 3440 Jul 15 16:57 ./perl2bin.pl
+-rwxrwxr-x. 1 admin admin   40 Jan  2 00:04 ./world.pl
+[admin@localhost perl]$ ./perl2bin.pl hello.pl world.pl 
+开始转换脚本:hello.pl
+开始转换脚本:world.pl
+[admin@localhost perl]$ ll
+total 36
+-rwx-wx--x. 1 admin admin 9312 Jan  2 00:07 hello
+-rw-rw-r--. 1 admin admin   40 Jan  2 00:03 hello.pl
+-rwxr-xr-x. 1 admin admin 3440 Jul 15 16:57 perl2bin.pl
+-rwx-wx--x. 1 admin admin 9312 Jan  2 00:07 world
+-rw-rw-r--. 1 admin admin   40 Jan  2 00:04 world.pl
+[admin@localhost perl]$ ./hello 
+hello,world
+[admin@localhost perl]$ ./world 
+hello,world
+```
+
+### 2.2 不保留源文件
+* 转换时,使用-d 参数, 将不会保留源文件
+* 除了删除了源文件, 转换效果是一样的
+```perl
+[admin@localhost perl]$ ./perl2bin.pl -d hello.pl world.pl 
+开始转换脚本:hello.pl
+开始转换脚本:world.pl
+[admin@localhost perl]$ ls
+hello  perl2bin.pl  world
+```
+
+### 2.2 设置过期时间
+* 日期之前格式为: yyyy.MM.dd , 日期必须放置在脚本名称前
+* 如果使用-d参数的话,那么日期必须在-d之后
+
+```perl
+[admin@localhost perl]$ ls
+hello.pl  perl2bin.pl  world.pl
+[admin@localhost perl]$ date
+Sat Jul 15 00:00:55 CST 2017
+[admin@localhost perl]$ ./perl2bin.pl -d 2017.01.01 hello.pl world.pl 
+开始转换脚本:hello.pl
+开始转换脚本:world.pl
+[admin@localhost perl]$ ls
+hello  perl2bin.pl  world
+[admin@localhost perl]$ ./hello 
+./hello: has expired!
+The usage period of this command is 2017.01.01 !
+[admin@localhost perl]$ ./world 
+./world: has expired!
+The usage period of this command is 2017.01.01 !
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
