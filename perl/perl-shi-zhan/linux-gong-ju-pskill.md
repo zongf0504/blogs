@@ -223,7 +223,20 @@ pskill  pskill.pl
 
 ### 3.1 查看命令帮助
 ```bash
-
+[admin@localhost perl]$ pskill -h
+Desc: 强制杀死当前正在运行的进程, 存在一次用户交互
+Args: 关键字列表
+Exam: pskill tomcat: 选择杀死包含tomcat 关键字的进程
+      pskill tomcat nginx: 选择杀死包含tomcat 或 nginx 关键字的进程
+Auth: zongf
+Date: 2017-07-15
+[admin@localhost perl]$ pskill --help
+Desc: 强制杀死当前正在运行的进程, 存在一次用户交互
+Args: 关键字列表
+Exam: pskill tomcat: 选择杀死包含tomcat 关键字的进程
+      pskill tomcat nginx: 选择杀死包含tomcat 或 nginx 关键字的进程
+Auth: zongf
+Date: 2017-07-15
 ```
 
 ### 3.2. 删除单个进程
@@ -239,7 +252,7 @@ pskill  pskill.pl
 [成功] 进程pid: %6d 强制杀死成功!
 ```
 
-### 4.2 批量删除进程
+### 3.3 批量删除进程
 ```bash
 [admin@localhost perl]$ pskill tomcat
 [1] admin      3521      1 49 01:29 pts/1    00:00:04 /opt/app/jdk/jdk1.7.0_80/bin/java -Djava.util.logging.config.file=/opt/app/tomcat/tomcat-7-7080/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Xms516m -Xmx1024m -Xss1024K -XX:PermSize=512m -XX:MaxPermSize=512m -Djdk.tls.ephemeralDHKeySize=2048 -Djava.endorsed.dirs=/opt/app/tomcat/tomcat-7-7080/endorsed -classpath /opt/app/tomcat/tomcat-7-7080/bin/bootstrap.jar:/opt/app/tomcat/tomcat-7-7080/bin/tomcat-juli.jar -Dcatalina.base=/opt/app/tomcat/tomcat-7-7080 -Dcatalina.home=/opt/app/tomcat/tomcat-7-7080 -Djava.io.tmpdir=/opt/app/tomcat/tomcat-7-7080/temp org.apache.catalina.startup.Bootstrap start
@@ -251,7 +264,7 @@ pskill  pskill.pl
 [成功] 进程pid:   3542 强制杀死成功!
 ```
 
-### 4.3 杀死全部进程
+### 3.4 杀死全部进程
 * 用户交互时输入0, 表示删除查询到的所有进程
 * 示例中nginx 进程由root 用户启动, 所以admin 用户无权杀死进程, 所以杀死进程失败
 
