@@ -152,31 +152,16 @@ Auth: zongf
 Date: 2017-07-17
 ```
 
-### 3.2 获取远程服务器根目录文件列表
+### 3.2 从远程服务器批量下载文件
 * 命令需要用单引号或者双引号包裹
 
 ```bash
-[admin@localhost test]$ ./rls 192.168.145.100 admin admin '-d /s* /m*' /usr/bin/expect               
-/media
-/misc
-/mnt
-/sbin
-/selinux
-/srv
-/sys
+[admin@localhost test]$ ./rscpdown 172.22.12.225 admin admin . "/tmp/hello*.txt"
+hello1.txt                                                                                                                 100%   12     0.0KB/s   00:00 ETA
+hello.txt  
+[admin@localhost test]$ ls ./hello*
+./hello1.txt  ./hello.txt
 ```
-
-### 3.3 获取家目录列表
-
-```bash
-[admin@localhost test]$ ./rls 192.168.145.100 admin admin /home/admin /usr/bin/expect
-blog
-elk
-jboss
-jdk
-zookeeper
-```
-
 
 
 
