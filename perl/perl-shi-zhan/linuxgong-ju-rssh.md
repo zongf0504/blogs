@@ -134,7 +134,7 @@ Exam: rssh 192.168.145.100 admin admin 'ls /'
       rssh 192.168.145.100 admin admin 'ls /' /usr/bin/expect
 Auth: zongf
 Date: 2017-07-17
-[admin@gds test]$ ./rssh --help
+[admin@localhost test]$ ./rssh --help
 Desc: 向远处linux服务器执行一条命令,返回命令执行的结果.此脚本依赖于expect 环境,需要实现安装
 Args: 参数列表: ip, 用户名, 密码, 命令
       [expect 绝对路径地址] 可选参数
