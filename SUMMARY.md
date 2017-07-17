@@ -77,6 +77,7 @@
     * [linux 工具 -- psnetstat](perl/perl-shi-zhan/linux-gong-ju-psnetstat.md)
     * [linux 工具 -- confview](perl/perl-shi-zhan/linux-gong-ju-confview.md)
     * [linux工具 -- rssh](perl/perl-shi-zhan/linuxgong-ju-rssh.md)
+    * [linux工具 -- rls](perl/perl-shi-zhan/linuxgong-ju-rls.md)
 * [framework](framework.md)
 * [jboss](jboss.md)
   * [jboss 端口](jboss/jboss-duan-kou.md)
