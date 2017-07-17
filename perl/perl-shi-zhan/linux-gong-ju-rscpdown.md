@@ -43,10 +43,10 @@ sub check_help{
   my $param = $ARGV[0];
   if("-h" eq $param || "--help" eq $param){
     &print_help("Desc","从远程服务器上批量下载文件,此脚本依赖于expect 环境, 需要先安装expect");
-    &print_help("Args","参数列表: ip, 用户名, 密码, 本地目录, 远程文件名,支持通配符",
+    &print_help("Args","参数列表: ip, 用户名, 密码, 本地目录, \"远程文件名,支持通配符\", 文件名需要用单引号或双引号包裹",
                 "[expect 绝对路径地址] 可选参数");
-    &print_help("Exam","rscpdown 192.168.145.100 admin admin . /tmp/hello*.txt",
-                "rscpdown 192.168.145.100 admin admin  /tmp /tmp/hello*.txt /usr/bin/expect");
+    &print_help("Exam","rscpdown 192.168.145.100 admin admin . '/tmp/hello*.txt'",
+                "rscpdown 192.168.145.100 admin admin  /tmp '/tmp/hello*.txt' /usr/bin/expect");
     &print_help("Auth","zongf");
     &print_help("Date","2017-07-17");
     exit;
@@ -111,6 +111,7 @@ unless($#results == 0 && $results[0] =~ /cannot access/){
   }
 }
 
+
 ```
 
 ### 2.2 加密为二进制程序
@@ -135,18 +136,18 @@ rls.pl
 ```bash
 [admin@localhost test]$ rscpdown -h
 Desc: 从远程服务器上批量下载文件,此脚本依赖于expect 环境, 需要先安装expect
-Args: 参数列表: ip, 用户名, 密码, 本地目录, 远程文件名,支持通配符
+Args: 参数列表: ip, 用户名, 密码, 本地目录, "远程文件名,支持通配符", 文件名需要用单引号或双引号包裹
       [expect 绝对路径地址] 可选参数
-Exam: rscpdown 192.168.145.100 admin admin . /tmp/hello*.txt
-      rscpdown 192.168.145.100 admin admin  /tmp /tmp/hello*.txt /usr/bin/expect
+Exam: rscpdown 192.168.145.100 admin admin . '/tmp/hello*.txt'
+      rscpdown 192.168.145.100 admin admin  /tmp '/tmp/hello*.txt' /usr/bin/expect
 Auth: zongf
 Date: 2017-07-17
-[admin@gds localhost]$ rscpdown --help
+[admin@localhost test]$ rscpdown --help
 Desc: 从远程服务器上批量下载文件,此脚本依赖于expect 环境, 需要先安装expect
-Args: 参数列表: ip, 用户名, 密码, 本地目录, 远程文件名,支持通配符
+Args: 参数列表: ip, 用户名, 密码, 本地目录, "远程文件名,支持通配符", 文件名需要用单引号或双引号包裹
       [expect 绝对路径地址] 可选参数
-Exam: rscpdown 192.168.145.100 admin admin . /tmp/hello*.txt
-      rscpdown 192.168.145.100 admin admin  /tmp /tmp/hello*.txt /usr/bin/expect
+Exam: rscpdown 192.168.145.100 admin admin . '/tmp/hello*.txt'
+      rscpdown 192.168.145.100 admin admin  /tmp '/tmp/hello*.txt' /usr/bin/expect
 Auth: zongf
 Date: 2017-07-17
 ```
