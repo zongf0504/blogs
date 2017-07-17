@@ -170,6 +170,23 @@ Date: 2017-07-17
 /sys
 ```
 
+### 3.3 获取j家目录列表
+
+```bash
+[admin@localhost test]$ ./rls 192.168.145.100 admin admin /home/admin /usr/bin/expect
+blog
+elk
+jboss
+jdk
+zookeeper
+```
+
+
+
+
+
+
+
 
 
 
