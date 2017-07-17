@@ -123,7 +123,7 @@ unless($#results == 0 && $results[0] =~ /cannot access/){
 rls.pl
 [admin@localhost perl]$ perl2bin -d rscpdown.pl 
 开始转换脚本:rscpdown.pl
-[admin@localhost perl]$ mv rls /usr/local/bin/perl/
+[admin@localhost perl]$ mv rscpdown /usr/local/bin/perl/
 ```
 
 ## 3. 测试
@@ -133,22 +133,20 @@ rls.pl
 * 使用-h 或 --help 选项获取命令的帮助信息
 
 ```bash
-[admin@localhost test]$ rls -h
-Desc: 获取远程服务器文件列表, 相当于向远程服务器执行ls 命令, 若没有文件则返回为空,此脚本依赖于expect 环境, 需要先安装expect
-Args: 参数列表: ip, 用户名, 密码, "文件名列表,支持通配符", 文件名列表需要用单引号或双引号包裹
+[admin@localhost test]$ rscpdown -h
+Desc: 从远程服务器上批量下载文件,此脚本依赖于expect 环境, 需要先安装expect
+Args: 参数列表: ip, 用户名, 密码, 本地目录, 远程文件名,支持通配符
       [expect 绝对路径地址] 可选参数
-Exam: rls 192.168.145.100 admin admin '-d /s* /m*'
-      rls 192.168.145.100 admin admin  '-d /s* /m*' /usr/bin/expect
-      rls 192.168.145.100 admin admin  '-d /s* /m*' /usr/bin/expect
+Exam: rscpdown 192.168.145.100 admin admin . /tmp/hello*.txt
+      rscpdown 192.168.145.100 admin admin  /tmp /tmp/hello*.txt /usr/bin/expect
 Auth: zongf
 Date: 2017-07-17
-[admin@localhost test]$ rls --help
-Desc: 获取远程服务器文件列表, 相当于向远程服务器执行ls 命令, 若没有文件则返回为空,此脚本依赖于expect 环境, 需要先安装expect
-Args: 参数列表: ip, 用户名, 密码, "文件名列表,支持通配符", 文件名列表需要用单引号或双引号包裹
+[admin@gds localhost]$ rscpdown --help
+Desc: 从远程服务器上批量下载文件,此脚本依赖于expect 环境, 需要先安装expect
+Args: 参数列表: ip, 用户名, 密码, 本地目录, 远程文件名,支持通配符
       [expect 绝对路径地址] 可选参数
-Exam: rls 192.168.145.100 admin admin '-d /s* /m*'
-      rls 192.168.145.100 admin admin  '-d /s* /m*' /usr/bin/expect
-      rls 192.168.145.100 admin admin  '-d /s* /m*' /usr/bin/expect
+Exam: rscpdown 192.168.145.100 admin admin . /tmp/hello*.txt
+      rscpdown 192.168.145.100 admin admin  /tmp /tmp/hello*.txt /usr/bin/expect
 Auth: zongf
 Date: 2017-07-17
 ```
