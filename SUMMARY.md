@@ -79,6 +79,7 @@
     * [linux工具 -- rssh](perl/perl-shi-zhan/linuxgong-ju-rssh.md)
     * [linux工具 -- rls](perl/perl-shi-zhan/linuxgong-ju-rls.md)
     * [linux 工具 -- rscpdown](perl/perl-shi-zhan/linux-gong-ju-rscpdown.md)
+    * [linux 工具 -- rscpup](perl/perl-shi-zhan/linux-gong-ju-rscpup.md)
 * [framework](framework.md)
 * [jboss](jboss.md)
   * [jboss 端口](jboss/jboss-duan-kou.md)

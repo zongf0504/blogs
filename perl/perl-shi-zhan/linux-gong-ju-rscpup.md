@@ -12,7 +12,7 @@
 
 ## 2. rspup 开发
 
-### 2.1 源程序 rscpdown.pl
+### 2.1 源程序 rspup .pl
 
 ```perl
 
@@ -26,10 +26,10 @@
 
 ```bash
 [admin@localhost perl]$ ls
-rscpdown.pl
-[admin@localhost perl]$ perl2bin -d rscpdown.pl 
-开始转换脚本:rscpdown.pl
-[admin@localhost perl]$ mv rscpdown /usr/local/bin/perl/
+rspup.pl
+[admin@localhost perl]$ perl2bin -d rspup.pl 
+开始转换脚本:rspup.pl
+[admin@localhost perl]$ mv rspup /usr/local/bin/perl/
 ```
 
 ## 3. 测试
