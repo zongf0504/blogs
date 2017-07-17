@@ -160,13 +160,16 @@ Date: 2017-07-17
 * 命令需要用单引号或者双引号包裹
 
 ```bash
-[admin@localhost test]$ ./rssh 192.168.145.100 admin admin 'ls -d /m* /n*' /usr/bin/expect
+[admin@localhost test]$ ./rls 192.168.145.100 admin admin '-d /s* /m*' /usr/bin/expect               
 /media
 /misc
 /mnt
-/net
-/nohup.out
+/sbin
+/selinux
+/srv
+/sys
 ```
+
 
 
 
