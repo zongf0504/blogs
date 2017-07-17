@@ -16,7 +16,110 @@
 
 ```perl
 
+#!/usr/bin/perl
+#Desc: 批量上传文件到远程服务器. 此脚本依赖于expect 环境, 请先安装expect环境
+#Args: 远程服务器ip, 用户名, 密码, 本地文件夹, 远程文件名列表, [expect 命令绝对路径]
+#Auth: zonggf
+#Date: 2017-07-11
 
+use warnings;
+use Term::ANSIColor qw(:constants);
+$Term::ANSIColor::AUTORESET = 1;
+
+######################################## 子程序  ########################################
+#打印注释信息
+sub print_help{
+    #获取标签和注释
+    my($tag) = shift @_;
+    my($cmt) = shift @_;
+    #输出第一行注释
+    print BOLD BLUE "$tag: ";
+    print "$cmt\n";
+    #输出其它的注释
+    printf "%5s $_\n","" foreach @_;
+}
+
+
+#检查是否是查询帮助
+sub check_help{
+  my $param = $ARGV[0];
+  if("-h" eq $param || "--help" eq $param){
+    &print_help("Desc","批量上传文件到远程服务器件,此脚本依赖于expect 环境, 需要先安装expect");
+    &print_help("Args","参数列表: ip, 用户名, 密码, 远程目录, 本地文件名列表,支持通配符",
+                "[expect 绝对路径地址] 可选参数");
+    &print_help("Exam","rscpup root root /tmp ./hello*.txt /tmp/hello*.txt",
+                "rscpup root root /tmp ./hello*.txt /tmp/hello*.txt /usr/bin/expect");
+    &print_help("Auth","zongf");
+    &print_help("Date","2017-07-17");
+    exit;
+  }
+  #判断传入参数个数
+  if(@ARGV < 5){
+     print "[error] the param cannot less 5\n";
+     exit;
+  }elsif(@ARGV > 5){
+     my $el = $ARGV[$#ARGV];
+     if ($el =~ /^\/expect$/){
+       $expect = pop @ARGV;
+       unless( -e $expect){
+     	print BOLD RED "The command $expect is not exsits !";
+     	exit ;
+       }
+     }
+  }
+}
+
+######################################## 主程序  ########################################
+
+#校验帮助
+&check_help;
+
+#设置默认命令
+$expect = "expect";
+
+#获取脚本传入的ip, 用户名, 密码
+$ip = shift @ARGV;
+$user = shift @ARGV;
+$password = shift @ARGV;
+$remote_dir = shift @ARGV;
+@local_files = @ARGV;
+
+#拼接expect命令
+$cmd = "$expect -c 'spawn scp @local_files $user\@$ip:$remote_dir\n"
+      ."expect {\n"
+      .'"*yes/no*" { send "yes\r"; exp_continue }' . "\n"
+      ."\"*password:*\" { send \"$password\\r\" } \n"
+      ."}\n"
+      ."interact\n"
+      ."exit\n"
+      ."'";
+
+# 执行命令
+@files = `$cmd`;
+
+# 处理返回结果
+$flag = 0;
+for my $el (@files){
+   if( $el =~ /password:/ ){
+      $flag = 1;
+   }elsif ($flag == 1){
+      #返回换行符为crlf, 即/r/n
+      $el =~ s/\r\n/\n/g;
+      #去除两侧空格
+      $el =~ s/^\s+|\s+$//g;
+      push (@results, $el);
+   }
+}
+
+#处理返回结果
+unless($#results == 0 && $results[0] =~ /cannot access/){
+  for my $el (@results){
+     unless($el =~ /^\s*$|:$/){
+        $el =~ s/\s+/\t/g;
+        print "$el\n";
+     }
+  }
+}
 ```
 
 ### 2.2 加密为二进制程序
