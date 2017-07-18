@@ -11,10 +11,21 @@
 
 zookeeper 安装是比较简单的, 我们对安装目录做一下简单的规划, 这些目录需要手动创建
 
-* /opt/app/zookeeper/zookeeper-3.4.10: zookeeper 安装家目录
-* /var/data/zookeeper/ : zookeeper 数据存放目录
-* /var/logs/zookeeper/zklogs : zookeeper 日志
-* /var/logs/zookeeper/datalogs : zookeeper 数据日志
+| 目录 | 用途 |
+| :--- | :--- |
+| /opt/app/zookeeper/zookeeper-3.4.10 | zookeeper 安装家目录 |
+| /var/data/zookeeper | zookeeper 数据存放目录 |
+| /var/logs/zookeeper/zklogs | zookeeper 数据存放目录 |
+| /var/logs/zookeeper/datalogs | zookeeper 数据日志 |
+
+| 配置/脚本 | 用途 |
+| :--- | :--- |
+| conf/zoo.cfg | zookeeper 的核心配置文件 |
+| conf/log4j.properties | zookeeper 的日志输出格式配置文件, zookeeper是用java 写的, 用log4j 输出日志 |
+| bin/zkEnv.sh | zookeeper 的环境配置脚本 |
+| bin/zkServer.sh | zookeeper 的启动管理脚本 |
+| bin/zkCli.sh | zookeeper的客户端连接脚本
+
 
 ### 2.1 安装zookeeper
 
