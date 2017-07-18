@@ -85,4 +85,8 @@
   * [jboss 端口](jboss/jboss-duan-kou.md)
 * [windows](windows.md)
   * [脚本连接远程桌面](windows/windows-lian-jie-yuan-cheng-windows-fu-wu-qi.md)
+* [zookeeper](zookeeper.md)
+  * [Zookeeper 单实例安装](zookeeper/zookeeper-dan-shi-li-an-zhuang.md)
+  * [Zookeeper 集群安装](zookeeper/zookeeper-ji-qun-an-zhuang.md)
+  * Zookeeper 伪集群安装
 
