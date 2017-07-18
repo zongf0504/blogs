@@ -150,7 +150,7 @@ Stopping zookeeper ... STOPPED
 ## 4. 客户端连接
 * zookeeper提供了客户端连接脚本 zkCli.sh, Ctrl+C 退出
 * zkCli.sh 默认连接本地 2181 端口
-* 如果其它服务器要访问的话, 需要释放端口号2181
+* 如果其它服务器要访问的话, 需要更新防火墙策略,释放端口号2181
 
 ```bash
 [admin@localhost bin]$ ./zkCli.sh 
