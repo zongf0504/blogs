@@ -145,5 +145,84 @@ Using config: /home/admin/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
 Stopping zookeeper ... STOPPED
 ```
 
+## 4. 客户端连接
+* zookeeper提供了客户端连接脚本 zkCli.sh, Ctrl+C 退出
+
+```bash
+[admin@localhost bin]$ ./zkCli.sh 
+Connecting to localhost:2181
+2017-07-18 10:34:18,378 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+2017-07-18 10:34:18,380 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=localhost.localdomain
+2017-07-18 10:34:18,380 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.6.0_31
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Sun Microsystems Inc.
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/opt/app/jdk/jdk1.6.0_31/jre
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/home/admin/zookeeper/zookeeper-3.4.10/bin/../build/classes:/home/admin/zookeeper/zookeeper-3.4.10/bin/../build/lib/*.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../lib/slf4j-log4j12-1.6.1.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../lib/slf4j-api-1.6.1.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../lib/netty-3.10.5.Final.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../lib/log4j-1.2.16.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../lib/jline-0.9.94.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../zookeeper-3.4.10.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../src/java/lib/*.jar:/home/admin/zookeeper/zookeeper-3.4.10/bin/../conf:/opt/app/jdk/jdk1.6.0_31/lib
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/opt/app/jdk/jdk1.6.0_31/jre/lib/amd64/server:/opt/app/jdk/jdk1.6.0_31/jre/lib/amd64:/opt/app/jdk/jdk1.6.0_31/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=<NA>
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd64
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=2.6.32-642.el6.x86_64
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=admin
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/home/admin
+2017-07-18 10:34:18,381 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/home/admin/zookeeper/zookeeper-3.4.10/bin
+2017-07-18 10:34:18,382 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=localhost:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@27ce2dd4
+Welcome to ZooKeeper!
+2017-07-18 10:34:18,396 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1032] - Opening socket connection to server localhost/0:0:0:0:0:0:0:1:2181. Will not attempt to authenticate using SASL (java.lang.SecurityException: Unable to locate a login configuration)
+JLine support is enabled
+2017-07-18 10:34:18,399 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@876] - Socket connection established to localhost/0:0:0:0:0:0:0:1:2181, initiating session
+[zk: localhost:2181(CONNECTING) 0] 2017-07-18 10:34:18,436 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1299] - Session establishment complete on server localhost/0:0:0:0:0:0:0:1:2181, sessionid = 0x15d5380f6e10002, negotiated timeout = 30000
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+
+[zk: localhost:2181(CONNECTED) 0] help
+ZooKeeper -server host:port cmd args
+        connect host:port
+        get path [watch]
+        ls path [watch]
+        set path data [version]
+        rmr path
+        delquota [-n|-b] path
+        quit 
+        printwatches on|off
+        create [-s] [-e] path data acl
+        stat path [watch]
+        close 
+        ls2 path [watch]
+        history 
+        listquota path
+        setAcl path acl
+        getAcl path
+        sync path
+        redo cmdno
+        addauth scheme auth
+        delete path [version]
+        setquota -n|-b val path
+[zk: localhost:2181(CONNECTED) 1] ls /
+[zookeeper]
+[zk: localhost:2181(CONNECTED) 2] get /zookeeper
+
+cZxid = 0x0
+ctime = Thu Jan 01 08:00:00 CST 1970
+mZxid = 0x0
+mtime = Thu Jan 01 08:00:00 CST 1970
+pZxid = 0x0
+cversion = -1
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 0
+numChildren = 1
+
+```
+
+
+
+
+
+
+
 
 
