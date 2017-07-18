@@ -37,3 +37,35 @@ server.3=192.168.145.102:2888:3888
 | 192.168.145.100 | echo 1 > /var/data/zookeeper/myid |
 | 192.168.145.101 | echo 2 > /var/data/zookeeper/myid |
 | 192.168.145.102 | echo 3 > /var/data/zookeeper/myid |
+
+
+## 3. 集群启动
+### 3.1 启动zk 集群
+
+
+### 2.2 查看集群节点状态:
+* 集群节点选主完全看时机, 不一定是哪个节点为leader.
+
+192.168.145.100:
+```bash
+[admin@localhost zookeeper-3.4.10]$ ./bin/zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /home/admin/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Mode: leader
+```
+
+192.168.145.101:
+```bash
+[root@localhost zookeeper-3.4.10]# ./bin/zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Mode: follower
+```
+
+192.168.145.102:
+```bash
+[root@localhost zookeeper-3.4.10]# ./bin/zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Mode: follower
+```
