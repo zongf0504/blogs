@@ -3,6 +3,7 @@
 > Zookeeper 通常都是采用集群方式安装, 所谓集群就是由一个一个的单实例zookeeper单实例串联起来的, 因此单实例安装是非常必要的.而且在学习时, 一个zookeeper实例就够用了. Zookeeper 依赖于Java 环境.
 
 zookeeper 重要配置/脚本:
+
 | 配置/脚本 | 用途 |
 | :--- | :--- |
 | conf/zoo.cfg | zookeeper 的核心配置文件, 需要手工创建 |
