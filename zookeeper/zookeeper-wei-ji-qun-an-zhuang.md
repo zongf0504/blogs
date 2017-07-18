@@ -1,6 +1,6 @@
-# Zookeeper 集群安装
+# Zookeeper 伪集群安装
 
-> 在生产环境中, zookeeper 通常都是以集群存在的, 而且通常是一台物理机上一个zookeeper. zookeeper 集群没必要有太多的机器, 通常3,5,7,9,11 台就足够了, 最常用的应该也就是3,5 台zookeeper搭建的集群了.所谓ZK 集群就是由多个ZK 单实例节点组成的一组有主从节点之分的集合.因此, 搭建集群时, 先把各个服务器上的单实例zookeeper搭建起来, 然后配置串联即可.
+> 所谓
 
 ## 1. 集群环境
 
@@ -77,7 +77,6 @@ Mode: follower
 
 * 集群半数节点启动成功后, 集群才能连接成功.否则只是节点启动成功, 并没有成功创建集群
 * 成功创建集群的标志是,为每个节点分配了角色: leader, follwer, observer
-* 注意释放各个节点的2181, 2888, 3888 端口, 保证节点之间能正常通信
 
 ```bash
 [admin@localhost zookeeper-3.4.10]$ ./bin/zkServer.sh status              

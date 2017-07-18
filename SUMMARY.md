@@ -88,5 +88,5 @@
 * [zookeeper](zookeeper.md)
   * [Zookeeper 单实例安装](zookeeper/zookeeper-dan-shi-li-an-zhuang.md)
   * [Zookeeper 集群安装](zookeeper/zookeeper-ji-qun-an-zhuang.md)
-  * Zookeeper 伪集群安装
+  * [Zookeeper 伪集群安装](zookeeper/zookeeper-wei-ji-qun-an-zhuang.md)
 
