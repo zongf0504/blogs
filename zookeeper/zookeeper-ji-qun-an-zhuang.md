@@ -41,8 +41,9 @@ server.3=192.168.145.102:2888:3888
 ## 3. 集群启动
 * 依次启动集群节点: ./bin/zkServer.sh start
 * 集群节点选主完全看时机, 不一定是哪个节点为leader. 节点半数启动成功之后, 集群才能启动成功
+* 集群创建成功的标志是为每个节点分配了角色: leader, follwer, observer
 
-192.168.145.100:
+192.168.145.100: leader
 ```bash
 [admin@localhost zookeeper-3.4.10]$ ./bin/zkServer.sh status
 ZooKeeper JMX enabled by default
@@ -50,7 +51,7 @@ Using config: /home/admin/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
 Mode: leader
 ```
 
-192.168.145.101:
+192.168.145.101: follwer
 ```bash
 [root@localhost zookeeper-3.4.10]# ./bin/zkServer.sh status
 ZooKeeper JMX enabled by default
@@ -58,10 +59,28 @@ Using config: /home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
 Mode: follower
 ```
 
-192.168.145.102:
+192.168.145.102: follwer
 ```bash
 [root@localhost zookeeper-3.4.10]# ./bin/zkServer.sh status
 ZooKeeper JMX enabled by default
 Using config: /home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
 Mode: follower
 ```
+
+## 附:
+* 集群半数节点启动成功后, 集群才能连接成功.否则只是节点启动成功, 并没有成功创建集群
+* 成功创建集群的标志是,为每个节点分配了角色: leader, follwer, observer
+
+```bash
+[zongf@localhost zookeeper-3.4.10]$ ./bin/zkServer.sh status              
+ZooKeeper JMX enabled by default
+Using config: /home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
+Error contacting service. It is probably not running.
+[zongf@localhost zookeeper-3.4.10]$ jps -l | grep zookeeper               
+11739 org.apache.zookeeper.server.quorum.QuorumPeerMain
+[zongf@localhost zookeeper-3.4.10]$ ps -ef | grep zookeeper | grep -v grep
+zongf    11739     1  0 11:12 pts/3    00:00:00 /opt/app/jdk1.6.0_31/bin/java -Dzookeeper.log.dir=. -Dzookeeper.root.logger=INFO,CONSOLE -cp /home/zongf/zookeeper/zookeeper-3.4.10/bin/../build/classes:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../build/lib/*.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../lib/slf4j-log4j12-1.6.1.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../lib/slf4j-api-1.6.1.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../lib/netty-3.10.5.Final.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../lib/log4j-1.2.16.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../lib/jline-0.9.94.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../zookeeper-3.4.10.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../src/java/lib/*.jar:/home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.local.only=false org.apache.zookeeper.server.quorum.QuorumPeerMain /home/zongf/zookeeper/zookeeper-3.4.10/bin/../conf/zoo.cfg
+```
+
+
+
