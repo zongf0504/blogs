@@ -2,6 +2,16 @@
 
 > Zookeeper 通常都是采用集群方式安装, 所谓集群就是由一个一个的单实例zookeeper单实例串联起来的, 因此单实例安装是非常必要的.而且在学习时, 一个zookeeper实例就够用了. Zookeeper 依赖于Java 环境.
 
+zookeeper 重要配置/脚本:
+| 配置/脚本 | 用途 |
+| :--- | :--- |
+| conf/zoo.cfg | zookeeper 的核心配置文件, 需要手工创建 |
+| conf/log4j.properties | zookeeper 的日志输出格式配置文件, zookeeper是用java 写的, 用log4j 输出日志 |
+| bin/zkEnv.sh | zookeeper 的环境配置脚本 |
+| bin/zkServer.sh | zookeeper 的启动管理脚本 |
+| bin/zkCli.sh | zookeeper的客户端连接脚本
+
+
 ## 1. 安装准备
 
 * 安装java 环境
@@ -17,14 +27,6 @@ zookeeper 安装是比较简单的, 我们对安装目录做一下简单的规�
 | /var/data/zookeeper | zookeeper 数据存放目录 |
 | /var/logs/zookeeper/zklogs | zookeeper 数据存放目录 |
 | /var/logs/zookeeper/datalogs | zookeeper 数据日志 |
-
-| 配置/脚本 | 用途 |
-| :--- | :--- |
-| conf/zoo.cfg | zookeeper 的核心配置文件 |
-| conf/log4j.properties | zookeeper 的日志输出格式配置文件, zookeeper是用java 写的, 用log4j 输出日志 |
-| bin/zkEnv.sh | zookeeper 的环境配置脚本 |
-| bin/zkServer.sh | zookeeper 的启动管理脚本 |
-| bin/zkCli.sh | zookeeper的客户端连接脚本
 
 
 ### 2.1 安装zookeeper
