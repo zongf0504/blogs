@@ -89,4 +89,6 @@
   * [Zookeeper 单实例安装](zookeeper/zookeeper-dan-shi-li-an-zhuang.md)
   * [Zookeeper 集群安装](zookeeper/zookeeper-ji-qun-an-zhuang.md)
   * [Zookeeper 伪集群安装](zookeeper/zookeeper-wei-ji-qun-an-zhuang.md)
+* [eclipse](eclipse.md)
+  * [eclipse 插件开发--启动计时](eclipse/eclipse-cha-jian-kai-53d1-qi-dong-ji-shi.md)
 
