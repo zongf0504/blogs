@@ -20,7 +20,8 @@
 
 ![](/assets/eclipse_2017-07-19_085123.png)
 
-### 1.5 添加Console 包:点击MANIFEST.MF文件, 选择Dependencies 选项卡, 点击Required Plug-ins 面板中的Add, 输入Console, 选择or.eclipse.ui.console
+### 1.5 添加Console 包
+* 点击MANIFEST.MF文件, 选择Dependencies 选项卡, 点击Required Plug-ins 面板中的Add, 输入Console, 选择or.eclipse.ui.console
 
 ![](/assets/eclipse_2017-07-19_085408.png)
 
