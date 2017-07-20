@@ -4,23 +4,23 @@
 
 ## 1. eclipse 插件项目开发
 
-1. 新建项目: File -> New -> Plugin-in Project
+### 1.1 新建项目: File -> New -> Plugin-in Project
 
 ![](/assets/eclpse_2017-07-19_084822.png)
 
-2.输入ID 和 供应商名称Vendor
+### 1.2 输入ID 和 供应商名称Vendor
 
 ![](/assets/eclipse_2017-07-19_084939.png)
 
-3. 选择模板, 笔者选择自定义
+### 1.3 选择模板, 笔者选择自定义
 
 ![](/assets/eclipse_2017-07-19_085051.png)
 
-4. 选择模板, 笔者不选择任何模板
+### 1.4 选择模板, 笔者不选择任何模板
 
 ![](/assets/eclipse_2017-07-19_085123.png)
 
-5. 添加Console 包:点击MANIFEST.MF文件, 选择Dependencies 选项卡, 点击Required Plug-ins 面板中的Add, 输入Console, 选择or.eclipse.ui.console
+### 1.5 添加Console 包:点击MANIFEST.MF文件, 选择Dependencies 选项卡, 点击Required Plug-ins 面板中的Add, 输入Console, 选择or.eclipse.ui.console
 
 ![](/assets/eclipse_2017-07-19_085408.png)
 
