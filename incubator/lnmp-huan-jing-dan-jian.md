@@ -43,7 +43,9 @@
 ### 2.1.2 创建nginx 用户
 
 ```bash
-useradd -s /sbin/nologin nginx
+[root@localhost nginx]# useradd -s /sbin/nologin nginx
+[root@localhost nginx]# id nginx
+uid=505(nginx) gid=506(nginx) groups=506(nginx)
 ```
 
 ### 2.1.3 自定义配置
@@ -75,19 +77,25 @@ useradd -s /sbin/nologin nginx
 
 ### 2.1.4 编译
 ```bash
-make
+[root@localhost nginx-1.11.13]# make
 ```
 
 ### 2.1.5 安装
 ```bash
-make install
+[root@localhost nginx-1.11.13]# make install
 ```
 
 ### 2.1.6 测试
-
+* 查看nginx 版本号和安装信息
 ```bash
-nginx -v   //查看版本号
-nginx -V   //查看安装详情
+[root@localhost nginx-1.11.3]# nginx -v
+nginx version: nginx/1.11.3
+[root@localhost nginx-1.11.3]# nginx -V
+nginx version: nginx/1.11.3
+built by gcc 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) 
+built with OpenSSL 1.0.1e-fips 11 Feb 2013
+TLS SNI support enabled
+configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/.nginx/nginx.conf --error-log-path=/var/logs/nginx/error.log --http-log-path=/var/logs/nginx/access.log --pid-path=/var/run/nginx/nginx.pid --lock-path=/var/run/nginx/nginx.lock --http-client-body-temp-path=/var/data/cache/nginx/client_temp --http-proxy-temp-path=/var/data/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/data/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/data/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/data/cache/nginx/scgi_temp --user=nginx --group=nginx --with-http_ssl_module --with-http_gunzip_module --with-http_gzip_static_module --with-stream_ssl_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module
 ```
 
 
