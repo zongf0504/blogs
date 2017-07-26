@@ -301,7 +301,26 @@ php-7.1.7
 [root@localhost php-7.1.7]# make install 
 ```
 
+### 3.3.6 添加环境变量
+* 编辑文件: vim /etc/profile
 
+```bash
+#php env
+export PHP_HOME=/usr/local/php
+export PATH=$PATH:$PHP_HOME/bin:$PHP_HOME/sbin	
+```
+### 3.3.7 使配置立即生效
+```bash
+[root@localhost php]# source /etc/profile
+```
+
+### 3.3.8 查看php 
+```bash
+[root@localhost php]# php-fpm -v
+PHP 7.1.7 (fpm-fcgi) (built: Jul 26 2017 17:21:35)
+Copyright (c) 1997-2017 The PHP Group
+Zend Engine v3.1.0, Copyright (c) 1998-2017 Zend Technologies
+```
 
 
 
