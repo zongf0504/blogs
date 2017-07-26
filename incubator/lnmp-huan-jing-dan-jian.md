@@ -27,9 +27,12 @@
 yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
 ```
 
-### 2.1 安装Nginx
+## 2.1 安装Nginx
+
+### 2.1.1 解压nginx
 * 解压nginx压缩包, 并切换到nginx 目录: cd /usr/local/src/nginx/nginx-1.11.13
 
+### 2.1.2 自定义配置
 ```bash
 ./configure \
 --prefix=/var/data/nginx \
@@ -56,30 +59,23 @@ yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
 --add-module=../plugins/ngx-fancyindex/
 ```
 
-### 3.2 编译
-
+### 2.1.2 编译
 ```bash
 make
 ```
 
-### 3.3 安装
 
+### 2.1.3 安装
 ```bash
 make install
 ```
 
-### 3.4 测试
+### 2.1.4 测试
 
 ```bash
 nginx -v   //查看版本号
 nginx -V   //查看安装详情
 ```
-
-
-
-
-
-
 
 
 ## 2. Mysql 环境安装
