@@ -12,11 +12,19 @@
 * PHP: php-7.1.7.tar.bz2
 
 ## 1.2 安装目录 
+* 以下这些目录需要手工创建
 
 | 软件 | 目录 | 用途 |
 | :--- | :--- | :---|
 | Nginx | /usr/local/src/nginx | nginx 源码目录 |
 | Nginx | /usr/local/src/nginx/modules | nginx 插件目录
+| Nginx | /var/logs/nginx | nginx 日志目录 |
+| Nginx | /var/data/nginx | nginx 数据目录 |
+| Nginx | /var/run/nginx | nginx 进程id文件等目录 |
+| Nginx | /var/data/cache/nginx | nginx 缓存数据目录 | 
+
+
+
 
 
 # 2. Nginx 安装
@@ -24,7 +32,7 @@
 ## 2.1 安装依赖环境
 
 ```bash
-yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
+[root@localhost nginx]# yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
 ```
 
 ## 2.1 安装Nginx
@@ -48,11 +56,11 @@ useradd -s /sbin/nologin nginx
 --http-log-path=/var/logs/nginx/access.log \
 --pid-path=/var/run/nginx/nginx.pid \
 --lock-path=/var/run/nginx/nginx.lock \
---http-client-body-temp-path=/var/cache/nginx/client_temp \
---http-proxy-temp-path=/var/cache/nginx/proxy_temp \
---http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
---http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
---http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+--http-client-body-temp-path=/var/data/cache/nginx/client_temp \
+--http-proxy-temp-path=/var/data/cache/nginx/proxy_temp \
+--http-fastcgi-temp-path=/var/data/cache/nginx/fastcgi_temp \
+--http-uwsgi-temp-path=/var/data/cache/nginx/uwsgi_temp \
+--http-scgi-temp-path=/var/data/cache/nginx/scgi_temp \
 --user=nginx \
 --group=nginx \
 --with-http_ssl_module \
@@ -62,7 +70,7 @@ useradd -s /sbin/nologin nginx
 --with-http_slice_module \
 --with-http_stub_status_module \
 --with-http_perl_module \
---add-module=../plugins/ngx-fancyindex/
+--add-module=../modules/ngx-fancyindex/
 ```
 
 ### 2.1.4 编译
