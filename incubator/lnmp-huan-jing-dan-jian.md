@@ -106,4 +106,9 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 ## 2. Mysql 环境安装
 
 
+
+
+
+
+
 ## 3. PHP 环境安装 
