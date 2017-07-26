@@ -87,6 +87,7 @@ uid=505(nginx) gid=506(nginx) groups=506(nginx)
 
 ### 2.1.6 测试
 * 查看nginx 版本号和安装信息
+
 ```bash
 [root@localhost nginx-1.11.3]# nginx -v
 nginx version: nginx/1.11.3
