@@ -22,6 +22,10 @@
 | Nginx | /var/data/nginx | nginx 数据目录 |
 | Nginx | /var/run/nginx | nginx 进程id文件等目录 |
 | Nginx | /var/data/cache/nginx | nginx 缓存数据目录 | 
+| Mysql | /var/data/mysql | mysql 数据库数据存放目录 |
+| Mysql | /var/logs/mysql | mysql 日志目录  |
+| Mysql | /var/run/mysql | mysql 运行进程相关文件 |
+
 
 
 
@@ -129,15 +133,68 @@ mysql57-community-release-el6-9.noarch.rpm
 
 ```
 
-
 ### 2.2 设置本地yum源
+* 将mysql 5.7 的yum源地址安装在本地
+* 命令: rpm -Uvh mysql57-community-release-el6-9.noarch.rpm 或者 yum localinstall mysql57-community-release-el6-9.noarch.rpm 
 
+```bash
+[root@localhost mysql]# rpm -Uvh mysql57-community-release-el6-9.noarch.rpm
+warning: mysql57-community-release-el6-9.noarch.rpm: Header V3 DSA/SHA1 Signature, key ID 5072e1f5: NOKEY
+Preparing...                                                            (100########################################### [100%]
+   1:mysql57-community-relea                                            ( 65########################################### [100%]
+[root@localhost mysql]# ls /etc/yum.repos.d/mysql*
+/etc/yum.repos.d/mysql-community.repo
+/etc/yum.repos.d/mysql-community-source.repo   
+
+```
 
 ### 2.3 安装mysql
 
+```bash
+[root@localhost mysql]# yum -y install mysql-community-server mysql-devel
+
+```
+
 ### 2.4 初始化mysql 配置
+* 修改数据库默认编码为: utf-8
+* 修改日志,数据,运行id 等目录位置
+* 关闭密码强度校验: mysql 5.7在设置密码时, 出于安全考虑新增了密码校验, 建议再生产环境使用, 但是在开发环境就没有必要了, 可以选择关闭. 
+mysql 默认密码校验规则: 由大写字母, 小写字母, 数字, 特殊符合组成的至少8位的密码
+
+修改: /etc/my.cnf 
+```bash
+
+#数据库编码: mysqld 下添加一行 
+[mysqld]
+# 修改数据存放目录
+datadir=/var/data/mysql
+
+# 修改通信文件位置
+socket=/run/mysql/mysql.sock
+
+# 修改日志文件位置
+log-error=/var/logs/mysql/mysqld.log
+
+# 修改运行id 文件位置
+pid-file=/var/run/mysql/mysqld.pid
+
+
+#指定数据库默认编码
+default-character-set = utf8 
+
+# 关闭密码校验
+validate_password=off
+
+
+
+#指定数据库默认编码
+[client]
+character_set_server = utf8
+```
 
 ### 2.5 启动mysql
+
+
 
 ### 2.6 
 
