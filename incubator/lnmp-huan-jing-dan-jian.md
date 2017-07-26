@@ -22,11 +22,6 @@
 | Nginx | /var/data/nginx | nginx 数据目录 |
 | Nginx | /var/run/nginx | nginx 进程id文件等目录 |
 | Nginx | /var/data/cache/nginx | nginx 缓存数据目录 | 
-| Mysql | /var/data/mysql | mysql 数据库数据存放目录 |
-| Mysql | /var/logs/mysql | mysql 日志目录  |
-| Mysql | /var/run/mysql | mysql 运行进程相关文件 |
-
-
 
 # 2. Nginx 安装
 
