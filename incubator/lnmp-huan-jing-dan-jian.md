@@ -233,10 +233,73 @@ mysql> show variables like '%char%';
 8 rows in set (0.00 sec)
 ```
 
-## 3. PHP 环境安装 
+## 3.3 PHP 环境安装 
+* 笔者并不懂PHP 开发, 因此只能从网上收集资料,比葫芦画瓢安装, 并不太清楚各个配置是什么意思.
 
+### 3.3.1 安装依赖:
+```bash
+[root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel  bzip2-devel libcurl-devel freetype freetype-devel  libxslt-devel net-snmp-devel
 
+```
 
+### 3.3.2  解压php 
+```bash
+[root@localhost php]# tar -jxf php-7.1.7.tar.bz2 
+[root@localhost php]# ls
+php-7.1.7
+```
+
+### 3.3.3 配置安装环境
+
+```bash
+[root@localhost php-7.1.7]# pwd
+/usr/local/src/php/php-7.1.7
+[root@localhost php-7.1.7]# 
+./configure --prefix=/usr/local/php \
+--with-curl \
+--with-freetype-dir \
+--with-gd \
+--with-gettext \
+--with-iconv-dir \
+--with-kerberos \
+--with-libdir=lib64 \
+--with-libxml-dir \
+--with-mysqli \
+--with-openssl \
+--with-pcre-regex \
+--with-pdo-mysql \
+--with-pdo-sqlite \
+--with-pear \
+--with-png-dir \
+--with-xmlrpc \
+--with-xsl \
+--with-zlib \
+--enable-fpm \
+--enable-bcmath \
+--enable-libxml \
+--enable-inline-optimization \
+--enable-gd-native-ttf \
+--enable-mbregex \
+--enable-mbstring \
+--enable-opcache \
+--enable-pcntl \
+--enable-shmop \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem \
+--enable-xml \
+--enable-zip \
+```
+
+### 3.3.4 编译
+```bash
+[root@localhost php-7.1.7]# make
+```
+
+### 3.3.5 安装
+```bash
+[root@localhost php-7.1.7]# make install 
+```
 
 
 
