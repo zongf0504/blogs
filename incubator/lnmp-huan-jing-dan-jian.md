@@ -32,7 +32,13 @@ yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
 ### 2.1.1 解压nginx
 * 解压nginx压缩包, 并切换到nginx 目录: cd /usr/local/src/nginx/nginx-1.11.13
 
-### 2.1.2 自定义配置
+### 2.1.2 创建nginx 用户
+
+```bash
+useradd -s /sbin/nologin nginx
+```
+
+### 2.1.3 自定义配置
 ```bash
 ./configure \
 --prefix=/var/data/nginx \
@@ -59,18 +65,17 @@ yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
 --add-module=../plugins/ngx-fancyindex/
 ```
 
-### 2.1.2 编译
+### 2.1.4 编译
 ```bash
 make
 ```
 
-
-### 2.1.3 安装
+### 2.1.5 安装
 ```bash
 make install
 ```
 
-### 2.1.4 测试
+### 2.1.6 测试
 
 ```bash
 nginx -v   //查看版本号
