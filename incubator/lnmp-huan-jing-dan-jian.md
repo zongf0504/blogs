@@ -104,7 +104,42 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 ```
 
 ## 2. Mysql 环境安装
+* 笔者操作系统为CentOS 6.8, 如果使用yum 安装mysql, 那么安装的是mysql 5.5 版本的, 而mysql 这个mysql 版本有点儿老, 笔者选择安装mysql 5.7.
 
+### 2.1 下载mysql.5.7 yum 源配置
+
+```bash
+[root@localhost mysql]# wget https://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm
+--2017-07-26 13:57:39--  https://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm
+Connecting to 172.17.18.84:8080... connected.
+Proxy request sent, awaiting response... 302 Found
+Location: https://repo.mysql.com//mysql57-community-release-el6-9.noarch.rpm [following]
+--2017-07-26 13:57:40--  https://repo.mysql.com//mysql57-community-release-el6-9.noarch.rpm
+Connecting to 172.17.18.84:8080... connected.
+Proxy request sent, awaiting response... 200 OK
+Length: 9216 (9.0K) [application/x-redhat-package-manager]
+Saving to: “mysql57-community-release-el6-9.noarch.rpm”
+
+100%[==================================>] 9,216       --.-K/s   in 0s      
+
+2017-07-26 13:57:41 (1.36 GB/s) - “mysql57-community-release-el6-9.noarch.rpm” saved [9216/9216]
+
+[root@localhost mysql]# ls
+mysql57-community-release-el6-9.noarch.rpm
+
+```
+
+
+### 2.2 设置本地yum源
+
+
+### 2.3 安装mysql
+
+### 2.4 初始化mysql 配置
+
+### 2.5 启动mysql
+
+### 2.6 
 
 
 
@@ -112,3 +147,29 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 
 
 ## 3. PHP 环境安装 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
