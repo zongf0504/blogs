@@ -214,7 +214,7 @@ mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT
 Query OK, 0 rows affected, 1 warning (0.00 sec)
 ```
 
-### 2.7 查看数据库编码
+### 2.8 查看数据库编码
 
 ```bash
 mysql> show variables like '%char%';
