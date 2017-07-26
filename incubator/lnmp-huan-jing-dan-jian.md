@@ -321,8 +321,12 @@ PHP 7.1.7 (fpm-fcgi) (built: Jul 26 2017 17:21:35)
 Copyright (c) 1997-2017 The PHP Group
 Zend Engine v3.1.0, Copyright (c) 1998-2017 Zend Technologies
 ```
-
-
+### 3.3.9 拷贝配置文件
+```bash
+[root@localhost php-7.1.7]# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+[root@localhost php-7.1.7]# cp ./php.ini-development /usr/local/php/etc/php.ini
+[root@localhost php-7.1.7]# cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf
+```
 
 
 
