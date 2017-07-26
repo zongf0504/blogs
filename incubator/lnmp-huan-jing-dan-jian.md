@@ -2,57 +2,33 @@
 > 所谓的LNMP 环境指的是在Linux 系统上搭建, Nginx, Mysql, PHP 的环境. 这套环境搭建起来并不是太简单, 因为每一个环境都依赖其它一些包或软件. 笔者采用yum 方式安装依赖和mysql 环境, 源码安装nginx, php 环境.
 
 
+# 1. 安装介绍
+
+## 1.1 环境介绍
 笔者安装环境:
 * Linux: centos 6.8 x64
-* Nginx: 
-* Mysql: 5.7
-* PHP: 7.02
+* Nginx: nginx-1.11.13.tar.gz
+* Mysql: mysql57-community-release-el6-9.noarch.rpm
+* PHP: php-7.1.7.tar.bz2
+
+## 1.2 安装目录 
+
+| 软件 | 目录 | 用途 |
+| :--- | :--- | :---|
+| Nginx | /usr/local/src/nginx | nginx 源码目录 |
+| Nginx | /usr/local/src/nginx/modules | nginx 插件目录
 
 
-# 1. Nginx 环境安装
-## 1. 安装前准备
-### 1.1 Nginx 依赖
+# 2. Nginx 安装
 
-1. gcc: 源码包安装  
-2. zlib: nginx 提供zip 模块儿, 需要zlib 支持  
-3. openssl: nginx 提供ssl 模块儿, 需要openssl 支持  
-4. pcre: nginx 提供地址重写rewrite功能, 需要安装perl 依赖库pcre
-
-### 1.2 下载相关包
-
-* [nginx-1.11.13.tar.gz](http://download.csdn.net/detail/zgf19930504/9845788)
-* [ngx-fancyindex.tar.gz](http://download.csdn.net/detail/zgf19930504/9845791)
-
-### 1.3 目录结构
-
-* /usr/local/src/nginx
-* /usr/local/src/nginx/nginx-1.11.13.tar.gz
-* /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
-
-### 1.4 解压
+## 2.1 安装依赖环境
 
 ```bash
-tar -zxvf /usr/local/src/nginx/nginx-1.11.13.tar.gz
-tar -zxvf /usr/local/src/nginx/modules/ngx-fancyindex.tar.gz
+yum -y install gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre-devel
 ```
 
-## 2. 安装依赖环境
-
-### 2.1 安装gcc 编译器:
-
-```bash
-yum -y gcc gcc-c++
-```
-
-### 2.2 安装zlib
-
-```bash
-yum -y install zlib zlib-devel openssl openssl-devel pcre-devel
-```
-
-## 3. 安装Nginx
-
-### 3.1 自定义安装路径
+### 2.1 安装Nginx
+* 解压nginx压缩包, 并切换到nginx 目录: cd /usr/local/src/nginx/nginx-1.11.13
 
 ```bash
 ./configure \
