@@ -182,9 +182,6 @@ validate_password=off
 #指定客户端连接默认编码
 [client]
 default-character-set = utf8
-
-
-character_set_server = utf8
 ```
 
 ### 2.6 查看root 初始密码
