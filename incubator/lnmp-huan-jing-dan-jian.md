@@ -50,7 +50,11 @@ uid=505(nginx) gid=506(nginx) groups=506(nginx)
 
 ### 2.1.3 自定义配置
 ```bash
-./configure \
+[root@localhost nginx-1.11.3]# pwd
+/usr/local/src/nginx/nginx-1.11.3
+[root@localhost nginx-1.11.3]# ls ../modules/
+ngx-fancyindex
+[root@gds nginx-1.11.3]# ./configure \
 --prefix=/var/data/nginx \
 --sbin-path=/usr/sbin/nginx \
 --conf-path=/etc/.nginx/nginx.conf \
