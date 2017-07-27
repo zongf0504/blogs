@@ -341,7 +341,7 @@ Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 ```bash
 
 location ~ \.php$ {
-    root           /var/data/nginx/html;
+    root           /var/data/nginx/php;
     fastcgi_pass   127.0.0.1:9000;
     fastcgi_index  index.php;
     fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
@@ -350,6 +350,27 @@ location ~ \.php$ {
 
 ``
 
+## 4. 测试:
+### 4.1 编写hello.php 文件
+* /var/data/nginx/php 目录下新建hello.php 文件
+```
+<?php
+echo "Hello PHP"; 
+
+phpinfo();
+  $conn=mysqli_connect("172.22.12.224", "root","root", "zabbix");
+?>
+```
+
+### 4.2 启动服务:
+```bash
+[root@localhost php-5.6.30]# nginx
+[root@localhost php-5.6.30]# service mysqld start
+[root@localhost php-5.6.30]# php-fpm
+```
+
+### 4.3 浏览器中访问:
+* 访问地址: http://localhost/hello.php
 
 
 
