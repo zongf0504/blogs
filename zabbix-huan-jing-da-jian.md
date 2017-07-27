@@ -119,6 +119,8 @@ date.timezone = PRC
 enable_post_data_reading = Off
 always_populate_raw_post_data = -1
 mbstring.func_overload = 0
+extension=php_gd2.dll
+extension=php_gettext.dll
 ```
 
 
