@@ -108,6 +108,30 @@ Timeout=4
 LogSlowQueries=3000
 ```
 
+### 4.3 配置php
+* 设置php.ini: vim /usr/local/etc/php.ini
+
+```bash
+post_max_size = 16M
+max_execution_time = 300
+max_input_time = 300
+date.timezone = PRC
+enable_post_data_reading = Off
+always_populate_raw_post_data = -1
+mbstring.func_overload = 0
+```
+
+
+## 5. 测试启动
+
+### 5.1 依次启动环境
+* 启动mysql: service mysqld restart
+* 启动php:  php-fpm 
+* 启动nginx: nginx -s reload
+* 启动zabbix: zabbix_server
+
+### 5.2 浏览器中访问zabbix
+* 访问地址: http://localhost/zabbix/setup.php
 
 
 
