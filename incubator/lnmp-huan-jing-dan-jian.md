@@ -255,7 +255,14 @@ php-7.1.7
 [root@localhost php-7.1.7]# pwd
 /usr/local/src/php/php-7.1.7
 [root@localhost php-7.1.7]# 
-./configure --prefix=/usr/local/php \
+./configure \
+--prefix=/usr/local/php \
+--with-config-file-path=/usr/local/php/etc \
+--with-fpm-user=nginx \
+--with-fpm-group=nginx \
+--with-mysql=mysqlnd \
+--with-mysqli=mysqlnd \
+--with-pdo-mysql=mysqlnd \
 --with-curl \
 --with-freetype-dir \
 --with-gd \
@@ -264,7 +271,6 @@ php-7.1.7
 --with-kerberos \
 --with-libdir=lib64 \
 --with-libxml-dir \
---with-mysqli \
 --with-openssl \
 --with-pcre-regex \
 --with-pdo-mysql \
@@ -289,6 +295,7 @@ php-7.1.7
 --enable-sysvsem \
 --enable-xml \
 --enable-zip \
+
 ```
 
 ### 3.3.4 编译
