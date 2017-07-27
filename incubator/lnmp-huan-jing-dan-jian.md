@@ -237,8 +237,22 @@ mysql> show variables like '%char%';
 * 笔者并不懂PHP 开发, 因此只能从网上收集资料,比葫芦画瓢安装, 并不太清楚各个配置是什么意思.
 
 ### 2.3.1 安装依赖:
+
+#### 2.3.1.1 yum 安装依赖
 ```bash
 [root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel  bzip2-devel libcurl-devel freetype freetype-devel  libxslt-devel net-snmp-devel
+
+```
+
+#### 2.3.1.2 源码安装jpeg 环境
+安装jpeg依赖:
+```bash
+[root@localhost php]# wget http://www.ijg.org/files/jpegsrc.v9b.tar.gz
+[root@localhost php]# tar -zxf jpegsrc.v9b.tar.gz
+[root@localhost php]# cd jpeg-9b
+[root@localhost jpeg-9b]# ./configure --prefix=/usr/local/jpeg --enable-shared --enable-static
+[root@localhost jpeg-9b]# make && makeinstall
+
 
 ```
 
@@ -258,6 +272,7 @@ php-5.6.30
 ./configure \
 --prefix=/usr/local/php \
 --with-config-file-path=/usr/local/php/etc \
+--with-jpeg-dir=/usr/local/jpeg \
 --with-fpm-user=nginx \
 --with-fpm-group=nginx \
 --with-mysql=mysqlnd \
