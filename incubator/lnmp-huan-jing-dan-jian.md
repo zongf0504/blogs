@@ -233,28 +233,28 @@ mysql> show variables like '%char%';
 8 rows in set (0.00 sec)
 ```
 
-## 3.3 PHP 环境安装 
+## 2.3 PHP 环境安装 
 * 笔者并不懂PHP 开发, 因此只能从网上收集资料,比葫芦画瓢安装, 并不太清楚各个配置是什么意思.
 
-### 3.3.1 安装依赖:
+### 2.3.1 安装依赖:
 ```bash
 [root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel  bzip2-devel libcurl-devel freetype freetype-devel  libxslt-devel net-snmp-devel
 
 ```
 
-### 3.3.2  解压php 
+### 2.3.2  解压php 
 ```bash
-[root@localhost php]# tar -jxf php-7.1.7.tar.bz2 
+[root@localhost php]# tar -jxf php-5.6.30.tar.bz2 
 [root@localhost php]# ls
-php-7.1.7
+php-5.6.30
 ```
 
-### 3.3.3 配置安装环境
+### 2.3.3 配置安装环境
 
 ```bash
-[root@localhost php-7.1.7]# pwd
-/usr/local/src/php/php-7.1.7
-[root@localhost php-7.1.7]# 
+[root@localhost php-5.6.30]# pwd
+/usr/local/src/php/php-5.6.30
+[root@localhost php-5.6.30]# 
 ./configure \
 --prefix=/usr/local/php \
 --with-config-file-path=/usr/local/php/etc \
@@ -298,17 +298,17 @@ php-7.1.7
 
 ```
 
-### 3.3.4 编译
+### 2.3.4 编译
 ```bash
-[root@localhost php-7.1.7]# make
+[root@localhost php-5.6.30]# make
 ```
 
-### 3.3.5 安装
+### 2.3.5 安装
 ```bash
-[root@localhost php-7.1.7]# make install 
+[root@localhost php-5.6.30]# make install 
 ```
 
-### 3.3.6 添加环境变量
+### 2.3.6 添加环境变量
 * 编辑文件: vim /etc/profile
 
 ```bash
@@ -316,24 +316,39 @@ php-7.1.7
 export PHP_HOME=/usr/local/php
 export PATH=$PATH:$PHP_HOME/bin:$PHP_HOME/sbin	
 ```
-### 3.3.7 使配置立即生效
+### 2.3.7 使配置立即生效
 ```bash
 [root@localhost php]# source /etc/profile
 ```
 
-### 3.3.8 查看php 
+### 2.3.8 查看php 
 ```bash
-[root@localhost php]# php-fpm -v
-PHP 7.1.7 (fpm-fcgi) (built: Jul 26 2017 17:21:35)
-Copyright (c) 1997-2017 The PHP Group
-Zend Engine v3.1.0, Copyright (c) 1998-2017 Zend Technologies
+[root@localhost php-5.6.30]# php-fpm -v
+PHP 5.6.30 (fpm-fcgi) (built: Jul 27 2017 09:55:34)
+Copyright (c) 1997-2016 The PHP Group
+Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 ```
-### 3.3.9 拷贝配置文件
+### 2.3.9 拷贝配置文件
 ```bash
-[root@localhost php-7.1.7]# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
-[root@localhost php-7.1.7]# cp ./php.ini-development /usr/local/php/etc/php.ini
-[root@localhost php-7.1.7]# cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf
+[root@localhost php-5.6.30]# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+[root@localhost php-5.6.30]# cp ./php.ini-development /usr/local/php/etc/php.ini
 ```
+
+## 3. 整合nginx 和 php
+* 修改nginx 配置: vim /etc/.nginx/nginx.conf
+* 添加配置, php 结尾的文件反向代理fastcgi 处理
+
+```bash
+
+location ~ \.php$ {
+    root           /var/data/nginx/html;
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    include        fastcgi_params;
+}
+
+``
 
 
 
