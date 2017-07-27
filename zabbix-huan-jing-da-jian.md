@@ -33,7 +33,7 @@ uid=506(zabbix) gid=507(zabbix) groups=507(zabbix)
 * 安装server和agent
 
 ```bash
-[root@gds zabbix-3.0.10]# ./configure --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2
+[root@gds zabbix-3.0.10]# ./configure --enable-server --enable-agent --with-mysql=/usr/bin/mysql_config --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2
 
 ```
 

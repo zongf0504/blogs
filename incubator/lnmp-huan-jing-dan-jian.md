@@ -310,6 +310,7 @@ php-5.6.30
 --enable-sysvsem \
 --enable-xml \
 --enable-zip \
+--with-ldap \
 
 ```
 
