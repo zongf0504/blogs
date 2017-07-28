@@ -14,21 +14,26 @@
 ## 1.2 安装目录 
 * 以下这些目录需要手工创建
 
-| 软件 | 目录 | 用途 |
-| :--- | :--- | :---|
-| Nginx | /usr/local/src/nginx | nginx 源码目录 |
-| Nginx | /usr/local/src/nginx/modules | nginx 插件目录
-| Nginx | /var/logs/nginx | nginx 日志目录 |
-| Nginx | /var/data/nginx | nginx 数据目录 |
-| Nginx | /var/run/nginx | nginx 进程id文件等目录 |
-| Nginx | /var/data/cache/nginx | nginx 缓存数据目录 | 
-| Mysql | /var/data/mysql | mysql 数据目录 |
-| Mysql | /usr/local/src/mysql | mysql 源代码目录 |
-| Mysql | /usr/local/mysql | mysql 安装目录 |
-| Mysql | /usr/logs/mysql | mysql 日志目录 |
-| PHP | /usr/local/src/php | php 源码目录 |
-| PHP | /usr/local/php | php 安装目录 |
-| PHP | /usr/local/etc/php | php 配置目录 | 
+| 软件 | 目录 | 用途 | 所有者 |
+| :--- | :--- | :---| :--- |
+| Nginx | /usr/local/src/nginx | nginx 源码目录 | root |
+| Nginx | /usr/local/src/nginx/modules | nginx 插件目录| root |
+| Nginx | /var/logs/nginx | nginx 日志目录 | nginx |
+| Nginx | /var/data/nginx | nginx 数据目录 | nginx |
+| Nginx | /var/run/nginx | nginx 进程id文件等目录 | nginx |
+| Nginx | /var/data/cache/nginx | nginx 缓存数据目录 | nginx |
+| Mysql | /var/data/mysql | mysql 数据目录 | mysql |
+| Mysql | /usr/local/src/mysql | mysql 源代码目录 | root |
+| Mysql | /usr/local/mysql | mysql 安装目录 | mysql |
+| Mysql | /usr/logs/mysql | mysql 日志目录 | mysql |
+| PHP | /usr/local/src/php | php 源码目录 | root |
+| PHP | /usr/local/php | php 安装目录 | nginx |
+| PHP | /usr/local/etc/php | php 配置目录 | nginx |
+| Zabbix | /usr/local/src/zabbix | zabbix 源代码目录 | nginx |
+| Zabbix | /usr/local/zabbix | zabbix 安装目录 | root |
+| Zabbix | /usr/local/etc/zabbix | zbbix 配置文件目录 | zabbix |
+| Zabbix | /usr/logs/zabbix | zabbix 日志目录 | zabbix |
+| Zabbix | /usr/run/zabbix | zabbix 进程id 目录 | zabbix |
 
 ## 1.3 设置epel 源
 * 有些软件依赖centos 默认的yum 源中没有, 需要从epel 源中下载
@@ -506,22 +511,33 @@ uid=506(zabbix) gid=507(zabbix) groups=507(zabbix)
 [root@localhost zabbix-3.2.7]# make install
 ```
 
-# 6. LNMPZ整合
-
-## 6.1 
-
-
-
-
-## 3. 整合zabbix 和 nginx
-### 3.1 拷贝zabbix 页面文件
+## 5.3 设置环境变量
+### 5.3.1 编辑配置文件: vim /etc/profile
 
 ```bash
-[root@gds zabbix-3.0.10]# cp -r /usr/local/src/zabbix/zabbix-3.0.10/frontends/php /var/data/nginx/php/zabbix
+#zabbix env
+export ZABBIX_HOME=/usr/local/zabbix/
+export PATH=$PATH:$ZABBIX_HOME/bin:$ZABBIX_HOME/sbin
 ```
 
-### 3.2 配置nginx
-* nginx 添加zabbix 配置
+### 5.3.2 使配置立即生效
+```bash
+[root@gds zabbix-3.2.7]# source /etc/profile
+```
+
+# 6. LNMPZ整合
+
+## 6.1 拷贝zabbix 页面
+* 拷贝zabbix 页面所在目录php拷贝到nginx 目录中, 并重命名为zabbix 
+* 修改php 目录的所有者所属组为nginx, 因为php-fpm 是以nginx:nginx 运行的
+
+```bash
+[root@gds zabbix-3.2.7]# cp -r ./frontends/php/ /var/data/nginx/php/zabbix
+[root@gds zabbix-3.2.7]# chown -R nginx:nginx /var/data/nginx/php/
+```
+
+## 6.2 配置nginx
+* zabbix 页面所在目录为: /var/data/nginx/php/zabbix
 
 ```bash
 #php 反向代理配置
@@ -534,16 +550,33 @@ location ~ \.php$ {
 }
 #zabbix 配置
 location /zabbix {
-    root        /var/data/nginx/php/nginx;
+    root        /var/data/nginx/php;
 }
 ```
 
-## 4. 整合zabbix 和 mysql
+## 6.3 配置PHP
+* 设置php.ini: vim /usr/local/etc/php/php.ini
+* 注意enable_post_data_reading = Off 一定不能打开, 否则就一直卡在首页了
 
-### 4.1 mysql 中创建用户导入数据
-* 登录mysql 客户端
+```bash
+post_max_size = 16M
+max_execution_time = 300
+max_input_time = 300
+date.timezone = PRC
+always_populate_raw_post_data = -1
+mbstring.func_overload = 0
+extension=php_gd2.dll
+extension=php_gettext.dll
+```
+
+## 6.4 整合zabbix & mysql
+* 重启mysql服务: service mysql restart
+* 登录mysql 客户端: mysql -u root -p
+
+### 6.4.1 创建zabbix 数据库和用户
 * 创建数据库zabbix
-* 创建导入数据
+* 导入zabbix 基础数据
+* 创建zabbix 用户, 并授权
 
 ```bash
 #创建数据库
@@ -553,66 +586,100 @@ mysql> use zabbix;
 Database changed
 
 #导入数据
-mysql> source /usr/local/src/zabbix/zabbix-3.0.10/database/mysql/schema.sql;
-mysql> source /usr/local/src/zabbix/zabbix-3.0.10/database/mysql/data.sql;
-mysql> source /usr/local/src/zabbix/zabbix-3.0.10/database/mysql/images.sql;
+mysql> source /usr/local/src/zabbix/zabbix-3.2.7/database/mysql/schema.sql;
+mysql> source /usr/local/src/zabbix/zabbix-3.2.7/database/mysql/data.sql;
+mysql> source /usr/local/src/zabbix/zabbix-3.2.7/database/mysql/images.sql;
 
 #创建用户
 mysql> CREATE USER 'zabbix@%' IDENTIFIED BY 'zabbix';
 Query OK, 0 rows affected (0.00 sec)
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'zabbix'@'%' IDENTIFIED BY 'zabbix' WITH GRANT OPTION; 
+
+#授权zabbix访问信息
+mysql> GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'%' IDENTIFIED BY 'zabbix' WITH GRANT OPTION; 
 Query OK, 0 rows affected, 1 warning (0.00 sec)
 
+mysql> exit
+Bye
 ```
 
-### 4.2 配置mysql
-* 修改配置文件: /usr/local/etc/zabbix_server.conf , 修改以下配置
+### 6.4.2 配置zabbix
+* 修改配置文件: /usr/local/etc/zabbix/zabbix_server.conf , 修改以下配置
+
 ```bash
-DBHost=127.0.0.1
+LogFile=/var/logs/zabbix/zabbix_server.log
+LogFileSize=10
+DebugLevel=3
+PidFile=/var/run/zabbix/zabbix_server.pid
+DBHost=localhost
 DBName=zabbix
 DBUser=zabbix
 DBPassword=zabbix
-DBSocket=/var/lib/mysql/mysql.sock
+DBSocket=/usr/local/mysql/mysql.sock
 DBPort=3306
 Timeout=4
 LogSlowQueries=3000
 ```
 
-### 4.3 配置php
-* 设置php.ini: vim /usr/local/etc/php.ini
+#7 启动服务
 
+## 7.1 重启mysql
 ```bash
-post_max_size = 16M
-max_execution_time = 300
-max_input_time = 300
-date.timezone = PRC
-enable_post_data_reading = Off
-always_populate_raw_post_data = -1
-mbstring.func_overload = 0
-extension=php_gd2.dll
-extension=php_gettext.dll
+[root@gds zabbix-3.2.7]# service mysql restart
+```
+
+## 7.2 重启php
+```bash
+[root@gds zabbix-3.2.7]# killall php-fpm
+[root@gds zabbix-3.2.7]# php-fpm
+```
+## 7.3 重启nginx
+```bash
+[root@gds zabbix-3.2.7]# nginx -s reload
+```
+
+## 7.4 重启zabbix
+```bash
+[root@gds zabbix-3.2.7]# killall zabbix_server
+[root@gds zabbix-3.2.7]# zabbix_server
 ```
 
 
-## 5. 测试启动
+# 8. 初始化zabbix 配置
+* 注意防火墙释放端口
 
-### 5.1 依次启动环境
-* 启动mysql: service mysqld restart
-* 启动php:  php-fpm 
-* 启动nginx: nginx -s reload
-* 启动zabbix: zabbix_server
+## 8.1 浏览器访问
+* 地址: http://192.168.1.100/zabbix/index.php, 点击next step
+![](/assets/lnmpz_2017-07-28_214359.png)
 
-### 5.2 浏览器中访问zabbix
-* 访问地址: http://localhost/zabbix/setup.php
+## 8.2 校验php 环境
+* 如果有Fail 选项, 则需修改php.ini 文件中对应的配置即可,修改后需要重启php-fpm
+* 全部点ok 之后, 点next step
+![](/assets/lnmpz_2017-07-28_214434.png)
 
-
-
-
-
-
-
+## 8.3 配置数据库
+* 输入mysql 数据库的相关信息, 点击next step
+![](/assets/lnmpz_2017-07-28_214513.png)
 
 
+## 8.4 配置zabbix_server 信息
+* 配置zabbix 名称, 监听ip, 端口号, 配置好之后, 一直点next
+![](/assets/lnmpz_2017-07-28_214614.png)
+
+## 8.5 配置成功
+* 注意, 到此步会生成一个zabbix_conf.php 文件, 此文件需要是nginx:nginx 权限, 如果不是的话, 需要手工设置 
+![](/assets/lnmpz_2017-07-28_214710.png)
+
+## 8.6 登录zabbix
+* 默认用户名密码为: admin=zabbix
+![](/assets/lnmpz_2017-07-28_214754.png)
+
+## 8.7 修改zabbix 语言
+* 默认zabbix 是全英文的, 修改为中文页面
+![](/assets/lnmpz_2017-07-28_214856.png)
+
+## 8.9 中文环境
+* 到此为止, zabbix_server 就算是搭建成功了 
+![](/assets/lnmpz_2017-07-28_214958.png)
 
 
 
@@ -631,23 +698,13 @@ extension=php_gettext.dll
 
 
 
-## 3. 整合nginx 和 php
-* 修改nginx 配置: vim /etc/.nginx/nginx.conf
-* 添加配置, php 结尾的文件反向代理fastcgi 处理
-
-```bash
-
-location ~ \.php$ {
-    root           /var/data/nginx/php;
-    fastcgi_pass   127.0.0.1:9000;
-    fastcgi_index  index.php;
-    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-    include        fastcgi_params;
-}
-
-``
 
 
+
+
+
+
+\
 
 
 
