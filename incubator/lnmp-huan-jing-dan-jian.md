@@ -26,6 +26,9 @@
 | Mysql | /usr/local/src/mysql | mysql 源代码目录 |
 | Mysql | /usr/local/mysql | mysql 安装目录 |
 | Mysql | /usr/logs/mysql | mysql 日志目录 |
+| PHP | /usr/local/src/php | php 源码目录 |
+| PHP | /usr/local/php | php 安装目录 |
+| PHP | /usr/local/etc/php | php 配置目录 | 
 
 ## 1.3 设置epel 源
 * 有些软件依赖centos 默认的yum 源中没有, 需要从epel 源中下载
