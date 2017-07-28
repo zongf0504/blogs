@@ -121,34 +121,34 @@ TLS SNI support enabled
 configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/.nginx/nginx.conf --error-log-path=/var/logs/nginx/error.log --http-log-path=/var/logs/nginx/access.log --pid-path=/var/run/nginx/nginx.pid --lock-path=/var/run/nginx/nginx.lock --http-client-body-temp-path=/var/data/cache/nginx/client_temp --http-proxy-temp-path=/var/data/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/data/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/data/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/data/cache/nginx/scgi_temp --user=nginx --group=nginx --with-http_ssl_module --with-http_gunzip_module --with-http_gzip_static_module --with-stream_ssl_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module
 ```
 
-## 2. Mysql 环境安装
+# 3. Mysql 环境安装
 * 笔者操作系统为CentOS 6.8, 如果使用yum 安装mysql, 那么安装的是mysql 5.5 版本的, 而mysql 这个mysql 版本有点儿老, 笔者选择安装mysql 5.7.
 * 笔者采用源码编译方式安装mysql, 这个过程比较久, 具体情况根据机器性能而定
 
-### 2.1 安装准备
-#### 2.1 创建mysql 用户
+## 3.1 安装准备
+### 3.1.1 创建mysql 用户
 ```bash
 [root@localhost ~]# useradd -s /sbin/nologin mysql
 [root@localhost ~]# id mysql
 ```
 
-#### 2.2 创建mysql 相关目录
+### 3.1.2 创建mysql 相关目录
 ```
 [root@localhost ~]# mkdir -p /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
 [root@localhost ~]# chown mysql:mysql /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
 ```
 
-### 2.2 安装mysql 依赖
+### 3.2 安装mysql 依赖
 * mysql 依赖的包有点儿多, 需要些时间
 
 ```bash
 [root@localhost ~]# yum -y install make gcc gcc-c++ cmake gcc-g77 flex bison file libtool libtool-libs autoconf kernel-devel gd gd-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel gettext gettext-devel gmp-devel pspell-devel unzip libcaplsof 
 ```
 
-### 2.3 编译mysql
+### 3.3 编译mysql
 * 进入mysql 目录, 进行编译安装
 
-#### 2.3.1 安装cmake boost
+#### 3.3.1 安装cmake boost
 * 编译mysql 需要用到boost , 把它安装在/usrl/local/boost 目录
 
 ```bash
@@ -156,7 +156,7 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 [root@localhost mysql-5.7.19]# cmake -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/boost
 ```
 
-#### 2.3.2 配置mysql 安装路径
+#### 3.3.2 配置mysql 安装路径
 * 如果配置出现错误, 需要重新执行此命令时, 需要删除当前目录下才: CMakeCache.txt 文件
 * 需指定刚刚安装的boost 路径
 
@@ -181,20 +181,20 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 -DWITH_BOOST=/usr/local/boost \
 ```
 
-#### 2.3.2 编译mysql 
+#### 3.3.3 编译mysql 
 * mysql 编译的过程会比较长, 具体依机器性能决定, 笔者花了半个多小时
 
 ```bash
 [root@localhost mysql-5.7.19]# make
 ```
 
-#### 2.3.3 安装mysql
+#### 3.3.4 安装mysql
 
 ```bash
 [root@localhost mysql-5.7.19]# make install
 ````
 
-#### 2.3.4 新建mysql配置文件: /usr/local/etc/mysql/my.cnf
+#### 3.3.5 新建mysql配置文件: /usr/local/etc/mysql/my.cnf
 ```bash
 [mysqld]
 # 指定mysql 数据存放目录
@@ -225,7 +225,7 @@ socket=/usr/local/mysql/mysql.sock
 [root@localhost mysql-5.7.19]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
 ```
 
-#### 2.3.6 添加环境变量
+#### 3.3.6 添加环境变量
 * 编辑配置文件: vim /etc/profile
 ``` bash
 #set mysql
@@ -238,7 +238,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 [root@localhost mysql-5.7.19]# source /etc/profile
 ```
 
-#### 2.3.7 初始化mysql 数据库
+#### 3.3.7 初始化mysql 数据库
 * 初始化数据库的过程会为root 用户产生一个随机密码
 * /var/data/mysql 目录必须是空的, 且mysql 具有读写权限
 
@@ -246,7 +246,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 [root@localhost mysql-5.7.19]# mysqld --initialize --user=mysql
 ```
 
-#### 2.3.8 查看root 随机密码
+#### 3.3.8 查看root 随机密码
 * 初始化数据时, 日志会输出到/var/logs/mysql/mysqld.log 文件中
 
 ```bash
@@ -254,14 +254,14 @@ export PATH=$PATH:$MYSQL_HOME/bin
 
 ```
 
-#### 2.3.8 启动mysql 服务
+#### 3.3.8 启动mysql 服务
 * 安装服务之后, 就可以使用service 命令进行管理mysql 服务器了
 
 ```
 [root@localhost mysql-5.7.19]# service mysql start
 ```
 
-#### 2.9 登录客户端, 修改root 密码
+#### 3.3.9 登录客户端, 修改root 密码
 * 使用mysql 客户端连接mysql数据库: mysql -u 用户名 -p
 * 修改root用户名, 我们设置一个简单的密码: root
 * 默认情况下root用户不允许从其他电脑登录, 我们授权允许从任何机器上登录
@@ -289,7 +289,7 @@ Query OK, 0 rows affected, 1 warning (0.00 sec)
 
 ```
 
-#### 2.10 查看数据库编码
+#### 3.3.10 查看数据库编码
 
 ```bash
 mysql> show variables like '%char%';
@@ -312,18 +312,27 @@ Bye
 
 ```
 
-## 2.3 PHP 环境安装 
+#### 3.3.11 设置libmysqlclient
+* 查看mysql lib 目录是否有libmysqlclient.so 文件, 有的话执行下面命令
+
+```bash
+[root@localhost mysql]# echo "/usr/local/mysql/lib" >> /etc/ld.so.conf
+[root@localhost mysql]# ldconfig
+```
+
+
+# 4. PHP 环境安装 
 * 笔者并不懂PHP 开发, 因此只能从网上收集资料,比葫芦画瓢安装, 并不太清楚各个配置是什么意思.
 * php 版本选择: php-5.6.30.tar.bz2
 
-### 2.3.1 安装依赖:
+## 4.1 安装依赖:
 
-#### 2.3.1.1 yum 安装依赖
+### 4.1.1 yum 安装依赖
 ```bash
 [root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel bzip2-devel libcurl-devel freetype freetype-devel libxslt-devel net-snmp-devel net-snmp perl-DBI php-gd php-bcmath php-mbstring gd libmcrypt openldap openldap-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel  php-mcrypt  libmcrypt  libmcrypt-devel readline readline-devel
 ```
 
-#### 2.3.1.2 源码安装jpeg 环境
+### 4.1.2 源码安装jpeg 环境
 安装jpeg依赖:
 ```bash
 [root@localhost php]# wget http://www.ijg.org/files/jpegsrc.v9b.tar.gz
@@ -334,14 +343,14 @@ Bye
 
 ```
 
-#### 2.3.1.2 设置ldap 包
+### 4.1.2 设置ldap 包
 * 由于笔者是64位操作系统, 所以需要将ldap 相关库文件拷贝到/usr/lib 目录下 
 
 ```bash
 [root@localhost php-5.6.30]# cp /usr/lib64/libldap* /usr/lib/
 ```
 
-#### 2.3.1.3 创建目录:
+### 4.1.3 创建目录:
 * 
 ```bash
 [root@localhost php-5.6.30]# mkdir -p /usr/local/etc/php  /var/data/nginx/php
@@ -349,14 +358,14 @@ Bye
 ```
 
 
-### 2.3.2  解压php 
+## 4.2  解压php 
 ```bash
 [root@localhost php]# tar -jxf php-5.6.30.tar.bz2 
 [root@localhost php]# ls
 php-5.6.30
 ```
 
-### 2.3.3 配置安装环境
+### 4.2.1 配置安装环境
 
 ```bash
 [root@localhost php-5.6.30]# pwd
@@ -432,17 +441,23 @@ php-5.6.30
 
 ```
 
-### 2.3.4 编译
+### 4.2.2 编译
 ```bash
 [root@localhost php-5.6.30]# make
 ```
 
-### 2.3.5 安装
+### 4.2.3 安装
 ```bash
 [root@localhost php-5.6.30]# make install 
 ```
 
-### 2.3.6 添加环境变量
+### 4.2.4 拷贝配置文件
+```bash
+[root@localhost php-5.6.30]# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
+[root@localhost php-5.6.30]# cp ./php.ini-development /usr/local/etc/php/php.ini
+```
+
+### 4.2.5 添加环境变量
 * 编辑文件: vim /etc/profile
 
 ```bash
@@ -450,25 +465,21 @@ php-5.6.30
 export PHP_HOME=/usr/local/php
 export PATH=$PATH:$PHP_HOME/bin:$PHP_HOME/sbin	
 ```
-### 2.3.7 使配置立即生效
+
+### 4.2.6 使配置立即生效
 ```bash
 [root@localhost php]# source /etc/profile
 ```
 
-### 2.3.8 查看php 
+## 4.3 查看php 
 ```bash
 [root@localhost php-5.6.30]# php-fpm -v
 PHP 5.6.30 (fpm-fcgi) (built: Jul 27 2017 09:55:34)
 Copyright (c) 1997-2016 The PHP Group
 Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 ```
-### 2.3.9 拷贝配置文件
-```bash
-[root@localhost php-5.6.30]# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
-[root@localhost php-5.6.30]# cp ./php.ini-development /usr/local/etc/php/php.ini
-```
 
-## 3. 整合nginx 和 php
+# 5. 整合nginx 和 php
 * 修改nginx 配置: vim /etc/.nginx/nginx.conf
 * 添加配置, php 结尾的文件反向代理fastcgi 处理
 
@@ -484,8 +495,8 @@ location ~ \.php$ {
 
 ``
 
-## 4. 测试:
-### 4.1 编写hello.php 文件
+# 6. 测试:
+## 6.1 编写hello.php 文件
 * /var/data/nginx/php 目录下新建hello.php 文件
 ```
 <?php
@@ -494,14 +505,14 @@ phpinfo();
 ?>
 ```
 
-### 4.2 启动服务:
+## 6.2 启动服务:
 ```bash
 [root@localhost php-5.6.30]# nginx
 [root@localhost php-5.6.30]# service mysql start
 [root@localhost php-5.6.30]# php-fpm
 ```
 
-### 4.3 浏览器中访问:
+## 6.3 浏览器中访问:
 * 访问地址: http://192.168.1.100/hello.php
 ![](/assets/lnmp_2017-07-28_200700.png)
 
