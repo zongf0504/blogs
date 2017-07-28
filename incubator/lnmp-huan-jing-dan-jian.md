@@ -27,6 +27,21 @@
 | Mysql | /usr/local/mysql | mysql 安装目录 |
 | Mysql | /usr/logs/mysql | mysql 日志目录 |
 
+## 1.3 设置epel 源
+* 有些软件依赖centos 默认的yum 源中没有, 需要从epel 源中下载
+
+### 1.3.1 安装
+```bash
+[root@localhost ~]# yum install yum-priorities
+[root@localhost ~]# rpm -Uvh http://mirrors.ustc.edu.cn/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+[root@localhost ~]# rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+[root@localhost ~]# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+```
+
+### 1.3.2 修改优先级
+* 修改数据源的优先级为优先去yum的官方地址下载,找不到则去epel源下载
+* 配置文件/etc/yum.repos.d/epel.repo 中, [epel] 节点下添加属性: priority=11
+
 # 2. Nginx 安装
 
 ## 2.1 安装依赖环境
@@ -105,93 +120,147 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 
 ## 2. Mysql 环境安装
 * 笔者操作系统为CentOS 6.8, 如果使用yum 安装mysql, 那么安装的是mysql 5.5 版本的, 而mysql 这个mysql 版本有点儿老, 笔者选择安装mysql 5.7.
+* 笔者采用源码编译方式安装mysql, 这个过程比较久, 具体情况根据机器性能而定
 
-### 2.1 下载mysql.5.7 yum 源配置
-
+### 2.1 安装准备
+#### 2.1 创建mysql 用户
 ```bash
-[root@localhost mysql]# wget https://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm
---2017-07-26 13:57:39--  https://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm
-Connecting to 172.17.18.84:8080... connected.
-Proxy request sent, awaiting response... 302 Found
-Location: https://repo.mysql.com//mysql57-community-release-el6-9.noarch.rpm [following]
---2017-07-26 13:57:40--  https://repo.mysql.com//mysql57-community-release-el6-9.noarch.rpm
-Connecting to 172.17.18.84:8080... connected.
-Proxy request sent, awaiting response... 200 OK
-Length: 9216 (9.0K) [application/x-redhat-package-manager]
-Saving to: “mysql57-community-release-el6-9.noarch.rpm”
-
-100%[==================================>] 9,216       --.-K/s   in 0s      
-
-2017-07-26 13:57:41 (1.36 GB/s) - “mysql57-community-release-el6-9.noarch.rpm” saved [9216/9216]
-
-[root@localhost mysql]# ls
-mysql57-community-release-el6-9.noarch.rpm
-
+[root@localhost ~]# useradd -s /sbin/nologin mysql
+[root@localhost ~]# id mysql
 ```
 
-### 2.2 设置本地yum源
-* 将mysql 5.7 的yum源地址安装在本地
-* 命令: rpm -Uvh mysql57-community-release-el6-9.noarch.rpm 或者 yum localinstall mysql57-community-release-el6-9.noarch.rpm 
-
-```bash
-[root@localhost mysql]# rpm -Uvh mysql57-community-release-el6-9.noarch.rpm
-warning: mysql57-community-release-el6-9.noarch.rpm: Header V3 DSA/SHA1 Signature, key ID 5072e1f5: NOKEY
-Preparing...                                                            (100########################################### [100%]
-   1:mysql57-community-relea                                            ( 65########################################### [100%]
-[root@localhost mysql]# ls /etc/yum.repos.d/mysql*
-/etc/yum.repos.d/mysql-community.repo
-/etc/yum.repos.d/mysql-community-source.repo   
-
+#### 2.2 创建mysql 相关目录
+```
+[root@localhost ~]# mkdir -p /var/data/mysql /var/logs/mysql /var/local/mysql /var/run/mysql
+[root@localhost ~]# chown mysql:mysql /var/data/mysql /var/logs/mysql /var/local/mysql /var/run/mysql
 ```
 
-### 2.3 安装mysql
+### 2.2 安装mysql 依赖
+* mysql 依赖的包有点儿多, 需要些时间
 
 ```bash
-[root@localhost mysql]# yum -y install mysql-community-server mysql-devel
-
+[root@localhost ~]# yum -y install make gcc gcc-c++ cmake gcc-g77 flex bison file libtool libtool-libs autoconf kernel-devel gd gd-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel gettext gettext-devel gmp-devel pspell-devel unzip libcaplsof 
 ```
 
-### 2.4 初始化启动mysql
+### 2.3 编译mysql
+* 进入mysql 目录, 进行编译安装
+
+#### 2.3.1 安装cmake boost
+* 编译mysql 需要用到boost , 把它安装在/usrl/local/boost 目录
 
 ```bash
-[root@localhost mysql]# service mysqld start  
-Initializing MySQL database:                               [  OK  ]
-Starting mysqld:                                           [  OK  ]
-[root@gds mysql]# service mysqld stop
-Stopping mysqld:                                           [  OK  ]
+[root@localhost mysql-5.7.19]# cd /usr/local/src/mysql/mysql-5.7.19
+[root@localhost mysql-5.7.19]# cmake -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/boost
 ```
 
-### 2.5 初始化mysql 配置
-* 修改数据库默认编码为: utf-8
-* 修改日志,数据,运行id 等目录位置
-* 关闭密码强度校验: mysql 5.7在设置密码时, 出于安全考虑新增了密码校验, 建议再生产环境使用, 但是在开发环境就没有必要了, 可以选择关闭. 
-mysql 默认密码校验规则: 由大写字母, 小写字母, 数字, 特殊符合组成的至少8位的密码
+#### 2.3.2 配置mysql 安装路径
+* 如果配置出现错误, 需要重新执行此命令时, 需要删除当前目录下才: CMakeCache.txt 文件
+* 需指定刚刚安装的boost 路径
 
-修改: /etc/my.cnf
 ```bash
+[root@localhost mysql-5.7.19]# cmake  \
+-DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+-DMYSQL_DATADIR=/var/data/mysql/ \
+-DMYSQL_UNIX_ADDR=/usr/local/mysql/mysql.sock \
+-DSYSCONFDIR=/usr/local/etc/mysql \
+-DWITH_MYISAM_STORAGE_ENGINE=1 \
+-DWITH_INNOBASE_STORAGE_ENGINE=1 \
+-DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+-DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+-DENABLED_LOCAL_INFILE=1 \
+-DDEFAULT_CHARSET=utf8 \
+-DDEFAULT_COLLATION=utf8_general_ci \
+-DEXTRA_CHARSETS=all \
+-DWITH_SSL=system \
+-DMYSQL_TCP_PORT=3306 \
+-DWITH_SSL=bundled \
+-DDOWNLOAD_BOOST=1 \
+-DWITH_BOOST=/usr/local/boost \
+```
 
-#数据库编码: mysqld 下添加一行
+#### 2.3.2 编译mysql 
+* mysql 编译的过程会比较长, 具体依机器性能决定, 笔者花了半个多小时
+
+```bash
+[root@localhost mysql-5.7.19]# make
+```
+
+#### 2.3.3 安装mysql
+
+```bash
+[root@localhost mysql-5.7.19]# make install
+````
+
+#### 2.3.4 新建mysql配置文件: /usr/local/etc/mysql/my.cnf
+```bash
 [mysqld]
-#指定数据库默认编码
+# 指定mysql 数据存放目录
+datadir=/var/data/mysql
+# 指定mysql 通信文件
+socket=/usr/local/mysql/mysql.sock
+# 指定mysql 日志
+log-error=/var/logs/mysql/mysqld.log
+# 指定mysql pid 存放位置
+pid-file=/var/run/mysql/mysqld.pid
+# 指定数据库密码
 character_set_server = utf8
-
 # 关闭密码校验
 validate_password=off
 
-#指定客户端连接默认编码
+symbolic-links=0
+
+
 [client]
-default-character-set = utf8
+# 设置客户端连接默认编码
+default-character-set = utf8 
+# 设置客户端连接sock文件位置
+socket=/usr/local/mysql/mysql.sock
 ```
 
-### 2.6 查看root 初始密码
-* 密码为: +)j8KEtxGNUV
+#### 2.3.5 安装mysql 服务
+* centos 可以将mysql.server 脚本拷贝到/etc/init.d 目录中, 那么以后就可以使用service 命令启动了
 
 ```bash
-[root@gds mysql]# grep 'temporary password' /var/log/mysqld.log
-2017-07-26T08:04:47.499031Z 1 [Note] A temporary password is generated for root@localhost: +)j8KEtxGNUV
+[root@localhost mysql-5.7.19]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
 ```
 
-### 2.7 登录客户端, 修改root 密码
+#### 2.3.6 初始化mysql 数据库
+* 初始化数据库的过程会为root 用户产生一个随机密码
+* 
+
+```bash
+[root@localhost mysql-5.7.19]# mysqld --initialize --user=mysql
+```
+
+#### 2.3.7 查看root 随机密码
+* 初始化数据时, 日志会输出到/var/logs/mysql/mysqld.log 文件中
+
+```bash
+cat /var/logs/mysql/mysqld.log | grep password
+
+```
+
+#### 2.3.8 添加环境变量
+* 编辑配置文件: vim /etc/profile
+``` bash
+#set mysql
+export MYSQL_HOME=/usr/local/mysql
+export PATH=$PATH:$MYSQL_HOME/bin
+```
+
+* 使配置立即生效 
+```bash
+[root@localhost mysql-5.7.19]# source /etc/profile
+```
+
+#### 2.3.8 启动mysql 服务
+* 安装服务之后, 就可以使用service 命令进行管理mysql 服务器了
+
+```
+[root@localhost mysql-5.7.19]# service mysql start
+```
+
+#### 2.9 登录客户端, 修改root 密码
 * 使用mysql 客户端连接mysql数据库: mysql -u 用户名 -p
 * 修改root用户名, 我们设置一个简单的密码: root
 * 默认情况下root用户不允许从其他电脑登录, 我们授权允许从任何机器上登录
@@ -218,7 +287,7 @@ mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT
 Query OK, 0 rows affected, 1 warning (0.00 sec)
 ```
 
-### 2.8 查看数据库编码
+#### 2.10 查看数据库编码
 
 ```bash
 mysql> show variables like '%char%';
