@@ -314,6 +314,15 @@ Bye
 
 ```
 
+#### 2.2.11 设置libmysqlclient
+* 查看mysql lib 目录是否有libmysqlclient.so 文件, 有的话执行下面命令
+
+```bash
+[root@localhost mysql]# echo "/usr/local/mysql/lib" >> /etc/ld.so.conf
+[root@localhost mysql]# ldconfig
+```
+
+
 ## 2.3 PHP 环境安装 
 * 笔者并不懂PHP 开发, 因此只能从网上收集资料,比葫芦画瓢安装, 并不太清楚各个配置是什么意思.
 * php 版本选择: php-5.6.30.tar.bz2
@@ -484,8 +493,6 @@ uid=506(zabbix) gid=507(zabbix) groups=507(zabbix)
 ```
 
 
-
-
 ### 3.2 安装
 
 #### 3.2.1 编译
@@ -498,7 +505,125 @@ uid=506(zabbix) gid=507(zabbix) groups=507(zabbix)
 [root@localhost zabbix-3.2.7]# make install
 ```
 
-### 
+### 3.
+
+
+
+
+## 3. 整合zabbix 和 nginx
+### 3.1 拷贝zabbix 页面文件
+
+```bash
+[root@gds zabbix-3.0.10]# cp -r /usr/local/src/zabbix/zabbix-3.0.10/frontends/php /var/data/nginx/php/zabbix
+```
+
+### 3.2 配置nginx
+* nginx 添加zabbix 配置
+
+```bash
+#php 反向代理配置
+location ~ \.php$ {
+    root           /var/data/nginx/php;
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    include        fastcgi_params;
+}
+#zabbix 配置
+location /zabbix {
+    root        /var/data/nginx/php/nginx;
+}
+```
+
+## 4. 整合zabbix 和 mysql
+
+### 4.1 mysql 中创建用户导入数据
+* 登录mysql 客户端
+* 创建数据库zabbix
+* 创建导入数据
+
+```bash
+#创建数据库
+mysql> CREATE DATABASE zabbix DEFAULT CHARACTER SET utf8 ;                
+Query OK, 1 row affected (0.00 sec)
+mysql> use zabbix;
+Database changed
+
+#导入数据
+mysql> source /usr/local/src/zabbix/zabbix-3.0.10/database/mysql/schema.sql;
+mysql> source /usr/local/src/zabbix/zabbix-3.0.10/database/mysql/data.sql;
+mysql> source /usr/local/src/zabbix/zabbix-3.0.10/database/mysql/images.sql;
+
+#创建用户
+mysql> CREATE USER 'zabbix@%' IDENTIFIED BY 'zabbix';
+Query OK, 0 rows affected (0.00 sec)
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'zabbix'@'%' IDENTIFIED BY 'zabbix' WITH GRANT OPTION; 
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+```
+
+### 4.2 配置mysql
+* 修改配置文件: /usr/local/etc/zabbix_server.conf , 修改以下配置
+```bash
+DBHost=127.0.0.1
+DBName=zabbix
+DBUser=zabbix
+DBPassword=zabbix
+DBSocket=/var/lib/mysql/mysql.sock
+DBPort=3306
+Timeout=4
+LogSlowQueries=3000
+```
+
+### 4.3 配置php
+* 设置php.ini: vim /usr/local/etc/php.ini
+
+```bash
+post_max_size = 16M
+max_execution_time = 300
+max_input_time = 300
+date.timezone = PRC
+enable_post_data_reading = Off
+always_populate_raw_post_data = -1
+mbstring.func_overload = 0
+extension=php_gd2.dll
+extension=php_gettext.dll
+```
+
+
+## 5. 测试启动
+
+### 5.1 依次启动环境
+* 启动mysql: service mysqld restart
+* 启动php:  php-fpm 
+* 启动nginx: nginx -s reload
+* 启动zabbix: zabbix_server
+
+### 5.2 浏览器中访问zabbix
+* 访问地址: http://localhost/zabbix/setup.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -43,6 +43,13 @@ uid=506(zabbix) gid=507(zabbix) groups=507(zabbix)
 ```
 
 
+
+
+
+
+
+
+
 ## 3. 整合zabbix 和 nginx
 ### 3.1 拷贝zabbix 页面文件
 
