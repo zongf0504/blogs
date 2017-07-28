@@ -96,4 +96,5 @@
 * [incubator](incubator.md)
   * [LNMP 环境搭建](incubator/lnmp-huan-jing-dan-jian.md)
   * [Zabbix 环境搭建](zabbix-huan-jing-da-jian.md)
+  * [Mysql 安装 ](incubator/mysql-an-zhuang.md)
 
