@@ -311,13 +311,13 @@ Bye
 
 ## 2.3 PHP 环境安装 
 * 笔者并不懂PHP 开发, 因此只能从网上收集资料,比葫芦画瓢安装, 并不太清楚各个配置是什么意思.
+* php 版本选择: php-5.6.30.tar.bz2
 
 ### 2.3.1 安装依赖:
 
 #### 2.3.1.1 yum 安装依赖
 ```bash
-[root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel  bzip2-devel libcurl-devel freetype freetype-devel  libxslt-devel net-snmp-devel
-
+[root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel bzip2-devel libcurl-devel freetype freetype-devel libxslt-devel net-snmp-devel net-snmp perl-DBI php-gd php-bcmath php-mbstring gd libmcrypt openldap openldap-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel  php-mcrypt  libmcrypt  libmcrypt-devel
 ```
 
 #### 2.3.1.2 源码安装jpeg 环境
@@ -329,8 +329,15 @@ Bye
 [root@localhost jpeg-9b]# ./configure --prefix=/usr/local/jpeg --enable-shared --enable-static
 [root@localhost jpeg-9b]# make && makeinstall
 
-
 ```
+
+#### 2.3.1.2 设置ldap 包
+* 由于笔者是64位操作系统, 所以需要将ldap 相关库文件拷贝到/usr/lib 目录下 
+
+```bash
+[root@localhost php-5.6.30]# cp /usr/lib64/libldap* /usr/lib/
+```
+
 
 ### 2.3.2  解压php 
 ```bash
@@ -347,45 +354,70 @@ php-5.6.30
 [root@localhost php-5.6.30]# 
 ./configure \
 --prefix=/usr/local/php \
---with-config-file-path=/usr/local/php/etc \
---with-jpeg-dir=/usr/local/jpeg \
+--with-config-file-path=/usr/local/etc/php \
+--with-mysql=/usr/local/mysql \
+--with-mysqli=/usr/local/mysql/bin/mysql_config \
+--with-mysql-sock=/usr/local/mysql/mysql.sock \
 --with-fpm-user=nginx \
 --with-fpm-group=nginx \
---with-mysql=mysqlnd \
---with-mysqli=mysqlnd \
---with-pdo-mysql=mysqlnd \
---with-curl \
---with-freetype-dir \
---with-gd \
---with-gettext \
---with-iconv-dir \
---with-kerberos \
---with-libdir=lib64 \
---with-libxml-dir \
---with-openssl \
---with-pcre-regex \
---with-pdo-mysql \
---with-pdo-sqlite \
---with-pear \
---with-png-dir \
---with-xmlrpc \
---with-xsl \
---with-zlib \
---enable-fpm \
---enable-bcmath \
---enable-libxml \
 --enable-inline-optimization \
---enable-gd-native-ttf \
---enable-mbregex \
---enable-mbstring \
---enable-opcache \
---enable-pcntl \
---enable-shmop \
+--enable-fpm \
 --enable-soap \
---enable-sockets \
---enable-sysvsem \
+--enable-pcntl \
 --enable-xml \
+--with-libxml-dir \
+--with-xmlrpc \
+--with-openssl \
+--with-mcrypt \
+--with-mhash \
+--with-pcre-regex \
+--with-sqlite3 \
+--with-zlib \
+--enable-bcmath \
+--with-iconv \
+--with-bz2 \
+--enable-calendar \
+--with-curl \
+--with-cdb \
+--enable-dom \
+--enable-exif \
+--enable-fileinfo \
+--enable-filter \
+--with-pcre-dir \
+--enable-ftp \
+--with-gd \
+--with-openssl-dir \
+--with-jpeg-dir \
+--with-png-dir \
+--with-zlib-dir  \
+--with-freetype-dir \
+--enable-gd-native-ttf \
+--with-gettext \
+--with-mhash \
+--enable-json \
+--enable-mbstring \
+--disable-mbregex \
+--disable-mbregex-backtrack \
+--with-libmbfl \
+--with-onig \
+--enable-pdo \
+--with-pdo-mysql \
+--with-zlib-dir \
+--with-pdo-sqlite \
+--with-readline \
+--enable-session \
+--enable-shmop \
+--enable-simplexml \
+--enable-sockets \
+--enable-sysvmsg \
+--enable-sysvsem \
+--enable-sysvshm \
+--enable-wddx \
+--with-libxml-dir  \
+--with-xsl \
 --enable-zip \
+--enable-mysqlnd-compression-support \
+--with-pear \
 --with-ldap \
 
 ```
