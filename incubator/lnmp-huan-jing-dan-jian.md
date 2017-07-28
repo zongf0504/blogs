@@ -284,8 +284,6 @@ Query OK, 0 rows affected (0.04 sec)
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;       
 Query OK, 0 rows affected, 1 warning (0.00 sec)
 
-mysql> exit
-Bye
 ```
 
 #### 2.10 查看数据库编码
@@ -305,6 +303,10 @@ mysql> show variables like '%char%';
 | character_sets_dir       | /usr/share/mysql/charsets/ |
 +--------------------------+----------------------------+
 8 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+
 ```
 
 ## 2.3 PHP 环境安装 
