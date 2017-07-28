@@ -317,7 +317,7 @@ Bye
 
 #### 2.3.1.1 yum 安装依赖
 ```bash
-[root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel bzip2-devel libcurl-devel freetype freetype-devel libxslt-devel net-snmp-devel net-snmp perl-DBI php-gd php-bcmath php-mbstring gd libmcrypt openldap openldap-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel  php-mcrypt  libmcrypt  libmcrypt-devel
+[root@localhost mysql]# yum -y install libxml2 libXpm-devel libxml2-devel libjpeg-devel libpng-devel bzip2-devel libcurl-devel freetype freetype-devel libxslt-devel net-snmp-devel net-snmp perl-DBI php-gd php-bcmath php-mbstring gd libmcrypt openldap openldap-devel libjpeg libjpeg-devel libpng libpng-devel libpng10 libpng10-devel  php-mcrypt  libmcrypt  libmcrypt-devel readline readline-devel
 ```
 
 #### 2.3.1.2 源码安装jpeg 环境
@@ -336,6 +336,13 @@ Bye
 
 ```bash
 [root@localhost php-5.6.30]# cp /usr/lib64/libldap* /usr/lib/
+```
+
+#### 2.3.1.3 创建目录:
+* 
+```bash
+[root@localhost php-5.6.30]# mkdir -p /usr/local/etc/php  /var/data/nginx/php
+[root@localhost php-5.6.30]# chown nginx:nginx /usr/local/etc/php /var/data/nginx/php
 ```
 
 
@@ -455,7 +462,7 @@ Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 ### 2.3.9 拷贝配置文件
 ```bash
 [root@localhost php-5.6.30]# cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf
-[root@localhost php-5.6.30]# cp ./php.ini-development /usr/local/php/etc/php.ini
+[root@localhost php-5.6.30]# cp ./php.ini-development /usr/local/etc/php/php.ini
 ```
 
 ## 3. 整合nginx 和 php
@@ -480,22 +487,20 @@ location ~ \.php$ {
 ```
 <?php
 echo "Hello PHP"; 
-
 phpinfo();
-  $conn=mysqli_connect("172.22.12.224", "root","root", "zabbix");
 ?>
 ```
 
 ### 4.2 启动服务:
 ```bash
 [root@localhost php-5.6.30]# nginx
-[root@localhost php-5.6.30]# service mysqld start
+[root@localhost php-5.6.30]# service mysql start
 [root@localhost php-5.6.30]# php-fpm
 ```
 
 ### 4.3 浏览器中访问:
-* 访问地址: http://localhost/hello.php
-
+* 访问地址: http://192.168.1.100/hello.php
+![](/assets/lnmp_2017-07-28_200700.png)
 
 
 
