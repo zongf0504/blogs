@@ -138,17 +138,17 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 [root@localhost ~]# chown mysql:mysql /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
 ```
 
-### 3.2 安装mysql 依赖
+### 3.1.2 安装mysql 依赖
 * mysql 依赖的包有点儿多, 需要些时间
 
 ```bash
 [root@localhost ~]# yum -y install make gcc gcc-c++ cmake gcc-g77 flex bison file libtool libtool-libs autoconf kernel-devel gd gd-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel gettext gettext-devel gmp-devel pspell-devel unzip libcaplsof 
 ```
 
-### 3.3 编译mysql
+## 3.3 编译mysql
 * 进入mysql 目录, 进行编译安装
 
-#### 3.3.1 安装cmake boost
+### 3.3.1 安装cmake boost
 * 编译mysql 需要用到boost , 把它安装在/usrl/local/boost 目录
 
 ```bash
@@ -156,7 +156,7 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 [root@localhost mysql-5.7.19]# cmake -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/boost
 ```
 
-#### 3.3.2 配置mysql 安装路径
+### 3.3.2 配置mysql 安装路径
 * 如果配置出现错误, 需要重新执行此命令时, 需要删除当前目录下才: CMakeCache.txt 文件
 * 需指定刚刚安装的boost 路径
 
@@ -181,14 +181,14 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 -DWITH_BOOST=/usr/local/boost \
 ```
 
-#### 3.3.3 编译mysql 
+### 3.3.3 编译mysql 
 * mysql 编译的过程会比较长, 具体依机器性能决定, 笔者花了半个多小时
 
 ```bash
 [root@localhost mysql-5.7.19]# make
 ```
 
-#### 3.3.4 安装mysql
+### 3.3.4 安装mysql
 
 ```bash
 [root@localhost mysql-5.7.19]# make install
@@ -218,14 +218,14 @@ default-character-set = utf8
 socket=/usr/local/mysql/mysql.sock
 ```
 
-#### 2.3.5 安装mysql 服务
+### 3.3.5 安装mysql 服务
 * centos 可以将mysql.server 脚本拷贝到/etc/init.d 目录中, 那么以后就可以使用service 命令启动了
 
 ```bash
 [root@localhost mysql-5.7.19]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
 ```
 
-#### 3.3.6 添加环境变量
+### 3.3.6 添加环境变量
 * 编辑配置文件: vim /etc/profile
 ``` bash
 #set mysql
@@ -238,7 +238,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 [root@localhost mysql-5.7.19]# source /etc/profile
 ```
 
-#### 3.3.7 初始化mysql 数据库
+### 3.3.7 初始化mysql 数据库
 * 初始化数据库的过程会为root 用户产生一个随机密码
 * /var/data/mysql 目录必须是空的, 且mysql 具有读写权限
 
@@ -246,7 +246,7 @@ export PATH=$PATH:$MYSQL_HOME/bin
 [root@localhost mysql-5.7.19]# mysqld --initialize --user=mysql
 ```
 
-#### 3.3.8 查看root 随机密码
+### 3.3.8 查看root 随机密码
 * 初始化数据时, 日志会输出到/var/logs/mysql/mysqld.log 文件中
 
 ```bash
@@ -254,14 +254,14 @@ export PATH=$PATH:$MYSQL_HOME/bin
 
 ```
 
-#### 3.3.8 启动mysql 服务
+### 3.3.8 启动mysql 服务
 * 安装服务之后, 就可以使用service 命令进行管理mysql 服务器了
 
 ```
 [root@localhost mysql-5.7.19]# service mysql start
 ```
 
-#### 3.3.9 登录客户端, 修改root 密码
+### 3.3.9 登录客户端, 修改root 密码
 * 使用mysql 客户端连接mysql数据库: mysql -u 用户名 -p
 * 修改root用户名, 我们设置一个简单的密码: root
 * 默认情况下root用户不允许从其他电脑登录, 我们授权允许从任何机器上登录
@@ -289,7 +289,7 @@ Query OK, 0 rows affected, 1 warning (0.00 sec)
 
 ```
 
-#### 3.3.10 查看数据库编码
+### 3.3.10 查看数据库编码
 
 ```bash
 mysql> show variables like '%char%';
@@ -312,7 +312,7 @@ Bye
 
 ```
 
-#### 3.3.11 设置libmysqlclient
+### 3.3.11 设置libmysqlclient
 * 查看mysql lib 目录是否有libmysqlclient.so 文件, 有的话执行下面命令
 
 ```bash
