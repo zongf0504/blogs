@@ -131,8 +131,8 @@ configure arguments: --prefix=/var/data/nginx --sbin-path=/usr/sbin/nginx --conf
 
 #### 2.2 创建mysql 相关目录
 ```
-[root@localhost ~]# mkdir -p /var/data/mysql /var/logs/mysql /var/local/mysql /var/run/mysql
-[root@localhost ~]# chown mysql:mysql /var/data/mysql /var/logs/mysql /var/local/mysql /var/run/mysql
+[root@localhost ~]# mkdir -p /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
+[root@localhost ~]# chown mysql:mysql /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
 ```
 
 ### 2.2 安装mysql 依赖
@@ -204,8 +204,6 @@ log-error=/var/logs/mysql/mysqld.log
 pid-file=/var/run/mysql/mysqld.pid
 # 指定数据库密码
 character_set_server = utf8
-# 关闭密码校验
-validate_password=off
 
 symbolic-links=0
 
@@ -224,23 +222,7 @@ socket=/usr/local/mysql/mysql.sock
 [root@localhost mysql-5.7.19]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
 ```
 
-#### 2.3.6 初始化mysql 数据库
-* 初始化数据库的过程会为root 用户产生一个随机密码
-* 
-
-```bash
-[root@localhost mysql-5.7.19]# mysqld --initialize --user=mysql
-```
-
-#### 2.3.7 查看root 随机密码
-* 初始化数据时, 日志会输出到/var/logs/mysql/mysqld.log 文件中
-
-```bash
-cat /var/logs/mysql/mysqld.log | grep password
-
-```
-
-#### 2.3.8 添加环境变量
+#### 2.3.6 添加环境变量
 * 编辑配置文件: vim /etc/profile
 ``` bash
 #set mysql
@@ -251,6 +233,22 @@ export PATH=$PATH:$MYSQL_HOME/bin
 * 使配置立即生效 
 ```bash
 [root@localhost mysql-5.7.19]# source /etc/profile
+```
+
+#### 2.3.7 初始化mysql 数据库
+* 初始化数据库的过程会为root 用户产生一个随机密码
+* /var/data/mysql 目录必须是空的, 且mysql 具有读写权限
+
+```bash
+[root@localhost mysql-5.7.19]# mysqld --initialize --user=mysql
+```
+
+#### 2.3.8 查看root 随机密码
+* 初始化数据时, 日志会输出到/var/logs/mysql/mysqld.log 文件中
+
+```bash
+[root@localhost mysql-5.7.19]# cat /var/logs/mysql/mysqld.log | grep password
+
 ```
 
 #### 2.3.8 启动mysql 服务
@@ -285,6 +283,9 @@ Query OK, 0 rows affected (0.04 sec)
 
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;       
 Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> exit
+Bye
 ```
 
 #### 2.10 查看数据库编码
