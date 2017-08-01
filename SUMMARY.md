@@ -95,7 +95,10 @@
   * [eclipse 插件开发--启动计时](eclipse/eclipse-cha-jian-kai-53d1-qi-dong-ji-shi.md)
 * [incubator](incubator.md)
   * [LNMP 环境搭建](incubator/lnmp-huan-jing-dan-jian.md)
-  * [LNMPZ 环境搭建](incubator/lnmpz-huan-jing-da-jian.md)
   * [Zabbix 环境搭建](zabbix-huan-jing-da-jian.md)
   * [Mysql 安装 ](incubator/mysql-an-zhuang.md)
+* [zabbix](zabbix.md)
+  * [LNMPZ 环境搭建](incubator/lnmpz-huan-jing-da-jian.md)
+  * [Zabbix 客户端环境搭建](incubator/zabbix-ke-hu-duan-huan-jing-da-jian.md)
+  * Zabbix 默认模板监控Mysql
 
