@@ -104,13 +104,22 @@ Hostname=zabbix.100
 ![](/assets/zabbix_2017-08-01_190851.png)
 
 
-#### 2.5.3 查看图形
+### 2.6 启动客户端
+* zabbix_agentd 默认使用/usr/local/etc/zabbix/zabbix_agentd.conf 配置文件, 可以使用-c filename 指定配置文件
+
+```
+[root@localhost zabbix-3.2.7]#  /usr/local/zabbix/sbin/zabbix_agentd
+```
+
+### 2.7 查看监控数据
+
+### 2.7.1 查看图形
 * 点击Monitoring -> Graphs
 * 可以选择分组, 主机, 监控项进行查看, 但是每页只能查看一张图标
 
 ![](/assets/zabbix_2017-08-01_191853.png)
 
-#### 2.5.4 聚合图形
+### 2.7.2 聚合图形
 * 点击Monitoring -> Screens -> Create Screen 创建聚合图形
 * 聚合图形可以将多个图形整合在一个页面上
 * 聚合只是模板的一个整合而已, 依然可以切换主机的
