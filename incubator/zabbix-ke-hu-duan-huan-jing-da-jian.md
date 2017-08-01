@@ -51,6 +51,7 @@
 ### 2.4 配置
 * zabbix_agentd 默认使用配置文件: /usr/local/etc/zabbix/zabbix_agentd.conf
 * 修改zabbix_agentd.conf 文件内容
+* Hostname 建议名字要有一定的规律
 
 ```bash
 # 指定pid 文件位置
@@ -69,19 +70,52 @@ LogFileSize=10
 DebugLevel=3
 
 # 指定zabbix server 服务地址
-Server=172.22.12.225
+Server=192.168.1.100
 
 # 指定zabbix 主动推送服务地址
-ServerActive=172.22.12.225
+ServerActive=192.168.1.100
 
 # 指定agent服务占用端口
 ListenPort=10050
 
 # 指定agent 主机名称, 必须和zabbix 管理页面中配置的主机名称一致
-Hostname=gds.falcon.226
+Hostname=zabbix.100
 ```
 
+### 2.5 配置zabbix 管理页面
 
+#### 2.5.1 新建主机
+* 点击 Configuration-> Hosts -> Create Host
+* Host Name: agent 主机名, 即zabbix_agentd.conf 中Hostname配置的值
+* Group in groups: 选择已有的组
+* New Group : 选择新的分组
+* Agent Interface: agent客户端ip和端口
+* Enable: 选择启用
+
+![](/assets/zabbix_2017-08-01_190637.png)
+
+
+#### 2.5.2 选择模板
+* No.1 选择模板选项卡
+* No.2 输入要关联的模板
+* No.3 点击add, No.4 会添加模板列表中
+* No.5 点击保存即可.
+
+![](/assets/zabbix_2017-08-01_190851.png)
+
+
+#### 2.5.3 查看图形
+* 点击Monitoring -> Graphs
+* 可以选择分组, 主机, 监控项进行查看, 但是每页只能查看一张图标
+
+![](/assets/zabbix_2017-08-01_191853.png)
+
+#### 2.5.4 聚合图形
+* 点击Monitoring -> Screens -> Create Screen 创建聚合图形
+* 聚合图形可以将多个图形整合在一个页面上
+* 聚合只是模板的一个整合而已, 依然可以切换主机的
+
+![](/assets/zabbix_2017-08-01_192443.png)
 
 
 
