@@ -28,6 +28,7 @@ uid=505(mysql) gid=505(mysql) groups=505(mysql)
 
 ### 3. 创建相关目录
 * 创建mysql存储的相关目录, 并指定所有者,所属组
+* 安装之前一定要事先创建这些目录
 
 ```bash
 [root@localhost ~]# mkdir -p /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
