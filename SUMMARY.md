@@ -102,4 +102,5 @@
   * [Zabbix 客户端环境搭建](incubator/zabbix-ke-hu-duan-huan-jing-da-jian.md)
   * [Zabbix 默认模板监控Mysql](incubator/zabbix-mo-ren-mo-ban-jian-kong-mysql.md)
 * [mysql](mysql.md)
+  * [Mysql 源码安装](mysql/mysql-yuan-ma-an-zhuang.md)
 
