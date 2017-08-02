@@ -89,8 +89,33 @@
 [root@localhost mysql-5.7.19]# make install
 ````
 
-## 3. 配置mysql
+### 2.6 安装linux 服务
 
+```bash
+[root@localhost mysql-5.7.19]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+
+```
+
+### 2.7 添加环境变量
+1. 编辑配置文件: vim /etc/profile
+2. 使配置立即生效: source /etc/profile
+
+``` bash
+#set mysql
+export MYSQL_HOME=/usr/local/mysql
+export PATH=$PATH:$MYSQL_HOME/bin
+```
+
+### 2.8 设置libmysqlclient
+* 查看mysql lib 目录是否有libmysqlclient.so 文件, 有的话执行下面命令
+
+```bash
+[root@localhost mysql]# echo "/usr/local/mysql/lib" >> /etc/ld.so.conf
+[root@localhost mysql]# ldconfig
+```
+
+
+## 3. 配置mysql
 
 ```bash
 [mysqld]
@@ -115,14 +140,98 @@ default-character-set = utf8
 socket=/usr/local/mysql/mysql.sock
 
 [mysqladmin]
-# 设置客户端连接默认编码
+# 设置连接默认编码
 default-character-set = utf8
-# 设置客户端连接sock文件位置
+# 设置连接sock文件位置
 socket=/usr/local/mysql/mysql.sock
 
 ```
 
+## 4. 数据库初始化
 
+### 4.1 初始化数据库
+* 初始化数据库的过程会为root 用户产生一个随机密码
+* /var/data/mysql 目录必须是空的, 且mysql 具有读写权限
+
+```bash
+[root@localhost mysql-5.7.19]# mysqld --initialize --user=mysql
+```
+
+### 4.2 查看root 登录密码
+* 初始化数据时, 日志会输出到/var/logs/mysql/mysqld.log 文件中
+
+```bash
+[root@localhost mysql-5.7.19]# cat /var/logs/mysql/mysqld.log | grep password
+
+```
+
+## 5. 启动数据库
+```
+[root@localhost mysql-5.7.19]# service mysql start
+```
+
+## 6. 客户端连接
+### 6.1 使用mysql 客户端连接数据库
+* 使用mysql 客户端连接mysql数据库: mysql -u 用户名 -p
+
+```bash
+[root@gds mysql]# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor. Commands end with ; or \g.
+Your MySQL connection id is 4
+Server version: 5.7.19
+
+Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+
+```
+
+### 6.2 修改root 密码
+* 修改root用户名, 我们设置一个简单的密码: root
+
+```mysql
+mysql> ALTER USER root@localhost IDENTIFIED BY 'root';
+Query OK, 0 rows affected (0.04 sec)
+
+```
+
+### 6.3 授予允许远程访问root 权限
+* 默认情况下root用户不允许从其他电脑登录, 我们授权允许从任何机器上登录
+
+
+```
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+
+```
+
+### 6.4 查看数据库编码
+
+```bash
+mysql> show variables like '%char%';
++--------------------------+----------------------------+
+| Variable_name | Value |
++--------------------------+----------------------------+
+| character_set_client | utf8 |
+| character_set_connection | utf8 |
+| character_set_database | utf8 |
+| character_set_filesystem | binary |
+| character_set_results | utf8 |
+| character_set_server | utf8 |
+| character_set_system | utf8 |
+| character_sets_dir | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+8 rows in set (0.00 sec)
+
+```
 
 
 
