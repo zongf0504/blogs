@@ -54,7 +54,7 @@ uid=505(mysql) gid=505(mysql) groups=505(mysql)
 
 ### 2.2 安装boost
 * mysql 安装过程中需要使用boost 模板, 所以需要事先安装一下.此过程有点儿慢
-* 注意需要进入mysql 源码目录之后执行
+* 注意需要进入mysql 源码目录内执行
 
 ```bash
 [root@localhost mysql-5.7.19]# cd /usr/local/src/mysql/mysql-5.7.19
@@ -63,7 +63,7 @@ uid=505(mysql) gid=505(mysql) groups=505(mysql)
 
 ### 2.3 设置编译环境
 * mysql 使用cmake 命令安装, 设置安装目录, 数据存放目录 , 日志目录等环境
-* 注意需要在mysql 源码目录之后执行
+* 注意需要在mysql 源码目录内执行
 
 ```bash
 [root@localhost mysql-5.7.19]# cmake \
@@ -88,20 +88,21 @@ uid=505(mysql) gid=505(mysql) groups=505(mysql)
 
 ### 2.4 编译
 * mysql 编译的过程会比较长, 具体依机器性能决定, 笔者物理机上花了半个小时左右
-* 注意需要在mysql 源码目录之后执行
+* 注意需要在mysql 源码目录内执行
 
 ```bash
 [root@localhost mysql-5.7.19]# make
 ```
 
 ### 2.5 安装
-* 注意需要在mysql 源码目录之后执行
+* 注意需要在mysql 源码目录内执行
 
 ```bash
 [root@localhost mysql-5.7.19]# make install
 ````
 
 ### 2.6 安装linux 服务
+* 将mysql.server 拷贝到/etc/init.d 目录下, 并更名为mysql, 则可以使用service 命令进行管理mysql 服务了
 
 ```bash
 [root@localhost mysql-5.7.19]# cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
@@ -122,12 +123,17 @@ export PATH=$PATH:$MYSQL_HOME/bin
 * 查看mysql lib 目录是否有libmysqlclient.so 文件, 有的话执行下面命令
 
 ```bash
+[root@localhost mysql]# ls /usr/local/mysql/lib/libmysqlclient.so.*
+/usr/local/mysql/lib/libmysqlclient.so.20
+/usr/local/mysql/lib/libmysqlclient.so.20.3.6
 [root@localhost mysql]# echo "/usr/local/mysql/lib" >> /etc/ld.so.conf
 [root@localhost mysql]# ldconfig
 ```
 
 
 ## 3. 配置mysql
+* 需自己在/usr/local/etc/mysql 目录下创建 my.cnf 文件
+* 文件内容如下: vim /usr/local/etc/mysql/my.cnf
 
 ```bash
 [mysqld]
