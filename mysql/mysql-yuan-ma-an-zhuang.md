@@ -11,20 +11,23 @@
 | /var/logs/mysql | Mysql 日志存放目录 |
 | /var/run/mysql | Myql pid 存放目录 |
 | /usr/local/etc/mysql | Mysql 配置文件存放目录 |
-
+| /usr/local/src/mysql | Mysql 源码存放目录 |
+| /usr/local/boost | boost 模板安装目录 |
 
 ### 1. 下载mysql 源码
-* 下载地址: 
+* 下载地址: [mysql download](https://dev.mysql.com/downloads/mysql/)
 
 ### 2. 创建mysql 用户
-* 创建mysql 用户
+* 创建mysql 用户, 不允许mysql 用户登录
 
 ```bash
 [root@localhost ~]# useradd -s /sbin/nologin mysql
 [root@localhost ~]# id mysql
+uid=505(mysql) gid=505(mysql) groups=505(mysql)
 ```
 
-### 3. 创建相关文件
+### 3. 创建相关目录
+* 创建mysql存储的相关目录, 并指定所有者,所属组
 
 ```bash
 [root@localhost ~]# mkdir -p /var/data/mysql /var/logs/mysql /usr/local/mysql /var/run/mysql /usr/local/etc/mysql
@@ -33,6 +36,7 @@
 ```
 
 ### 4. 安装mysql 依赖
+* mysql 依赖有点儿多, 使用yum 安装就好了
 
 ```bash
 [root@localhost ~]# yum -y install make gcc gcc-c++ cmake gcc-g77 flex bison file libtool libtool-libs autoconf kernel-devel gd gd-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel libevent libevent-devel ncurses ncurses-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel gettext gettext-devel gmp-devel pspell-devel unzip libcaplsof 
@@ -42,18 +46,24 @@
 ## 2. 安装mysql
 
 ### 2.1 解压文件
+* 将mysql 源码压缩包解压到 /usr/local/src/mysql 目录下
 
 ```bash
-[root@localhost mysql]# tar -zxf mysql-5.7.19.tar.gz -C /usr/local/mysql
+[root@localhost mysql]# tar -zxf mysql-5.7.19.tar.gz -C /usr/local/src/mysql
 ```
 
 ### 2.2 安装boost
+* mysql 安装过程中需要使用boost 模板, 所以需要事先安装一下.此过程有点儿慢
+* 注意需要进入mysql 源码目录之后执行
+
 ```bash
-[root@localhost mysql-5.7.19]# cd /usr/local/mysql/mysql-5.7.19
+[root@localhost mysql-5.7.19]# cd /usr/local/src/mysql/mysql-5.7.19
 [root@localhost mysql-5.7.19]# cmake -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/boost
 ```
 
 ### 2.3 设置编译环境
+* mysql 使用cmake 命令安装, 设置安装目录, 数据存放目录 , 日志目录等环境
+* 注意需要在mysql 源码目录之后执行
 
 ```bash
 [root@localhost mysql-5.7.19]# cmake \
@@ -77,13 +87,15 @@
 ```
 
 ### 2.4 编译
-* mysql 编译的过程会比较长, 具体依机器性能决定, 笔者花了半个多小时
+* mysql 编译的过程会比较长, 具体依机器性能决定, 笔者物理机上花了半个小时左右
+* 注意需要在mysql 源码目录之后执行
 
 ```bash
 [root@localhost mysql-5.7.19]# make
 ```
 
 ### 2.5 安装
+* 注意需要在mysql 源码目录之后执行
 
 ```bash
 [root@localhost mysql-5.7.19]# make install
