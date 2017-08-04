@@ -93,7 +93,7 @@ xtrabackup: Transaction log of lsn (393631383) to (393651645) was copied.
 170804 19:26:15 completed OK!
 
 [root@localhost mysql]# innobackupex --defaults-file=/usr/local/etc/mysql/my.cnf --user=root --password=root --database=zabbix /tmp/percona
-ls /tmp/percona
+[root@localhost mysql]# ls /tmp/percona
 2017-08-04_19-26-07
 ```
 
@@ -207,6 +207,8 @@ mysql_bin_log.000001    105847
 
 ```
 >mysql change master to master_host='192.168.1.100',master_user='repl',master_password='repl',master_log_file='mysql_bin_log.000001',master_log_pos=105847; 
+
+mysql_bin_log.000002    222310
 
 ```
 
