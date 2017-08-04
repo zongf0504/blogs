@@ -105,6 +105,6 @@
   * [Mysql 源码安装](mysql/mysql-yuan-ma-an-zhuang.md)
   * [percona](mysql/percona.md)
     * [xtraback 安装](mysql/percona/percona-xtraback.md)
-  * [Mysql 主从--新增从节点](mysql/mysql-zhu-4ece-xin-zeng-cong-jie-dian.md)
+  * [Mysql 主从](mysql/mysql-zhu-4ece-xin-zeng-cong-jie-dian.md)
     * [新增从节点](mysql/mysql-zhu-4ece-xin-zeng-cong-jie-dian/xin-zeng-cong-jie-dian.md)
 
