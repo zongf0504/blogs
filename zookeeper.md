@@ -48,8 +48,7 @@ zookeeper 数据是存储在内存中的, 但也会落地到磁盘中, 所以性
 2. leader 宕机, 在zk 集群中follower节点检测到zk leader 宕机之后, 会发起提议推选自己为leader, 当收到半数节点同意之后, 升为leader, 然后发送广播, 通知个节点更新系统状态.
 
 ### 2. 广播模式
-
-当zk leader 发起的更新提议通过后, zk leader 节点向集群中各个节点发送广播, 告知follower 当前leader 保存的最新数据id 是多少, 各follower节点各自更新本地当前记录的数据id.
+* 当zk leader 发起的更新提议通过后, zk leader 节点向集群中各个节点发送广播, 告知follower 当前leader 保存的最新数据id 是多少, 各follower节点各自更新本地当前记录的数据id.
 
 
 ## 2. ZNode 节点
