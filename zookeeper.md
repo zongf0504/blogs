@@ -116,7 +116,7 @@ Watcher 可以监控目录节点的数据变化及子目录的变化,一旦发�
 
 
 # 附: 
-1. ZK 高可用对比 Keepalived
+## 1.ZK 高可用对比 Keepalived
 * zk 做高可用只是zk 的一个副产品而已, 是应用利用zk 的临时节点类型和Watcher 机制实现, zk 各个节点都可以访问, 因此自带负载效果.
 * keepalived 主要是通过虚拟ip 技术实现高可用的, 两台节点虚拟出一个ip , 根据prioriy 属性进行抢占共用ip, 因此通常keepalived 主从priority 初始值应该相差50以上. 这样主挂了之后, 从升为主, 主重启之后再抢回主节点.
 
