@@ -37,8 +37,8 @@ server.3=192.168.145.100:2898:3898
 | 服务器 | 执行命令 |
 | :--- | :--- |
 | 192.168.145.100 | echo 1 &gt; /var/data/zookeeper/2181/myid |
-| 192.168.145.101 | echo 2 &gt; /var/data/zookeeper/2182/myid |
-| 192.168.145.102 | echo 3 &gt; /var/data/zookeeper/2183/myid |
+| 192.168.145.100 | echo 2 &gt; /var/data/zookeeper/2182/myid |
+| 192.168.145.100 | echo 3 &gt; /var/data/zookeeper/2183/myid |
 
 ## 3. 集群启动
 
