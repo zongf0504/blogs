@@ -67,13 +67,10 @@ clientPort=2181
 ### 2.3 修改启动日志文件
 
 * zookeeper 启动时,默认会在你执行命令的当前目录创建一个zookeeper.out 日志文件, 而且zoo.cfg 的配置文件中并不能修改zookeeper启动日志文件位置, 只能通过修改 bin/zkEnv.sh 脚本中的设置
-* 将 bin/zkEnv.sh 中的 ZOO\_LOG\_DIR 修改为自定义日志目录: /var/logs/zookeeper/zklogs 
+* 将 bin/zkEnv.sh 中第一行添加变量 ZOO\_LOG\_DIR 值为: /var/logs/zookeeper/zklogs 
 
 ```bash
-if [ "x${ZOO_LOG_DIR}" = "x" ]
-then
-    ZOO_LOG_DIR="/var/logs/zookeeper/zklogs"
-fi
+ZOO_LOG_DIR=/var/logs/zookeeper/zklogs
 ```
 
 ### 2.4 修改log4j 配置
