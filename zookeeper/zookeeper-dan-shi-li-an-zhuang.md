@@ -56,9 +56,9 @@ tickTime=2000
 initLimit=10
 #集群中follwer节点与leader节点之前请求-响应超时时间,单位为tickTime
 syncLimit=5
-#数据存放目录
+#数据存放目录: 记录当前的版本号和数据快照
 dataDir=/var/data/zookeeper
-#数据快照存放目录
+#数据操作日志存放目录
 dataLogDir=/var/data/zookeeper/datalogs
 #客户端连接端口
 clientPort=2181
