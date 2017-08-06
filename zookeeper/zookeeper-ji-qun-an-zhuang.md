@@ -4,11 +4,11 @@
 
 ## 1. 集群环境
 
-| 服务器ip | 占用端口 | ZK 家目录 | ZK 数据目录 | 数据日志目录 | ZK 日志目录 |
+| 服务器ip | 占用端口 | ZK 家目录 | ZK 数据目录 | 数据快照目录 | ZK 日志目录 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 192.168.145.100 | 2181, 2888, 3888 | /opt/app/zookeeper/zookeeper-3.4.10 | /var/data/zookeeper | /var/logs/zookeeper/datalogs | /var/logs/zookeeper/zklogs |
-| 192.168.145.101 | 2181, 2888, 3888 | /opt/app/zookeeper/zookeeper-3.4.10 | /var/data/zookeeper | /var/logs/zookeeper/datalogs | /var/logs/zookeeper/zklogs |
-| 192.168.145.102 | 2181, 2888, 3888 | /opt/app/zookeeper/zookeeper-3.4.10 | /var/data/zookeeper | /var/logs/zookeeper/datalogs | /var/logs/zookeeper/zklogs |
+| 192.168.145.100 | 2181, 2888, 3888 | /opt/app/zookeeper/zookeeper-3.4.10 | /var/data/zookeeper | /var/data/zookeeper/datalogs | /var/logs/zookeeper/zklogs |
+| 192.168.145.101 | 2181, 2888, 3888 | /opt/app/zookeeper/zookeeper-3.4.10 | /var/data/zookeeper | /var/data/zookeeper/datalogs | /var/logs/zookeeper/zklogs |
+| 192.168.145.102 | 2181, 2888, 3888 | /opt/app/zookeeper/zookeeper-3.4.10 | /var/data/zookeeper | /var/data/zookeeper/datalogs | /var/logs/zookeeper/zklogs |
 
 ## 2. 集群环境搭建
 

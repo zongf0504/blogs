@@ -58,8 +58,8 @@ initLimit=10
 syncLimit=5
 #数据存放目录
 dataDir=/var/data/zookeeper
-#数据日志存放目录
-dataLogDir=/var/logs/datalogs
+#数据快照存放目录
+dataLogDir=/var/data/zookeeper/datalogs
 #客户端连接端口
 clientPort=2181
 ```
