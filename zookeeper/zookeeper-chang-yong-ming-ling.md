@@ -1,5 +1,5 @@
 # Zooke 常用命令
-> zookeeper 提供了客户端连接工具zkCli.sh , 可以连接zookeeper 对zookeeper 进行简单的操作.
+> zookeeper 提供了客户端连接工具zkCli.sh , 可以连接zookeeper 对zookeeper 进行简单的操作. zk-Cli 只是做简单的操作而已, 主要还是使用java/C API操作.
 
 # 1. zk 客户端常用命令
 * zk 客户端提供了一些命令
