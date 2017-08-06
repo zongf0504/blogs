@@ -11,7 +11,7 @@
 | connect host:port | connect 127.0.0.1:2181 | 通过ip 端口号连接指定的Zookeeper 节点 |
 | close | close | 断开当前连接的zookeeper |
 | quit | quit | 退出客户端程序 |
-| create [-s/e] path data acl| create -e /hw hello,world  | 创建临时节点hw |
+| create [-s/e] path data acl| create -e /hw hello,world  | 创建临时节点hw, -e 临时节点, -s 有序节点, 默认为持久化节点 |
 | ls path | ls / | 查看子节点 |
 | get path | get / | 查看节点数据  |
 | set path data [version] | set /a hello | 设置节点数据 |
