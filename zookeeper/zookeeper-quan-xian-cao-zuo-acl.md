@@ -49,6 +49,70 @@ zk ACL 相关的命令有:
 
 # 2. 认证测试
 ## 2.1 world 认证
+* world 认证是zk 默认的认证方式, 代表所有人
+
+### 1. 查看根节点ACL 权限
+* 根节点默认权限为 world:anyone:cdrwa, 此权限表示任何人都能删除根节点下的所有空节点(不含子节点的权限), 因此可选择修改根目录的权限, 因此这种方式并不是太安装
+
+```bash
+[zk: 127.0.0.1:2181(CONNECTED) 0] getAcl /
+'world,'anyone
+: cdrwa
+```
+
+### 2. 测试根节点默认权限
+1. 查看根节点权限, 创建数据
+```bash
+[zk: 127.0.0.1:2181(CONNECTED) 0] getAcl /
+'world,'anyone
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 1] addauth digest mirror:mirror 
+[zk: 127.0.0.1:2181(CONNECTED) 2] create /a a auth::cdrwa  
+Created /a
+[zk: 127.0.0.1:2181(CONNECTED) 3] create /a/aa a_aa auth::cdrwa
+Created /a/aa
+[zk: 127.0.0.1:2181(CONNECTED) 4] create /b b auth::cdrwa
+Created /b
+``
+
+2. 退出重新登录, 不认证用户信息, 默认为anyone; 由于a 节点存在子节点所以删除失败, 但是b 节点不存在子节点, 可以成功删除, 虽然b 拥有ACL 权限
+
+```bash
+[zk: 127.0.0.1:2181(CONNECTED) 0] getAcl /a
+'digest,'mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 1] getAcl /a/aa
+'digest,'mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 2] getAcl /b
+'digest,'mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 3] delete /b
+[zk: 127.0.0.1:2181(CONNECTED) 4] rmr /a
+Authentication is not valid : /a
+```
+
+### 3. 修改根节点权限
+* 可以创建一管理用户, 对根节点拥有全部权限. 然后由管理员为每一个应用创建一个一级节点, 且此用户对该一级节点拥有所有权限
+
+```
+[zk: 127.0.0.1:2181(CONNECTED) 0] addauth digest admin:admin
+[zk: 127.0.0.1:2181(CONNECTED) 1] setAcl / auth::cdrwa
+cZxid = 0x0
+ctime = Thu Jan 01 08:00:00 CST 1970
+mZxid = 0x0
+mtime = Thu Jan 01 08:00:00 CST 1970
+pZxid = 0x1b00000030
+cversion = 20
+dataVersion = 0
+aclVersion = 1
+ephemeralOwner = 0x0
+dataLength = 0
+numChildren = 2
+[zk: 127.0.0.1:2181(CONNECTED) 2] getAcl /
+'digest,'admin:x1nq8J5GOJVPY6zgzhtTtA9izLc=
+: cdrwa
+```
 
 
 ## 2.2 auth 认证
