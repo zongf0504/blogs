@@ -4,7 +4,7 @@
 
 ## 1. 集群环境
 
-| 服务器ip | 占用端口 | ZK 家目录 | ZK 数据目录 | 数据快照目录 | ZK 日志目录 |
+| 服务器ip | 占用端口 | ZK 家目录 | ZK 数据目录 | 数据操作日志目录 | ZK 日志目录 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 192.168.145.100 | 2181, 2878, 3878 | /opt/app/zookeeper/2181/zookeeper-3.4.10-2181 | /var/data/zookeeper/2181 | /var/data/zookeeper/2181/datalogs | /var/logs/zookeeper/2181/zklogs |
 | 192.168.145.100 | 2182, 2888, 3888 | /opt/app/zookeeper/2182/zookeeper-3.4.10-2182 | /var/data/zookeeper/2182 | /var/data/zookeeper/2182/datalogs | /var/logs/zookeeper/2182/zklogs |
