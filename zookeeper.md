@@ -126,3 +126,4 @@ Watcher 可以监控目录节点的数据变化及子目录的变化,一旦发�
 | keepalived | 主动模式 | keepalived 主动检测应用程序是否存活, 如果宕机的话, 进行ip 漂移 | Nginx HA,mysql HA |
 
 
+
