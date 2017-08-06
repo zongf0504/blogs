@@ -49,10 +49,121 @@ zk ACL 相关的命令有:
 
 # 2. 认证测试
 ## 2.1 world 认证
-* world 认证是zk 默认的认证方式, 代表所有人
+* world 认证是zk 默认的认证方式, 代表所有人,默认权限为cdrwa
+* 创建zNode时, 如果不指定ACL 权限, 节点的默认权限为word:anyone:cdrwa, 即所有人拥有全部权限, 但是使用setAcl 命令时, 没有默认ACL权限, 必须制定ACL 信息
 
+```bash
+[zk: 127.0.0.1:2181(CONNECTED) 5] create /world world world:anyone:cd
+Created /world
+[zk: 127.0.0.1:2181(CONNECTED) 6] create /wd world              
+Created /wd
+[zk: 127.0.0.1:2181(CONNECTED) 7] getAcl /world
+'world,'anyone
+: cd
+[zk: 127.0.0.1:2181(CONNECTED) 8] getAcl /wd
+'world,'anyone
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 9] setAcl /wd world:anyone:cda
+cZxid = 0x1c00000003
+ctime = Sun Jul 30 09:07:52 CST 2017
+mZxid = 0x1c00000003
+mtime = Sun Jul 30 09:07:52 CST 2017
+pZxid = 0x1c00000003
+cversion = 0
+dataVersion = 0
+aclVersion = 1
+ephemeralOwner = 0x0
+dataLength = 5
+numChildren = 0
+[zk: 127.0.0.1:2181(CONNECTED) 10] getAcl /wd
+'world,'anyone
+: cda
+```
+
+## 2.2 auth 认证
+* 为节点设置auth 认证模式时, 需实现使用addauth 添加认证信息, 可通过addauth添加多组认证信息, 这样两个用户对此节点拥有相同的权限
+* addauth 通过用户名和密码添加认证信息, 用户密码会被采用base64(sha1(pwd))加密;
+
+```bash
+[zk: 127.0.0.1:2181(CONNECTED) 0] addauth digest mirror:mirror
+[zk: 127.0.0.1:2181(CONNECTED) 1] addauth digest zong:zong
+[zk: 127.0.0.1:2181(CONNECTED) 2] create /test/auth test_auth auth::cda
+Created /test/auth
+[zk: 127.0.0.1:2181(CONNECTED) 3] getAcl /test/auth
+'digest,'mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=
+: cda
+'digest,'zong:rJQhMsjxDyaqJWO4eOO1lOGKNxc=
+: cda
+[zk: 127.0.0.1:2181(CONNECTED) 4] get /test/auth
+Authentication is not valid : /test/auth
+[zk: 127.0.0.1:2181(CONNECTED) 7] setAcl /test/auth auth::cdrwa
+cZxid = 0x1c00000008
+ctime = Sun Jul 30 09:15:29 CST 2017
+mZxid = 0x1c00000008
+mtime = Sun Jul 30 09:15:29 CST 2017
+pZxid = 0x1c00000008
+cversion = 0
+dataVersion = 0
+aclVersion = 2
+ephemeralOwner = 0x0
+dataLength = 9
+numChildren = 0
+[zk: 127.0.0.1:2181(CONNECTED) 8] getAcl /test/auth
+'digest,'mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=
+: cdrwa
+'digest,'zong:rJQhMsjxDyaqJWO4eOO1lOGKNxc=
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 9] get /test/auth
+test_auth
+cZxid = 0x1c00000008
+ctime = Sun Jul 30 09:15:29 CST 2017
+mZxid = 0x1c00000008
+mtime = Sun Jul 30 09:15:29 CST 2017
+pZxid = 0x1c00000008
+cversion = 0
+dataVersion = 0
+aclVersion = 2
+ephemeralOwner = 0x0
+dataLength = 9
+numChildren = 0
+```
+
+## 2.3 digest 认证
+* digest 认证和auth 认证非常相似, 只不过digest 认证无须实现通过addauth 添加认证用户信息, 而是直接用户名和密码设置权限, 只不过密码不是明文, 而是密文 
+* digest 密文加密方式为base64(sha1(pwd)), 可以通过zk api生成, 或者在客户端使用addauth命令生成认证信息, 然后赋予一个测试节点, 然后再查看acl 信息, 这样就能看到用户名密码加密后的密文了.
+
+```bash
+[zk: 127.0.0.1:2181(CONNECTED) 0] create /test/123 1234 digest:mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=:cdrwa
+Created /test/123
+[zk: 127.0.0.1:2181(CONNECTED) 1] getAcl /test/123
+'digest,'mirror:R1vnwJN21HmcYWH2CB7NwyIxB14=
+: cdrwa
+[zk: 127.0.0.1:2181(CONNECTED) 2] get /test/123
+Authentication is not valid : /test/123
+[zk: 127.0.0.1:2181(CONNECTED) 3] addauth digest mirror:mirror
+[zk: 127.0.0.1:2181(CONNECTED) 4] get /test/123
+1234
+cZxid = 0x1c0000000d
+ctime = Sun Jul 30 09:22:45 CST 2017
+mZxid = 0x1c0000000d
+mtime = Sun Jul 30 09:22:45 CST 2017
+pZxid = 0x1c0000000d
+cversion = 0
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 4
+numChildren = 0
+```
+
+## 2.4 ip 认证
+* zk ACL 支持IP 认证方式, 但这种方式笔者并不常用, 就不做过多介绍了
+* ip ACL 格式:  ip:192.168.0.0/16:cdrwa
+
+
+## 4. 默认根节点权限
 ### 1. 查看根节点ACL 权限
-* 根节点默认权限为 world:anyone:cdrwa, 此权限表示任何人都能删除根节点下的所有空节点(不含子节点的权限), 因此可选择修改根目录的权限, 因此这种方式并不是太安装
+* 根节点默认权限为 world:anyone:cdrwa, 此权限表示任何人都能删除根节点下的所有空节点(不含子节点的权限), 因此可选择修改根目录的权限, 因此这种方式并不是太安全.
 
 ```bash
 [zk: 127.0.0.1:2181(CONNECTED) 0] getAcl /
@@ -116,11 +227,6 @@ numChildren = 2
 ```
 
 
-## 2.2 auth 认证
-
-## 2.3 digest 认证
-
-## 2.4 ip 认证
 
 
 
