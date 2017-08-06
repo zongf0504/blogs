@@ -257,10 +257,38 @@ ZooKeeper -server host:port cmd args
         setquota -n|-b val path
 ```
 
+# 3. 四字命令
+* zookeeper 还执行一些四字命令, 用于监控zookeeper 集群的运行状态, 只是需要配合nc或telnet 使用.
+* zk 支持的四字命令有: wchs, srst, dump, gtmk, crst, envi, stmk, mntr, isro, conf, ruok, stat, srvr, cons
 
+## 1. nc 安装
+* 检测nc是否安装, 若没有安装的话使用yum 安装
 
+```bash
+[admin@localhost bin]$ rpm -qa nc
+nc-1.84-24.el6.x86_64
+[admin@localhost bin]$ yum -y install nc
+```
 
+## 2. 使用
+* 四字命令用法都一样, 笔者就展示stat 命令如何使用
 
+``bash
+[admin@localhost bin]$ echo stat | nc 127.0.0.1 2181   
+Zookeeper version: 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT
+Clients:
+ /127.0.0.1:37516[1](queued=0,recved=91,sent=91)
+ /127.0.0.1:37525[0](queued=0,recved=1,sent=0)
+
+Latency min/avg/max: 0/0/1
+Received: 49
+Sent: 49
+Connections: 2
+Outstanding: 0
+Zxid: 0x1d00000043
+Mode: follower
+Node count: 17
+```
 
 
 
