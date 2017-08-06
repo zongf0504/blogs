@@ -73,7 +73,7 @@ Created /a
 Created /a/aa
 [zk: 127.0.0.1:2181(CONNECTED) 4] create /b b auth::cdrwa
 Created /b
-``
+```
 
 2. 退出重新登录, 不认证用户信息, 默认为anyone; 由于a 节点存在子节点所以删除失败, 但是b 节点不存在子节点, 可以成功删除, 虽然b 拥有ACL 权限
 
