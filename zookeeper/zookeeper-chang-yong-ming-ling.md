@@ -272,6 +272,7 @@ nc-1.84-24.el6.x86_64
 
 ## 2. 使用
 * 四字命令用法都一样, 笔者就展示stat 命令如何使用
+* nc 是在shell 客户端中执行的.
 
 ``bash
 [admin@localhost bin]$ echo stat | nc 127.0.0.1 2181   
