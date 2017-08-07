@@ -336,6 +336,9 @@ default-character-set = utf8
 socket=/usr/local/mysql/mysql.sock
 
 [mysqladmin]
+# 客户端默认连接编码
+default-character-set = utf8
+
 # sock 文件位置
 socket=/usr/local/mysql/mysql.sock
 ```
