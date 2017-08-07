@@ -282,7 +282,8 @@ Master_SSL_Verify_Server_Cert: No
 ``` 
 
 ### 12. 查看当前主从情况:
-* 登录主服务器
+* 登录主服务器, 查看主服务器状态和从服务器用户连接情况
+* 笔者做的一主两从, 所以可以看到两条记录
 
 ```bash
 mysql> show master status \G
