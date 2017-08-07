@@ -207,7 +207,6 @@ mysql_bin_log.000001    105847
 ```
 >mysql change master to master_host='192.168.1.100',master_user='repl',master_password='repl',master_log_file='mysql_bin_log.000001',master_log_pos=105847; 
 
-
 ```
 
 ### 10. 启动从服务
@@ -217,7 +216,7 @@ mysql> start slave;
 Query OK, 0 rows affected (0.05 sec)
 ```
 
-#### 7. 查看从节点状态
+### 11. 查看从节点状态
 
 ```bash
 mysql> show slave status\G
@@ -282,7 +281,28 @@ Master_SSL_Verify_Server_Cert: No
 1 row in set (0.00 sec) 
 ``` 
 
+### 12. 查看当前主从情况:
+* 登录主服务器
 
+```bash
+mysql> show master status \G
+*************************** 1. row ***************************
+             File: mysql_bin_log.000002
+         Position: 120759726
+     Binlog_Do_DB: 
+ Binlog_Ignore_DB: 
+Executed_Gtid_Set: 
+1 row in set (0.00 sec)
+
+mysql> SELECT user, host, time, command, time FROM information_schema.processlist WHERE user = 'repl';
++------+----------------------+------+-------------+------+
+| user | host                 | time | command     | time |
++------+----------------------+------+-------------+------+
+| repl | 192.168.1.101:34473 |   98 | Binlog Dump |   98 |
+| repl | 192.168.1.102:46111 |  795 | Binlog Dump |  795 |
++------+----------------------+------+-------------+------+
+2 rows in set (0.01 sec)
+```
 
 
 
