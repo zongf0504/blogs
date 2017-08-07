@@ -305,6 +305,41 @@ mysql> SELECT user, host, time, command, time FROM information_schema.processlis
 2 rows in set (0.01 sec)
 ```
 
+# 附:
+## 1. mysql 配置
+* 除了server_id 不同之外, 其它都相同
+
+```
+[mysqld]
+# mysql 数据存放目录
+datadir=/var/data/mysql
+# mysql socket
+socket=/usr/local/mysql/mysql.sock
+# 错误日志
+log-error=/var/logs/mysql/mysqld.log
+# mysql 进程id
+pid-file=/var/run/mysql/mysqld.pid
+# 数据库默认编码
+character_set_server = utf8
+# mysql 节点id
+server_id=225
+# 二进制文件存放位置, 相对于dataDir
+log_bin=binlog/mysql_bin_log
+# 二进制文件索引存放位置
+log_bin_index=binlog/mysql_bin_log_index
+symbolic-links=0
+
+[client]
+# 客户端默认连接编码
+default-character-set = utf8
+# sock 文件位置
+socket=/usr/local/mysql/mysql.sock
+
+[mysqladmin]
+# sock 文件位置
+socket=/usr/local/mysql/mysql.sock
+```
+
 
 
 
