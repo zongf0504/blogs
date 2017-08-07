@@ -46,10 +46,10 @@ Query OK, 0 rows affected (0.00 sec)
 server_id=100
 
 # 指定mysql 二进制文件, 默认存放在$datadir 目录下
-log_bin=logbin/myql_bin_log
+log_bin=binlog/myql_bin_log
 
 # 指定mysql 二进制文件索引
-log_bin_index=logbin/mysql_bin_log_index
+log_bin_index=binlog/mysql_bin_log_index
 
 ```
 
@@ -141,10 +141,10 @@ mysql_bin_log.000001    105847
 server_id=100
 
 # 指定mysql 二进制文件, 默认存放在$datadir 目录下
-log_bin=logbin/myql_bin_log
+log_bin=binlog/myql_bin_log
 
 # 指定mysql 二进制文件索引
-log_bin_index=logbin/mysql_bin_log_index
+log_bin_index=binlog/mysql_bin_log_index
 
 ```
 
