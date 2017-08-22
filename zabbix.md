@@ -28,7 +28,7 @@ Reading: 0 Writing: 1 Waiting: 2
 
 * 笔者zabbix\_agentd 的自定义监控脚本存放在/usr/local/etc/zabbix/scripts 中
 * 创建监控脚本: vim /usr/local/etc/zabbix/scripts/ngx\_status.sh
-* 赋予可执行权限: chmod 755 ngx_status.sh
+* 赋予可执行权限: chmod 755 ngx\_status.sh
 
 ```bash
 #!/bin/bash
@@ -36,7 +36,7 @@ Reading: 0 Writing: 1 Waiting: 2
 #Auth zongf
 #Date 2017/08/22
 
-URL="http://172.22.12.100:80/status/"
+URL="http://192.168.1.100:80/status/"
 
 # 检测nginx进程是否存在
 function ping {
@@ -100,11 +100,12 @@ UserParameter=nginx.status[*],/usr/local/etc/zabbix/scripts/ngx_status.sh $1
 ## 6. 测试脚本
 
 * 非必须步骤, 但是建议测试一下 
+* 必须在zabbix_server 端测试, 因为zabbix_get是zabbix_server 主动向zabbix_agentd 客户端请求数据
 
 ```bash
-[root@localhost scripts]# zabbix_get -s 172.22.12.100 -k 'nginx.status[ping]'
+[root@localhost scripts]# zabbix_get -s 192.168.1.100 -k 'nginx.status[ping]'
 1
-[root@localhost scripts]# zabbix_get -s 172.22.12.100 -k 'nginx.status[accepts]'
+[root@localhost scripts]# zabbix_get -s 192.168.1.100 -k 'nginx.status[accepts]'
 562
 ```
 
