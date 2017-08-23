@@ -104,11 +104,13 @@
   * [LNMPZ 环境搭建](incubator/lnmpz-huan-jing-da-jian.md)
   * [Zabbix 客户端环境搭建](incubator/zabbix-ke-hu-duan-huan-jing-da-jian.md)
   * [Zabbix 默认模板监控Mysql](incubator/zabbix-mo-ren-mo-ban-jian-kong-mysql.md)
-  * Zabbix 监控Nginx
+  * [Zabbix 监控Nginx](incubator/zabbix-jian-kong-nginx.md)
 * [mysql](mysql.md)
   * [Mysql 源码安装](mysql/mysql-yuan-ma-an-zhuang.md)
   * [percona](mysql/percona.md)
     * [xtraback 安装](mysql/percona/percona-xtraback.md)
   * [Mysql 主从](mysql/mysql-zhu-4ece-xin-zeng-cong-jie-dian.md)
     * [新增从节点](mysql/mysql-zhu-4ece-xin-zeng-cong-jie-dian/xin-zeng-cong-jie-dian.md)
+* [fdfs](fdfs.md)
+  * [fastdfs 安装](fdfs/fastdfs-an-zhuang.md)
 
