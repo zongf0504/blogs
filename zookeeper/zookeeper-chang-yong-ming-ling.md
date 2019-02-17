@@ -211,7 +211,9 @@ numChildren = 0
 
 
 ## 5. 操作历史命令
-* 与操作历史相关的命令有: history, redo```bash
+* 与操作历史相关的命令有: history, redo
+
+```bash
 [zk: 127.0.0.1:2181(CONNECTED) 1] ls /
 [wd, authNode, test, world, zookeeper, a]
 [zk: 127.0.0.1:2181(CONNECTED) 2] ls /authNode
